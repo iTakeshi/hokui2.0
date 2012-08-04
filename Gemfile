@@ -12,6 +12,8 @@ group :development, :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'pry-rails'
+  gem 'simplecov'
+  gem 'spork'
 end
 
 group :production do
