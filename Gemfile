@@ -12,7 +12,7 @@ group :development, :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'pry-rails'
-  gem 'simplecov'
+  gem 'simplecov', :require => false
   gem 'spork'
 end
 
