@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     @user.generate_user_auth_token
 
     if @user.save
+      @user.send_signup_confirmation_mail
       render
     else
       render action: :new

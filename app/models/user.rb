@@ -52,4 +52,8 @@ class User < ActiveRecord::Base
     end while User.exists?(user_auth_token: self.user_auth_token)
   end
 
+  def send_signup_confirmation_mail
+    UserMailer.confirm_signup(self).deliver
+  end
+
 end

@@ -23,7 +23,10 @@ describe User do
     user.save!
   end
 
-  describe "#generate_user_auth_token" do
+
+
+  describe "instance methods" do
+
     before(:each) do
       @user = User.new(
         user_family_name:      '山田',
@@ -39,13 +42,18 @@ describe User do
       @user.user_status = 1
     end
 
-    it "should generate unique :user_auth_token" do
-      @user.generate_user_auth_token
-      @user.user_auth_token.should be_instance_of(String)
-      @user.user_auth_token.length.should eq(27)
-      @user.should be_valid
+    describe "#generate_user_auth_token" do
+      it "should generate unique :user_auth_token" do
+        @user.generate_user_auth_token
+        @user.user_auth_token.should be_instance_of(String)
+        @user.user_auth_token.length.should eq(27)
+        @user.should be_valid
+      end
     end
+
   end
+
+
 
   describe "validation:" do
 
