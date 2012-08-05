@@ -14,5 +14,6 @@
 /log/*.log
 /tmp
 /coverage
+/coverage/*
 
 /config/initializers/secret_token.rb

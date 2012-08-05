@@ -23,6 +23,29 @@ describe User do
     user.save!
   end
 
+  describe "#generate_user_auth_token" do
+    before(:each) do
+      @user = User.new(
+        user_family_name:      '山田',
+        user_given_name:       '一郎',
+        user_handle_name:      'iYamada',
+        user_birthday:         '1991-05-27',
+        user_email:            'sample_email@ec.hokudai.ac.jp',
+        user_email_sub:        'sample.email-sub+ip512@hoge.fuga',
+        password:              'hogehogefugafuga',
+        password_confirmation: 'hogehogefugafuga'
+      )
+      @user.user_is_admin = true
+      @user.user_status = 1
+    end
+
+    it "should generate unique :user_auth_token" do
+      @user.generate_user_auth_token
+      @user.user_auth_token.should be_instance_of(String)
+      @user.user_auth_token.length.should eq(27)
+      @user.should be_valid
+    end
+  end
 
   describe "validation:" do
 

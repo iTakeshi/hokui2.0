@@ -46,4 +46,10 @@ class User < ActiveRecord::Base
     length: { minimum: 5 },
     confirmation: true
 
+  def generate_user_auth_token
+    begin
+      self.user_auth_token = SecureRandom.urlsafe_base64(20)
+    end while User.exists?(user_auth_token: self.user_auth_token)
+  end
+
 end
