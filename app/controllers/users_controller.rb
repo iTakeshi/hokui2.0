@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.user_is_admin = false
     @user.user_status = 1
-    @user.user_auth_token = SecureRandom.urlsafe_base64(20)
+    @user.generate_user_auth_token
 
     if @user.save
       render
