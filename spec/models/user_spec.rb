@@ -32,7 +32,7 @@ describe User do
         user_handle_name:      'iYamada',
         user_birthday:         '1991-05-27',
         user_email:            'sample_email@ec.hokudai.ac.jp',
-        user_email_sub:        'sample.email.sub@hoge.fuga',
+        user_email_sub:        'sample.email-sub+ip512@hoge.fuga',
         password:              'hogehogefugafuga',
         password_confirmation: 'hogehogefugafuga'
       )
@@ -56,9 +56,23 @@ describe User do
       end
     end
 
+    context "with too long :user_family_name" do
+      it "should not be valid" do
+        @user.user_family_name = "abcdefghijklmnop"
+        @user.should_not be_valid
+      end
+    end
+
     context "without :user_given_name" do
       it "should not be valid" do
         @user.user_given_name = ""
+        @user.should_not be_valid
+      end
+    end
+
+    context "with too long :user_given_name" do
+      it "should not be valid" do
+        @user.user_given_name = "abcdefghijklmnop"
         @user.should_not be_valid
       end
     end
@@ -125,6 +139,13 @@ describe User do
       end
     end
 
+    context "with too long :user_email" do
+      it "should not be valid" do
+        @user.user_email = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz@ec.hokudai.ac.jp"
+        @user.should_not be_valid
+      end
+    end
+
     context "without :user_email_sub" do
       it "should be valid" do
         @user.user_email_sub = ""
@@ -142,6 +163,13 @@ describe User do
     context ":user_email_sub is not unique" do
       it "should not be valid" do
         @user.user_email_sub = "hoge@hoge.fuga"
+        @user.should_not be_valid
+      end
+    end
+
+    context "with too long :user_email_sub" do
+      it "should not be valid" do
+        @user.user_email_sub = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz@gmail.com"
         @user.should_not be_valid
       end
     end

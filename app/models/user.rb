@@ -5,10 +5,12 @@ class User < ActiveRecord::Base
                   :password, :password_confirmation
 
   validates :user_family_name,
-    presence: true
+    presence: true,
+    length: { maximum: 15, allow_blank: true }
 
   validates :user_given_name,
-    presence: true
+    presence: true,
+    length: { maximum: 15, allow_blank: true }
 
   validates :user_handle_name,
     presence: true,
@@ -20,11 +22,11 @@ class User < ActiveRecord::Base
   validates :user_email,
     presence: true,
     uniqueness: { allow_blank: true },
-    format: { with: /^[0-9a-zA-Z_\-\.\+]+@[a-z]+\.hokudai\.ac\.jp$/, allow_blank: true }
+    format: { with: /^[0-9a-zA-Z_\-\.\+]{,50}@(ec|med)\.hokudai\.ac\.jp$/, allow_blank: true }
 
   validates :user_email_sub,
     uniqueness: { allow_blank: true },
-    format: { with: /^[0-9a-zA-Z_\-\.\+]+@[0-9a-zA-Z_\-\.\+]+$/, allow_blank: true }
+    format: { with: /^[0-9a-zA-Z_\-\.\+]{,50}@[0-9a-zA-Z_\-\.]+$/, allow_blank: true }
 
   validates :user_is_admin,
     inclusion: { in: [true, false] }
