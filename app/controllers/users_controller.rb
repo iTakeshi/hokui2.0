@@ -1,0 +1,24 @@
+# coding: utf-8
+
+class UsersController < ApplicationController
+
+  # GET /signup
+  def new
+    @user = User.new
+  end
+
+  # POST /signup
+  def create
+    @user = User.new(params[:user])
+    @user.user_is_admin = false
+    @user.user_status = 1
+    @user.user_auth_token = SecureRandom.urlsafe_base64(20)
+
+    if @user.save
+      render
+    else
+      render action: :new
+    end
+  end
+
+end
