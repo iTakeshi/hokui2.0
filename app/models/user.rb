@@ -35,7 +35,11 @@ class User < ActiveRecord::Base
     inclusion: { in: [0, 1, 2, 3] }
 
   validates :user_auth_token,
-    presence: true
+    presence: true,
+    uniqueness: { allow_blank: true }
+
+  validates :user_secret_token,
+    uniqueness: { allow_blank: true }
 
   validates :password,
     presence: true,

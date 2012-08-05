@@ -4,26 +4,27 @@ require 'spec_helper'
 
 describe User do
 
-  describe "validation:" do
+  before(:all) do
+    user = User.new(
+      user_family_name:      '佐藤',
+      user_given_name:       '春男',
+      user_handle_name:      'hSatoh',
+      user_birthday:         '1989-06-13',
+      user_email:            'hoge@ec.hokudai.ac.jp',
+      user_email_sub:        'hoge@hoge.fuga',
+      password:              'foobar',
+      password_confirmation: 'foobar'
+    )
+    user.user_is_admin = false
+    user.user_status = 0
+    user.user_auth_token = 'U42JEudizQmSPws4TxIEoHsIqbU'
+    user.user_secret_token = 'ltF24xR2QKq7c7VXavW7KJSVkts'
+    user.user_secret_token_expiration_time = Time.now + 60*60*2
+    user.save!
+  end
 
-    before(:all) do
-      user = User.new(
-        user_family_name:      '佐藤',
-        user_given_name:       '春男',
-        user_handle_name:      'hSatoh',
-        user_birthday:         '1989-06-13',
-        user_email:            'hoge@ec.hokudai.ac.jp',
-        user_email_sub:        'hoge@hoge.fuga',
-        password:              'foobar',
-        password_confirmation: 'foobar'
-      )
-      user.user_is_admin = false
-      user.user_status = 0
-      user.user_auth_token = SecureRandom.urlsafe_base64(20)
-      user.user_secret_token = SecureRandom.urlsafe_base64(20)
-      user.user_secret_token_expiration_time = Time.now + 60*60*2
-      user.save!
-    end
+
+  describe "validation:" do
 
     before(:each) do
       @user = User.new(
@@ -202,11 +203,25 @@ describe User do
       end
     end
 
+    context ":user_auth_token is not unique" do
+      it "should not be valid" do
+        @user.user_auth_token = "U42JEudizQmSPws4TxIEoHsIqbU"
+        @user.should_not be_valid
+      end
+    end
+
     context "without :user_secret_token and :user_secret_token_expiration_time" do
       it "should be valid" do
         @user.user_secret_token = ""
         @user.user_secret_token_expiration_time = ""
         @user.should be_valid
+      end
+    end
+
+    context ":user_secret_token is not unique" do
+      it "should not be valid" do
+        @user.user_secret_token = "ltF24xR2QKq7c7VXavW7KJSVkts"
+        @user.should_not be_valid
       end
     end
 
