@@ -1,5 +1,16 @@
 <h1>Sign Up!</h1>
 
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @user.errors.count %>個の項目にエラーがあります。</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for @user, url: '/signup' do |f| %>
   <div class="field">
     <%= f.label :user_family_name, '氏' %><br>
