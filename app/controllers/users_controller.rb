@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     end
     @user.user_status = 2
     @user.save!
-    # TODO : report for admins
+    @user.request_for_admin_approval
   rescue
     @error = 'fatal'
     # TODO : report for admins

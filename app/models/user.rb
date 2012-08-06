@@ -58,4 +58,10 @@ class User < ActiveRecord::Base
     UserMailer.confirm_signup(self).deliver
   end
 
+  def request_for_admin_approval
+    User.where(user_is_admin: true).select(:user_email).each do |admin|
+      AdminMailer.notify_signup_request(admin, self).deliver
+    end
+  end
+
 end
