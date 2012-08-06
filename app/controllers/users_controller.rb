@@ -40,4 +40,12 @@ class UsersController < ApplicationController
     render
   end
 
+  # GET /users/index
+  def index
+    @admins = User.where(user_is_admin: true)
+    @status1 = User.where(user_is_admin: false, user_status: 1)
+    @status2 = User.where(user_is_admin: false, user_status: 2)
+    @status3 = User.where(user_is_admin: false, user_status: 3)
+    @status0 = User.where(user_is_admin: false, user_status: 0)
+  end
 end
