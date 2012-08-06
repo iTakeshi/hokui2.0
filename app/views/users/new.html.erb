@@ -1,11 +1,13 @@
 <h1>Sign Up!</h1>
 
 <% if @user.errors.any? %>
+  <% messages = @user.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
+  <% messages.delete("Password doesn't match confirmation") %>
   <div id="error_explanation">
-    <h2><%= @user.errors.count %>個の項目にエラーがあります。</h2>
+    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
     <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+      <% messages.each do |msg| %>
+        <li><%= slice_error_message(msg) %></li>
       <% end %>
     </ul>
   </div>
@@ -13,17 +15,17 @@
 
 <%= form_for @user, url: '/signup' do |f| %>
   <div class="field">
-    <%= f.label :user_family_name, '氏' %><br>
+    <%= f.label :user_family_name, '氏' %> (15文字以内)<br>
     <%= f.text_field :user_family_name %>
   </div>
 
   <div class="field">
-    <%= f.label :user_given_name, '名' %><br>
+    <%= f.label :user_given_name, '名' %> (15文字以内)<br>
     <%= f.text_field :user_given_name %>
   </div>
 
   <div class="field">
-    <%= f.label :user_handle_name, 'ニックネーム' %><br>
+    <%= f.label :user_handle_name, 'ニックネーム' %> (3文字以上10文字以内)<br>
     <%= f.text_field :user_handle_name %>
   </div>
 
@@ -39,17 +41,17 @@
   </div>
 
   <div class="field">
-    <%= f.label :user_email_sub, '携帯メールアドレス（任意）' %><br>
+    <%= f.label :user_email_sub, '携帯メールアドレス' %> (任意)<br>
     <%= f.text_field :user_email_sub %>
   </div>
 
   <div class="field">
-    <%= f.label :password, 'パスワード' %><br>
+    <%= f.label :password, 'パスワード' %> (5字以上)<br>
     <%= f.password_field :password %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation, 'パスワード（確認）' %><br>
+    <%= f.label :password_confirmation, 'パスワード' %> (確認)<br>
     <%= f.password_field :password_confirmation %>
   </div>
 

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class User < ActiveRecord::Base
   has_secure_password
   attr_accessible :user_family_name, :user_given_name, :user_handle_name,
@@ -5,28 +7,28 @@ class User < ActiveRecord::Base
                   :password, :password_confirmation
 
   validates :user_family_name,
-    presence: true,
-    length: { maximum: 15, allow_blank: true }
+    presence: { message: '氏を入力してください。' },
+    length: { maximum: 15, allow_blank: true, message: '氏は15字以内で入力してください。' }
 
   validates :user_given_name,
-    presence: true,
-    length: { maximum: 15, allow_blank: true }
+    presence: { message: '名を入力してください。' },
+    length: { maximum: 15, allow_blank: true, message: '名は15字以内で入力してください。' }
 
   validates :user_handle_name,
-    presence: true,
-    length: { minimum: 3, maximum: 10, allow_blank: true }
+    presence: { message: 'ニックネームを入力してください。' },
+    length: { minimum: 3, maximum: 10, allow_blank: true, message: 'ニックネームは3字以上、10字以内で入力してください。' }
 
   validates :user_birthday,
-    presence: true
+    presence: { message: '生年月日を入力してください。' }
 
   validates :user_email,
-    presence: true,
-    uniqueness: { allow_blank: true },
-    format: { with: /^[0-9a-zA-Z_\-\.\+]{,50}@(ec|med)\.hokudai\.ac\.jp$/, allow_blank: true }
+    presence: { message: 'ELMSメールアドレスを入力してください。' },
+    uniqueness: { allow_blank: true, message: 'すでに同じELMSメールアドレスを利用しているユーザーが存在します。' },
+    format: { with: /^[0-9a-zA-Z_\-\.\+]{,50}@(ec|med)\.hokudai\.ac\.jp$/, allow_blank: true, message: 'ELMSメールアドレスの形式が不正です。' }
 
   validates :user_email_sub,
-    uniqueness: { allow_blank: true },
-    format: { with: /^[0-9a-zA-Z_\-\.\+]{,50}@[0-9a-zA-Z_\-\.]+$/, allow_blank: true }
+    uniqueness: { allow_blank: true, message: 'すでに同じ携帯メールアドレスを利用しているユーザーが存在します。' },
+    format: { with: /^[0-9a-zA-Z_\-\.\+]{,50}@[0-9a-zA-Z_\-\.]+$/, allow_blank: true, message: '携帯メールアドレスの形式が不正です。' }
 
   validates :user_is_admin,
     inclusion: { in: [true, false] }
@@ -42,9 +44,9 @@ class User < ActiveRecord::Base
     uniqueness: { allow_blank: true }
 
   validates :password,
-    presence: true,
-    length: { minimum: 5 },
-    confirmation: true
+    presence: { message: 'パスワードを入力してください。' },
+    length: { minimum: 5, allow_blank: true, message: 'パスワードは5文字以上で設定してください。' },
+    confirmation: { message: 'パスワードの確認が一致しません' }
 
   def generate_user_auth_token
     begin
