@@ -2,6 +2,8 @@ Hokui::Application.routes.draw do
   get  '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
+  get '/users/confirm/:user_auth_token', to: 'users#confirm_email'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

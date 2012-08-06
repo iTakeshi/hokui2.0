@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     uniqueness: { allow_blank: true }
 
   validates :password,
-    presence: { message: 'パスワードを入力してください。' },
+    presence: { if: 'password_digest.blank?', message: 'パスワードを入力してください。' },
     length: { minimum: 5, allow_blank: true, message: 'パスワードは5文字以上で設定してください。' },
     confirmation: { message: 'パスワードの確認が一致しません' }
 
