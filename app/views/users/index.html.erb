@@ -3,6 +3,7 @@
 <h2>管理者</h2>
 <table class="user_table">
   <tr>
+    <th>ID</th>
     <th>氏名</th>
     <th>ニックネーム</th>
     <th>生年月日</th>
@@ -12,6 +13,7 @@
   </tr>
   <% @admins.each do |user| %>
     <tr>
+      <td><%= user.id %></td>
       <td><%= user.user_family_name %> <%= user.user_given_name %></td>
       <td><%= user.user_handle_name %></td>
       <td><%= user.user_birthday.to_s %></td>
@@ -25,6 +27,7 @@
 <h2>承認待ちユーザー</h2>
 <table class="user_table">
   <tr>
+    <th>ID</th>
     <th>氏名</th>
     <th>ニックネーム</th>
     <th>生年月日</th>
@@ -34,6 +37,7 @@
   </tr>
   <% @status2.each do |user| %>
     <tr>
+      <td><%= user.id %></td>
       <td><%= user.user_family_name %> <%= user.user_given_name %></td>
       <td><%= user.user_handle_name %></td>
       <td><%= user.user_birthday.to_s %></td>
@@ -47,6 +51,7 @@
 <h2>一般ユーザー</h2>
 <table class="user_table">
   <tr>
+    <th>ID</th>
     <th>氏名</th>
     <th>ニックネーム</th>
     <th>生年月日</th>
@@ -56,6 +61,7 @@
   </tr>
   <% @status0.each do |user| %>
     <tr>
+      <td><%= user.id %></td>
       <td><%= user.user_family_name %> <%= user.user_given_name %></td>
       <td><%= user.user_handle_name %></td>
       <td><%= user.user_birthday.to_s %></td>
@@ -69,6 +75,7 @@
 <h2>パスワード再設定処理中のユーザー</h2>
 <table class="user_table">
   <tr>
+    <th>ID</th>
     <th>氏名</th>
     <th>ニックネーム</th>
     <th>生年月日</th>
@@ -78,6 +85,7 @@
   </tr>
   <% @status3.each do |user| %>
     <tr>
+      <td><%= user.id %></td>
       <td><%= user.user_family_name %> <%= user.user_given_name %></td>
       <td><%= user.user_handle_name %></td>
       <td><%= user.user_birthday.to_s %></td>
@@ -92,6 +100,7 @@
 メールアドレス確認手続きを完了していないので、承認することはできません。
 <table class="user_table">
   <tr>
+    <th>ID</th>
     <th>氏名</th>
     <th>ニックネーム</th>
     <th>生年月日</th>
@@ -101,6 +110,7 @@
   </tr>
   <% @status1.each do |user| %>
     <tr>
+      <td><%= user.id %></td>
       <td><%= user.user_family_name %> <%= user.user_given_name %></td>
       <td><%= user.user_handle_name %></td>
       <td><%= user.user_birthday.to_s %></td>
