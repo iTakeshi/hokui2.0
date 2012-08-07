@@ -64,4 +64,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def send_approval_notification
+    UserMailer.notify_approved(self).deliver
+  end
+
+  def send_rejection_notification
+    UserMailer.notify_rejected(self).deliver
+  end
+
 end

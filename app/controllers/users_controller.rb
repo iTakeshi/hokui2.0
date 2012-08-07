@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     raise unless user.user_status == 2
     user.user_status = 0
     user.save!
-    # TODO : notify for user
+    user.send_approval_notification
     render json: { status: :success }
   rescue
     render json: { status: :error }
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     raise unless user.user_status == 2
     user.delete
-    # TODO : notify for user
+    user.send_rejection_notification
     render json: { status: :success }
   rescue
     render json: { status: :error }
