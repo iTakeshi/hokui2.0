@@ -1,4 +1,5 @@
 Hokui::Application.routes.draw do
+
   get  '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
@@ -6,6 +7,12 @@ Hokui::Application.routes.draw do
   get '/users/index', to: 'users#index'
   get '/users/approve/:id', to: 'users#approve'
   get '/users/reject/:id', to: 'users#reject'
+
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+
+  # temp root
+  root to: 'users#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
