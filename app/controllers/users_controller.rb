@@ -48,4 +48,27 @@ class UsersController < ApplicationController
     @status3 = User.where(user_is_admin: false, user_status: 3)
     @status0 = User.where(user_is_admin: false, user_status: 0)
   end
+
+  # GET /users/approve/:id
+  def approve
+    user = User.find(params[:id])
+    raise unless user.user_status == 2
+    user.user_status = 0
+    user.save!
+    # TODO : notify for user
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
+
+  # GET /users/reject/:id
+  def reject
+    user = User.find(params[:id])
+    raise unless user.user_status == 2
+    user.delete
+    # TODO : notify for user
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
 end

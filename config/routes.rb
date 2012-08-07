@@ -4,6 +4,8 @@ Hokui::Application.routes.draw do
 
   get '/users/confirm/:user_auth_token', to: 'users#confirm_email'
   get '/users/index', to: 'users#index'
+  get '/users/approve/:id', to: 'users#approve'
+  get '/users/reject/:id', to: 'users#reject'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

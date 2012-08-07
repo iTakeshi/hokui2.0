@@ -46,8 +46,8 @@
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
       <td>
-        <button class="approve_user" id="user_id_<%= user.id %>">承認</button>
-        <button class="reject_user" id="user_id_<%= user.id %>">拒否</button>
+        <button class="approve_user" data-user-id="<%= user.id %>">承認</button>
+        <button class="reject_user" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
       </td>
     </tr>
   <%end %>
