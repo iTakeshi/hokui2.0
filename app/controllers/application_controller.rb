@@ -20,6 +20,7 @@ private
     unless current_user.user_is_admin
       respond_to do |format|
         format.html { render status: 403, file: "#{Rails.root}/public/403.html" }
+        format.json { render json: { status: :forbidden } }
       end
     end
   end

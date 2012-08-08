@@ -15,6 +15,8 @@ $ ->
                 if res.status == 'success'
                     $tr.children('td').last().remove()
                     $tr.appendTo('#status0')
+                else if res.status == 'forbidden'
+                    jAlert('この操作は管理者にしか認められていません。')
                 else
                     jAlert('予期しないエラーが発生しました。\nこの操作はすでに完了している可能性があります。\nページを再読み込みしてください。')
             error: (res) ->
@@ -34,6 +36,8 @@ $ ->
                     success: (res) ->
                         if res.status == 'success'
                             $tr.remove()
+                        else if res.status == 'forbidden'
+                            jAlert('この操作は管理者にしか認められていません。')
                         else
                             jAlert('予期しないエラーが発生しました。\nこの操作はすでに完了している可能性があります。\nページを再読み込みしてください。')
                     error: (res) ->
