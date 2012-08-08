@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password, :set_new_password, :create_new_password]
+  before_filter :authorize_as_admin, only: [:index, :approve, :reject]
 
   # GET /signup
   def new

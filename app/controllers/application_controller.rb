@@ -19,7 +19,7 @@ private
   def authorize_as_admin
     unless current_user.user_is_admin
       respond_to do |format|
-        format.html render status: :forbidden
+        format.html { render status: 403, file: "#{Rails.root}/public/403.html" }
       end
     end
   end
