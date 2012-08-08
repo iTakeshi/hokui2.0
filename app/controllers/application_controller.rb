@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 private
   def authorize_as_user
     redirect_to '/login' unless current_user
+    if cookies[:remember_me] == 'true'
+      request.session_options[:expire_after] = 86400 * 30
+    end
   end
 
   def current_user

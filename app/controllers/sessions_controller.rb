@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       session[:user_auth_token] = user.user_auth_token
       if params[:remember_me]
         cookies.permanent[:remember_me] = true
-        request.session_options[:expire_after] = 1.month.from_now
+        request.session_options[:expire_after] = 86400 * 30
       else
         cookies.permanent[:remember_me] = false
       end
