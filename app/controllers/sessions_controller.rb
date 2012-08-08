@@ -9,7 +9,13 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by_user_email(params[:user_email])
     if user && user.authenticate(params[:password])
-      cookies.permanent[:user_auth_token] = user.user_auth_token
+      session[:user_auth_token] = user.user_auth_token
+      if params[:remember_me]
+        cookies.permanent[:remember_me] = true
+        request.session_options[:expire_after] = 1.month.from_now
+      else
+        cookies.permanent[:remember_me] = false
+      end
       flash[:info] = 'ログインに成功しました！'
       redirect_to root_url
     else
