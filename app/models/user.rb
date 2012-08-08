@@ -54,6 +54,13 @@ class User < ActiveRecord::Base
     end while User.exists?(user_auth_token: self.user_auth_token)
   end
 
+  def generate_user_secret_token
+    begin
+      self.user_secret_token = SecureRandom.urlsafe_base64(20)
+    end while User.exists?(user_secret_token: self.user_secret_token)
+    self.user_secret_token_expiration_time = Time.now + 86400
+  end
+
   def send_signup_confirmation_mail
     UserMailer.confirm_signup(self).deliver
   end
@@ -70,6 +77,13 @@ class User < ActiveRecord::Base
 
   def send_rejection_notification
     UserMailer.notify_rejected(self).deliver
+  end
+
+  def reset_password
+    self.user_status = 3
+    self.generate_user_secret_token
+    self.save!
+    UserMailer.notify_resetting_password(self).deliver
   end
 
 end

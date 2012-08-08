@@ -14,7 +14,12 @@ class UserMailer < ActionMailer::Base
   end
 
   def notify_rejected(user)
-    @user =user
+    @user = user
     mail to: @user.user_email, subject: '北医ネット：登録申請が拒否されました'
+  end
+
+  def notify_resetting_password(user)
+    @user = user
+    mail to: @user.user_email, subject: '北医ネット：パスワードを再設定します'
   end
 end

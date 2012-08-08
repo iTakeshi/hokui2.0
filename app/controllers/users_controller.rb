@@ -83,7 +83,7 @@ class UsersController < ApplicationController
     @dummy_user = User.new(params[:user])
     user = User.find_by_user_email(@dummy_user.user_email)
     if user && user.user_birthday == @dummy_user.user_birthday
-      # TODO : notify for user
+      user.reset_password
       render
     else
       flash.now[:error] = 'メールアドレスまたは生年月日、あるいはその両方が不正です。'
