@@ -75,9 +75,19 @@ class UsersController < ApplicationController
 
   # GET /reset_password
   def forget_password
+    @dummy_user = User.new
   end
 
   # POST /reset_password
   def reset_password
+    @dummy_user = User.new(params[:user])
+    user = User.find_by_user_email(@dummy_user.user_email)
+    if user && user.user_birthday == @dummy_user.user_birthday
+      # TODO : notify for user
+      render
+    else
+      flash.now[:error] = 'メールアドレスまたは生年月日、あるいはその両方が不正です。'
+      render action: :forget_password
+    end
   end
 end
