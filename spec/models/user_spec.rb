@@ -258,28 +258,9 @@ describe User do
 
     context "without :password" do
       it "should not be valid" do
-        user = User.new(
-          user_family_name:      '山田',
-          user_given_name:       '一郎',
-          user_handle_name:      'iYamada',
-          user_birthday:         '1991-05-27',
-          user_email:            'sample_email@ec.hokudai.ac.jp',
-          user_email_sub:        'sample.email-sub+ip512@hoge.fuga',
-        )
-        user.user_is_admin = true
-        user.user_status = 1
-        user.user_auth_token = SecureRandom.urlsafe_base64(20)
-        user.user_secret_token = SecureRandom.urlsafe_base64(20)
-        user.user_secret_token_expiration_time = Time.now + 60*60*2
-        user.should_not be_valid
-      end
-    end
-
-    context "already has :password_digest, without :password" do
-      it "should be valid" do
         @user.password = nil
         @user.password_confirmation = nil
-        @user.should be_valid
+        @user.should_not be_valid
       end
     end
 

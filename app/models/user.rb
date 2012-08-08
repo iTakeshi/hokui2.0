@@ -44,9 +44,9 @@ class User < ActiveRecord::Base
     uniqueness: { allow_blank: true }
 
   validates :password,
-    presence: { if: 'password_digest.blank?', message: 'パスワードを入力してください。' },
-    length: { minimum: 5, allow_blank: true, message: 'パスワードは5文字以上で設定してください。' },
-    confirmation: { message: 'パスワードの確認が一致しません' }
+    presence: { on: :create, message: 'パスワードを入力してください。' },
+    length: { on: :create, minimum: 5, allow_blank: true, message: 'パスワードは5文字以上で設定してください。' },
+    confirmation: { on: :create, message: 'パスワードの確認が一致しません' }
 
   def generate_user_auth_token
     begin
