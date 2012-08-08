@@ -16,6 +16,14 @@ private
     end
   end
 
+  def authorize_as_admin
+    unless current_user.user_is_admin
+      respond_to do |format|
+        format.html render status: :forbidden
+      end
+    end
+  end
+
   def classify_user_status(user)
     if user.user_status == 1
       flash[:error] = 'ELMSメールアドレスの確認が完了していません。ELMS受信BOXを確認してください。'
