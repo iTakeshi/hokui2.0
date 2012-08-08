@@ -1,6 +1,8 @@
 # coding: utf-8
 
 class SessionsController < ApplicationController
+  skip_before_filter :authorize_as_user, only: [:new, :create]
+
   # GET /login
   def new
   end

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class UsersController < ApplicationController
+  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email]
 
   # GET /signup
   def new
