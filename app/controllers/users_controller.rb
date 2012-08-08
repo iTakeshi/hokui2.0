@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class UsersController < ApplicationController
-  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password]
+  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password, :set_new_password]
 
   # GET /signup
   def new
@@ -90,4 +90,23 @@ class UsersController < ApplicationController
       render action: :forget_password
     end
   end
+
+  def set_new_password
+    user = User.find_by_user_auth_token(params[:user_auth_token])
+    if user && user.user_secret_token == params[:user_secret_token]
+      if user.user_status == 3
+        if user.user_secret_token_expiration_time > Time.now
+          @error = nil
+        else
+          @error = 'timeout'
+        end
+      else
+        @error = 'bad_status'
+      end
+    else
+      @error = 'fatal'
+      # TODO : notify for admin
+    end
+  end
+
 end
