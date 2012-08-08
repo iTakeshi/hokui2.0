@@ -10,6 +10,7 @@ Hokui::Application.routes.draw do
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
+  get '/logout', to: 'sessions#delete'
 
   # temp root
   root to: 'users#index'
