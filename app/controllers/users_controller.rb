@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class UsersController < ApplicationController
-  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email]
+  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password]
 
   # GET /signup
   def new
@@ -71,5 +71,13 @@ class UsersController < ApplicationController
     render json: { status: :success }
   rescue
     render json: { status: :error }
+  end
+
+  # GET /reset_password
+  def forget_password
+  end
+
+  # POST /reset_password
+  def reset_password
   end
 end

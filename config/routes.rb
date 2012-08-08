@@ -12,6 +12,9 @@ Hokui::Application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#delete'
 
+  get '/reset_password', to: 'users#forget_password'
+  post '/reset_password', to: 'users#reset_password'
+
   # temp root
   root to: 'users#index'
 
