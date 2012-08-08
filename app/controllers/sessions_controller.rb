@@ -19,7 +19,13 @@ class SessionsController < ApplicationController
         cookies.permanent[:remember_me] = false
       end
       flash[:info] = 'ログインに成功しました！'
-      redirect_to root_url
+      if session[:requested_url]
+        temp_url = session[:requested_url]
+        session[:requested_url] = nil
+        redirect_to temp_url
+      else
+        redirect_to root_url
+      end
     else
       flash.now[:error] = 'メールアドレスまたはパスワード、あるいはその両方が不正です。'
       render action: :new
