@@ -16,7 +16,7 @@ $ ->
                     $tr.children('td').last().remove()
                     $tr.appendTo('#status0')
                 else
-                    jAlert('予期しないエラーが発生しました。')
+                    jAlert('予期しないエラーが発生しました。\nこの操作はすでに完了している可能性があります。\nページを再読み込みしてください。')
             error: (res) ->
                 jAlert('通信に失敗しました。')
 
@@ -35,6 +35,6 @@ $ ->
                         if res.status == 'success'
                             $tr.remove()
                         else
-                            jAlert('予期しないエラーが発生しました。')
+                            jAlert('予期しないエラーが発生しました。\nこの操作はすでに完了している可能性があります。\nページを再読み込みしてください。')
                     error: (res) ->
                         jAlert('通信に失敗しました。')
