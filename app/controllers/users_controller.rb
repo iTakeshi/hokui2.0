@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class UsersController < ApplicationController
-  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password, :set_new_password]
+  skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password, :set_new_password, :create_new_password]
 
   # GET /signup
   def new
@@ -91,12 +91,14 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /set_new_password/:user_auth_token/:user_secret_token
   def set_new_password
     user = User.find_by_user_auth_token(params[:user_auth_token])
     if user && user.user_secret_token == params[:user_secret_token]
       if user.user_status == 3
         if user.user_secret_token_expiration_time > Time.now
           @error = nil
+          @user_auth_token = user.user_auth_token
         else
           @error = 'timeout'
         end
@@ -106,6 +108,30 @@ class UsersController < ApplicationController
     else
       @error = 'fatal'
       # TODO : notify for admin
+    end
+  end
+
+  # POST /set_new_password/:user_auth_token
+  def create_new_password
+    user = User.find_by_user_auth_token(params[:user_auth_token])
+    @user_auth_token = user.user_auth_token
+    raise if user.user_status != 3
+    if params[:password].length >= 5
+      if params[:password] == params[:password_confirmation]
+        user.password = params[:password]
+        user.user_secret_token = nil
+        user.user_secret_token_expiration_time = nil
+        user.user_status = 0
+        user.save!
+        flash.now[:info] = 'パスワードを再設定しました。'
+        redirect_to '/login'
+      else
+        flash.now[:error] = 'パスワードの確認が一致しません。'
+        render action: :set_new_password
+      end
+    else
+      flash.now[:error] = 'パスワードは5文字以上で設定してください。'
+      render action: :set_new_password
     end
   end
 
