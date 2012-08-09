@@ -17,6 +17,8 @@ Hokui::Application.routes.draw do
   get '/set_new_password/:user_auth_token/:user_secret_token', to: 'users#set_new_password'
   post '/set_new_password/:user_auth_token', to: 'users#create_new_password'
 
+  get '/edit_profile', to: 'users#edit'
+
   # temp root
   root to: 'users#index'
 

@@ -136,4 +136,9 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /edit_profile
+  def edit
+    @user = current_user
+  end
+
 end

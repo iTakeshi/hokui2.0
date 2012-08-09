@@ -1,0 +1,28 @@
+<h1>プロフィールを編集</h1>
+
+<h2>これらの項目は変更できません。</h2>
+<dl>
+  <dt>氏名</dt><dd><%= @user.user_family_name %> <%= @user.user_given_name %></dd>
+  <dt>生年月日</dt><dd><%= @user.user_birthday %></dd>
+  <dt>ELMSメールアドレス</dt><dd><%= @user.user_email %></dd>
+</dl>
+
+<h2>編集できる項目</h2>
+<%= form_for @user, url: 'edit_profile' do |f| %>
+  <div class="field">
+    <%= f.label :user_handle_name, 'ニックネーム' %> (3文字以上10文字以内)<br>
+    <%= f.text_field :user_handle_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_email_sub, '携帯メールアドレス' %> (任意)<br>
+    <%= f.text_field :user_email_sub %>
+  </div>
+
+  <div class="action">
+    <%= f.submit '送信' %>
+  </div>
+
+<% end %>
+
+パスワードの変更はこちらから
