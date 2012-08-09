@@ -141,4 +141,17 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  # PUT /edit_profile
+  def update
+    @user = current_user
+    @user.user_handle_name = params[:user][:user_handle_name]
+    @user.user_email_sub = params[:user][:user_email_sub]
+    if @user.save
+      flash[:info] = 'プロフィールを変更しました！'
+      redirect_to action: :edit
+    else
+      render action: :edit
+    end
+  end
+
 end
