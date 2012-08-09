@@ -148,9 +148,37 @@ class UsersController < ApplicationController
     @user.user_email_sub = params[:user][:user_email_sub]
     if @user.save
       flash[:info] = 'プロフィールを変更しました！'
-      redirect_to action: :edit
+      redirect_to '/edit_profile'
     else
       render action: :edit
+    end
+  end
+
+  # GET /edit_password
+  def edit_password
+  end
+
+  # POST /edit_password
+  def update_password
+    user = current_user
+    if user.authenticate(params[:current_password])
+      if params[:password] == params[:password_confirmation]
+        if params[:password].length >= 5
+          user.password = params[:password]
+          user.save!
+          flash[:info] = 'パスワードを変更しました。'
+          redirect_to '/edit_profile'
+        else
+          flash.now[:error] = 'パスワードは5文字以上で設定してください。'
+          render action: :edit_password
+        end
+      else
+        flash.now[:error] = 'パスワードの確認が一致しません。'
+        render action: :edit_password
+      end
+    else
+      flash.now[:error] = '現在のパスワードが不正です。'
+      render action: :edit_password
     end
   end
 

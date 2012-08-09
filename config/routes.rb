@@ -19,6 +19,8 @@ Hokui::Application.routes.draw do
 
   get '/edit_profile', to: 'users#edit'
   put '/edit_profile', to: 'users#update'
+  get '/edit_password', to: 'users#edit_password'
+  post '/edit_password', to: 'users#update_password'
 
   # temp root
   root to: 'users#index'
