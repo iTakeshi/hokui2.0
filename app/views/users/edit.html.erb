@@ -1,0 +1,42 @@
+<h1>プロフィールを編集</h1>
+
+<h2>これらの項目は変更できません。</h2>
+<dl>
+  <dt>氏名</dt><dd><%= @user.user_family_name %> <%= @user.user_given_name %></dd>
+  <dt>生年月日</dt><dd><%= @user.user_birthday %></dd>
+  <dt>ELMSメールアドレス</dt><dd><%= @user.user_email %></dd>
+</dl>
+
+<h2>編集できる項目</h2>
+
+<% if @user.errors.any? %>
+  <% messages = @user.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
+  <% messages.delete("Password doesn't match confirmation") %>
+  <div id="error_explanation">
+    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
+    <ul>
+      <% messages.each do |msg| %>
+        <li><%= slice_error_message(msg) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @user, url: 'edit_profile' do |f| %>
+  <div class="field">
+    <%= f.label :user_handle_name, 'ニックネーム' %> (3文字以上10文字以内)<br>
+    <%= f.text_field :user_handle_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_email_sub, '携帯メールアドレス' %> (任意)<br>
+    <%= f.text_field :user_email_sub %>
+  </div>
+
+  <div class="action">
+    <%= f.submit '送信' %>
+  </div>
+
+<% end %>
+
+<%= link_to 'パスワードの変更はこちらから', '/edit_password' %>

@@ -12,6 +12,8 @@ group :development, :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'pry-rails'
+  gem 'simplecov', :require => false
+  gem 'spork'
 end
 
 group :production do
@@ -32,6 +34,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

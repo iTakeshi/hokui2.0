@@ -1,0 +1,29 @@
+<h1>Login</h1>
+
+<%= form_tag url: '/login' do %>
+  <div class="field">
+    <%= label_tag :user_email, 'ELMSメールアドレス' %><br>
+    <%= text_field_tag :user_email %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :password, 'パスワード' %><br>
+    <%= password_field_tag %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :remember_me, 'ログイン状態を保持' %><br>
+    <%= check_box_tag :remember_me %>
+  </div>
+
+  <div class="action">
+    <%= submit_tag 'GO!' %>
+  </div>
+<% end %>
+
+<div>
+  <%= link_to 'パスワードをお忘れですか？', '/reset_password' %>
+</div>
+
+<div>
+  <%= link_to '北医ネットを利用するにはユーザー登録が必要です。', '/signup' %>

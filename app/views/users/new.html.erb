@@ -1,0 +1,62 @@
+<h1>Sign Up!</h1>
+
+<% if @user.errors.any? %>
+  <% messages = @user.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
+  <% messages.delete("Password doesn't match confirmation") %>
+  <div id="error_explanation">
+    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
+    <ul>
+      <% messages.each do |msg| %>
+        <li><%= slice_error_message(msg) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @user, url: '/signup' do |f| %>
+  <div class="field">
+    <%= f.label :user_family_name, '氏' %> (15文字以内)<br>
+    <%= f.text_field :user_family_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_given_name, '名' %> (15文字以内)<br>
+    <%= f.text_field :user_given_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_handle_name, 'ニックネーム' %> (3文字以上10文字以内)<br>
+    <%= f.text_field :user_handle_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_birthday, '生年月日' %><br>
+    <%= f.date_select :user_birthday, start_year: 1980, end_year: 2000, use_month_numbers: true,
+                                      prompt: { day: '日', month: '月', year: '年' } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_email, 'ELMSメールアドレス' %><br>
+    <%= f.text_field :user_email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_email_sub, '携帯メールアドレス' %> (任意)<br>
+    <%= f.text_field :user_email_sub %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, 'パスワード' %> (5字以上)<br>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, 'パスワード' %> (確認)<br>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div class="action">
+    <%= f.submit '登録' %>
+  </div>
+
+<% end %>

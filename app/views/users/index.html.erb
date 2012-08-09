@@ -1,0 +1,127 @@
+<h1>ユーザー管理</h1>
+
+<h2>管理者</h2>
+<table class="user_table" id="admins">
+  <tr>
+    <th>ID</th>
+    <th>氏名</th>
+    <th>ニックネーム</th>
+    <th>生年月日</th>
+    <th>ELMSメール</th>
+    <th>携帯メール</th>
+    <th>登録日</th>
+  </tr>
+  <% @admins.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.user_family_name %> <%= user.user_given_name %></td>
+      <td><%= user.user_handle_name %></td>
+      <td><%= user.user_birthday.to_s %></td>
+      <td><%= user.user_email %></td>
+      <td><%= user.user_email_sub %></td>
+      <td><%= user.created_at.to_date.to_s %></td>
+    </tr>
+  <%end %>
+</table>
+
+<h2>承認待ちユーザー</h2>
+<table class="user_table" id="status2">
+  <tr>
+    <th>ID</th>
+    <th>氏名</th>
+    <th>ニックネーム</th>
+    <th>生年月日</th>
+    <th>ELMSメール</th>
+    <th>携帯メール</th>
+    <th>登録日</th>
+    <th>承認/拒否</th>
+  </tr>
+  <% @status2.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.user_family_name %> <%= user.user_given_name %></td>
+      <td><%= user.user_handle_name %></td>
+      <td><%= user.user_birthday.to_s %></td>
+      <td><%= user.user_email %></td>
+      <td><%= user.user_email_sub %></td>
+      <td><%= user.created_at.to_date.to_s %></td>
+      <td>
+        <button class="approve_user" data-user-id="<%= user.id %>">承認</button>
+        <button class="reject_user" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
+      </td>
+    </tr>
+  <%end %>
+</table>
+
+<h2>一般ユーザー</h2>
+<table class="user_table" id="status0">
+  <tr>
+    <th>ID</th>
+    <th>氏名</th>
+    <th>ニックネーム</th>
+    <th>生年月日</th>
+    <th>ELMSメール</th>
+    <th>携帯メール</th>
+    <th>登録日</th>
+  </tr>
+  <% @status0.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.user_family_name %> <%= user.user_given_name %></td>
+      <td><%= user.user_handle_name %></td>
+      <td><%= user.user_birthday.to_s %></td>
+      <td><%= user.user_email %></td>
+      <td><%= user.user_email_sub %></td>
+      <td><%= user.created_at.to_date.to_s %></td>
+    </tr>
+  <%end %>
+</table>
+
+<h2>パスワード再設定処理中のユーザー</h2>
+<table class="user_table" id="status3">
+  <tr>
+    <th>ID</th>
+    <th>氏名</th>
+    <th>ニックネーム</th>
+    <th>生年月日</th>
+    <th>ELMSメール</th>
+    <th>携帯メール</th>
+    <th>登録日</th>
+  </tr>
+  <% @status3.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.user_family_name %> <%= user.user_given_name %></td>
+      <td><%= user.user_handle_name %></td>
+      <td><%= user.user_birthday.to_s %></td>
+      <td><%= user.user_email %></td>
+      <td><%= user.user_email_sub %></td>
+      <td><%= user.created_at.to_date.to_s %></td>
+    </tr>
+  <%end %>
+</table>
+
+<h2>新規登録ユーザー</h2>
+メールアドレス確認手続きを完了していないので、承認することはできません。
+<table class="user_table" id="status1">
+  <tr>
+    <th>ID</th>
+    <th>氏名</th>
+    <th>ニックネーム</th>
+    <th>生年月日</th>
+    <th>ELMSメール</th>
+    <th>携帯メール</th>
+    <th>登録日</th>
+  </tr>
+  <% @status1.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.user_family_name %> <%= user.user_given_name %></td>
+      <td><%= user.user_handle_name %></td>
+      <td><%= user.user_birthday.to_s %></td>
+      <td><%= user.user_email %></td>
+      <td><%= user.user_email_sub %></td>
+      <td><%= user.created_at.to_date.to_s %></td>
+    </tr>
+  <%end %>
+</table>

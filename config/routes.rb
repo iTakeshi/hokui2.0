@@ -1,4 +1,30 @@
 Hokui::Application.routes.draw do
+
+  get  '/signup', to: 'users#new'
+  post '/signup', to: 'users#create'
+
+  get '/users/confirm/:user_auth_token', to: 'users#confirm_email'
+  get '/users/index', to: 'users#index'
+  get '/users/approve/:id', to: 'users#approve'
+  get '/users/reject/:id', to: 'users#reject'
+
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  get '/logout', to: 'sessions#delete'
+
+  get '/reset_password', to: 'users#forget_password'
+  post '/reset_password', to: 'users#reset_password'
+  get '/set_new_password/:user_auth_token/:user_secret_token', to: 'users#set_new_password'
+  post '/set_new_password/:user_auth_token', to: 'users#create_new_password'
+
+  get '/edit_profile', to: 'users#edit'
+  put '/edit_profile', to: 'users#update'
+  get '/edit_password', to: 'users#edit_password'
+  post '/edit_password', to: 'users#update_password'
+
+  # temp root
+  root to: 'users#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
