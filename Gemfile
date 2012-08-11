@@ -52,3 +52,4 @@ gem 'capistrano'
 # gem 'debugger'
 
 gem 'rmagick', require: 'RMagick'
+gem 'colorbox-rails'
