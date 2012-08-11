@@ -83,13 +83,6 @@ describe Term do
       end
     end
 
-    context "without :term_timetable_img_content_type" do
-      it "should not be valid" do
-        @term.term_timetable_img_content_type = nil
-        @term.should_not be_valid
-      end
-    end
-
     context ":term_timetable_img has invalid content_type" do
       it "should not be valid" do
         @term.term_timetable_img_content_type = "application/pdf"

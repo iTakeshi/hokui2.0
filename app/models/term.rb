@@ -14,7 +14,6 @@ class Term < ActiveRecord::Base
     presence: { message: "時間割表をアップロードしてください。" }
 
   validates :term_timetable_img_content_type,
-    presence: true,
     format: { allow_blank: true, with: /^image\/(jpeg|png|gif|tiff)$/, message: "画像ファイルの形式が不正です。" }
 
   def set_term_name
