@@ -13,7 +13,8 @@
 
 ActiveRecord::Schema.define(:version => 20120809021547) do
 
-  create_table "terms", :primary_key => "term_identifier", :force => true do |t|
+  create_table "terms", :force => true do |t|
+    t.string   "term_identifier",                 :null => false
     t.string   "term_name",                       :null => false
     t.binary   "term_timetable_img",              :null => false
     t.string   "term_timetable_img_content_type", :null => false

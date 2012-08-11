@@ -1,6 +1,6 @@
 class CreateTerms < ActiveRecord::Migration
   def change
-    create_table :terms, primary_key: :term_identifier do |t|
+    create_table :terms do |t|
       t.string :term_identifier, null: false
       t.string :term_name, null: false
       t.binary :term_timetable_img, null: false
