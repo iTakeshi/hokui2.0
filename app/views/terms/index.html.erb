@@ -13,7 +13,7 @@
       <td><%= term.term_identifier %></td>
       <td><%= term.term_name %></td>
       <td><%= mime %></td>
-      <td><%= image_tag "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}", type: mime %></td>
+      <td><%= image_tag "/terms/#{term.term_identifier}/thumb/#{term.term_name}_thumb.#{get_extension(mime)}", type: mime %></td>
     </tr>
   <% end %>
 </table>
