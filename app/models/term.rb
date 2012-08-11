@@ -24,4 +24,8 @@ class Term < ActiveRecord::Base
       self.term_name = "#{grade}年後期"
     end
   end
+
+  def self.find(term_identifier)
+    self.find_by_term_identifier(term_identifier)
+  end
 end
