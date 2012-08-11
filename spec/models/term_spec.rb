@@ -9,6 +9,7 @@ describe Term do
     term.term_identifier = '1a'
     term.set_term_name
     term.term_timetable_img = "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x01,\x01,\x00\x00\xFF\xE1\x10ZExif\x00\x00MM\x00*\x00\x00\x00\b\x00\x02\x87i\x00\x04\x00\x00\x00\x01\x00\x00"
+    term.term_timetable_thumb = "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x01,\x01,\x00\x00\xFF\xE1\x10ZExif\x00\x00MM\x00*\x00\x00\x00\b\x00\x02\x87i\x00\x04\x00\x00\x00\x01\x00\x00"
     term.term_timetable_img_content_type = "image/jpeg"
     term.save!
   end
@@ -37,6 +38,7 @@ describe Term do
       @term.term_identifier = "2a"
       @term.set_term_name
       @term.term_timetable_img = "\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x01,\x01,\x00\x00\xFF\xE1\x10ZExif\x00\x00MM\x00*\x00\x00\x00\b\x00\x02\x87i\x00\x04\x00"
+      @term.term_timetable_thumb = "\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x01,\x01,\x00\x00\xFF\xE1\x10ZExif\x00\x00MM\x00*\x00\x00\x00\b\x00\x02\x87i\x00\x04\x00"
       @term.term_timetable_img_content_type = "image/jpeg"
     end
 
@@ -79,6 +81,13 @@ describe Term do
     context "without :term_timetable_img" do
       it "should not be valid" do
         @term.term_timetable_img = nil
+        @term.should_not be_valid
+      end
+    end
+
+    context "without :term_timetable_thumb" do
+      it "should not be valid" do
+        @term.term_timetable_thumb = nil
         @term.should_not be_valid
       end
     end
