@@ -26,6 +26,7 @@ Hokui::Application.routes.draw do
   post '/terms/new', to: 'terms#create'
   get '/terms/:term_identifier/edit', to: 'terms#edit'
   post '/terms/:term_identifier/edit', to: 'terms#update'
+  get '/terms', to: 'terms#index'
 
   # temp root
   root to: 'users#index'

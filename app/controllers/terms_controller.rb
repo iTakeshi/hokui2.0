@@ -48,4 +48,9 @@ class TermsController < ApplicationController
       render action: :edit
     end
   end
+
+  # GET /terms
+  def index
+    @terms = Term.all
+  end
 end
