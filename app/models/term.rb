@@ -30,7 +30,7 @@ class Term < ActiveRecord::Base
 
   def generate_timetable_thumb
     img = Magick::Image.from_blob(self.term_timetable_img).shift
-    self.term_timetable_thumb = img.resize_to_fit(1000, 150)
+    self.term_timetable_thumb = img.resize_to_fit(1000, 100).to_blob
   end
 
   def self.find(term_identifier)
