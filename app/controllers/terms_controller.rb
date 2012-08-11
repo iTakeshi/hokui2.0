@@ -53,4 +53,10 @@ class TermsController < ApplicationController
   def index
     @terms = Term.all
   end
+
+  # GET /terms/:term_identifier/img/:file_name
+  def download_timetable_img
+    term = Term.find(params[:term_identifier])
+    send_data term.term_timetable_img, type: term.term_timetable_img_content_type, filename: params[:file_name], disposition: 'inline'
+  end
 end

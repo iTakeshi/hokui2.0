@@ -8,11 +8,12 @@
     <th>時間割表</th>
   </tr>
   <% @terms.each do |term| %>
+    <% mime = term.term_timetable_img_content_type %>
     <tr>
       <td><%= term.term_identifier %></td>
       <td><%= term.term_name %></td>
-      <td><%= term.term_timetable_img_content_type %></td>
-      <td></td>
+      <td><%= mime %></td>
+      <td><%= image_tag "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}", type: mime %></td>
     </tr>
   <% end %>
 </table>

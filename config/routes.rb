@@ -27,6 +27,7 @@ Hokui::Application.routes.draw do
   get '/terms/:term_identifier/edit', to: 'terms#edit'
   post '/terms/:term_identifier/edit', to: 'terms#update'
   get '/terms', to: 'terms#index'
+  get '/terms/:term_identifier/img/:file_name', to: 'terms#download_timetable_img'
 
   # temp root
   root to: 'users#index'
