@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class TermsController < ApplicationController
+  before_filter :authorize_as_admin
 
   # GET /terms/new
   def new
