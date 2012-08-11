@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20120809021547) do
     t.string   "term_identifier",                 :null => false
     t.string   "term_name",                       :null => false
     t.binary   "term_timetable_img",              :null => false
+    t.binary   "term_timetable_thumb",            :null => false
     t.string   "term_timetable_img_content_type", :null => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
