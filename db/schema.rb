@@ -13,13 +13,15 @@
 
 ActiveRecord::Schema.define(:version => 20120809021547) do
 
-  create_table "terms", :force => true do |t|
-    t.string   "term_name",          :null => false
-    t.binary   "term_timetable_img", :null => false
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+  create_table "terms", :primary_key => "term_identifier", :force => true do |t|
+    t.string   "term_name",                       :null => false
+    t.binary   "term_timetable_img",              :null => false
+    t.string   "term_timetable_img_content_type", :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
+  add_index "terms", ["term_identifier"], :name => "index_terms_on_term_identifier", :unique => true
   add_index "terms", ["term_name"], :name => "index_terms_on_term_name", :unique => true
 
   create_table "users", :force => true do |t|

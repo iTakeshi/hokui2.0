@@ -1,6 +1,7 @@
 class CreateTerms < ActiveRecord::Migration
   def change
-    create_table :terms do |t|
+    create_table :terms, primary_key: :term_identifier do |t|
+      t.string :term_identifier, null: false
       t.string :term_name, null: false
       t.binary :term_timetable_img, null: false
       t.string :term_timetable_img_content_type, null: false
@@ -8,6 +9,7 @@ class CreateTerms < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :terms, :term_identifier, unique: true
     add_index :terms, :term_name, unique: true
   end
 end
