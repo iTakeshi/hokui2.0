@@ -25,4 +25,26 @@ class TermsController < ApplicationController
       render action: :new
     end
   end
+
+  # GET /terms/:term_identifier/edit
+  def edit
+    @term = Term.find(params[:term_identifier])
+  end
+
+  # POST /terms/:term_identifier/edit
+  def update
+    @term = Term.find(params[:term_identifier])
+    if params[:term_timetable_img].respond_to?(:read)
+      img = params[:term_timetable_img]
+      @term.term_timetable_img = img.read
+      @term.term_timetable_img_content_type = img.content_type
+    end
+
+    if @term.save
+      flash[:info] = '時間割表を更新しました。'
+      redirect_to '/terms'
+    else
+      render action: :edit
+    end
+  end
 end
