@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120809021547) do
+ActiveRecord::Schema.define(:version => 20120812030949) do
+
+  create_table "subjects", :force => true do |t|
+    t.string   "term_identifier",       :null => false
+    t.string   "subject_identifier",    :null => false
+    t.string   "subject_name",          :null => false
+    t.string   "subject_staff",         :null => false
+    t.text     "subject_syllabus_html", :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  add_index "subjects", ["subject_identifier"], :name => "index_subjects_on_subject_identifier", :unique => true
+  add_index "subjects", ["subject_name"], :name => "index_subjects_on_subject_name", :unique => true
+  add_index "subjects", ["term_identifier"], :name => "index_subjects_on_term_identifier"
 
   create_table "terms", :force => true do |t|
     t.string   "term_identifier",                 :null => false
