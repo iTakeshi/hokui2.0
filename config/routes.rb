@@ -31,6 +31,7 @@ Hokui::Application.routes.draw do
   get '/terms/:term_identifier/thumb/:file_name', to: 'terms#download_timetable_thumb'
 
   get '/terms/:term_identifier/subjects/new', to: 'subjects#new'
+  post '/terms/:term_identifier/subjects/new', to: 'subjects#create'
 
   # temp root
   root to: 'users#index'
