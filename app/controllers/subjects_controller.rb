@@ -12,6 +12,11 @@ class SubjectsController < ApplicationController
   def create
     @term = Term.find(params[:term_identifier])
     @subject = @term.subjects.new
+    if params[:subject][:subject_syllabus_html].blank?
+      flash[:error] = "htmlソースを貼りつけてください。"
+      render action: :new
+      return
+    end
     @subject.subject_syllabus_html = params[:subject][:subject_syllabus_html]
     @subject.get_subject_informations
 
