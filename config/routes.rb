@@ -33,6 +33,7 @@ Hokui::Application.routes.draw do
   get '/terms/:term_identifier/subjects/new', to: 'subjects#new'
   post '/terms/:term_identifier/subjects/new', to: 'subjects#create'
   get '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#edit'
+  put '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#update'
 
   # temp root
   root to: 'users#index'
