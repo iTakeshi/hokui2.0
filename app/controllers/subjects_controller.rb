@@ -22,4 +22,10 @@ class SubjectsController < ApplicationController
       render action: :new
     end
   end
+
+  # GET /terms/:term_identifier/subjects/:subject_identifier/edit
+  def edit
+    @term = Term.find(params[:term_identifier])
+    @subject = Subject.find(params[:subject_identifier])
+  end
 end
