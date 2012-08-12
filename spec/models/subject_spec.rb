@@ -4,9 +4,6 @@ require 'spec_helper'
 
 describe Subject do
 
-  before(:all) do
-  end
-
   describe "instance methods" do
 
     describe "#get_subject_information" do
@@ -42,5 +39,126 @@ EOF
   end
 
 
+
+  describe "validation:" do
+
+    before(:all) do
+      @term = Term.new
+      @term.term_identifier = '1b'
+      @term.set_term_name
+      @term.term_timetable_img = "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x01,\x01,\x00\x00\xFF\xE1\x10ZExif\x00\x00MM\x00*\x00\x00\x00\b\x00\x02\x87i\x00\x04\x00\x00\x00\x01\x00\x00"
+      @term.term_timetable_thumb = "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x01,\x01,\x00\x00\xFF\xE1\x10ZExif\x00\x00MM\x00*\x00\x00\x00\b\x00\x02\x87i\x00\x04\x00\x00\x00\x01\x00\x00"
+      @term.term_timetable_img_content_type = "image/jpeg"
+      @term.save!
+
+      subject = @term.subjects.new
+      subject.subject_identifier = 'statistics'
+      subject.subject_name = '統計学'
+      subject.subject_staff = '後藤 允'
+      subject.subject_lct_cd = '020648'
+      subject.subject_syllabus_html = '<html></html>'
+      subject.save!
+    end
+
+    before(:each) do
+      @subject = @term.subjects.new
+      @subject.subject_identifier = 'math_1'
+      @subject.subject_name = '数学Ⅰ'
+      @subject.subject_staff = '名前或蔵'
+      @subject.subject_lct_cd = '021543'
+      @subject.subject_syllabus_html = '<html></html>'
+    end
+
+    context "with valid information" do
+      it "should be valid" do
+        @subject.should be_valid
+      end
+    end
+
+    context "without :term_identifier" do
+      it "should not be valid" do
+        @subject.term_identifier = nil
+        @subject.should_not be_valid
+      end
+    end
+
+    context ":term_identifier has invalid format" do
+      it "should not be valid" do
+        @subject.term_identifier = "1c"
+        @subject.should_not be_valid
+      end
+    end
+
+    context "without :subject_identifier" do
+      it "should not be valid" do
+        @subject.subject_identifier = nil
+        @subject.should_not be_valid
+      end
+    end
+
+    context ":subject_identifier is not unique" do
+      it "should not be valid" do
+        @subject.subject_identifier = "statistics"
+        @subject.should_not be_valid
+      end
+    end
+
+    context ":subject_identifier has invalid format" do
+      it "should not be valid" do
+        @subject.subject_identifier = "math_A"
+        @subject.should_not be_valid
+      end
+    end
+
+    context "without :subject_name" do
+      it "should not be valid" do
+        @subject.subject_name = nil
+        @subject.should_not be_valid
+      end
+    end
+
+    context ":subject_name is not unique" do
+      it "should not be valid" do
+        @subject.subject_name = "統計学"
+        @subject.should_not be_valid
+      end
+    end
+
+    context "without :subject_staff" do
+      it "should not be valid" do
+        @subject.subject_staff = nil
+        @subject.should_not be_valid
+      end
+    end
+
+    context ":subject_staff is not unique" do
+      it "should be valid" do
+        @subject.subject_staff = "後藤 允"
+        @subject.should be_valid
+      end
+    end
+
+    context "without :subject_lct_cd" do
+      it "should be valid" do
+        @subject.subject_lct_cd = nil
+        @subject.should be_valid
+      end
+    end
+
+    context ":subject_lct_cd is not unique" do
+      it "should not be valid" do
+        @subject.subject_lct_cd = "020648"
+        @subject.should_not be_valid
+      end
+    end
+
+    context "withou :subject_syllabus_html" do
+      it "should not be valid" do
+        @subject.subject_syllabus_html = nil
+        @subject.should_not be_valid
+      end
+    end
+
+  end
 
 end
