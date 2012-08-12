@@ -1,0 +1,55 @@
+# coding: utf-8
+
+class SubjectsController < ApplicationController
+
+  # GET /terms/:term_identifier/subjects/new
+  def new
+    @term = Term.find(params[:term_identifier])
+    @subject = @term.subjects.new
+  end
+
+  # POST /terms/:term_identifier/subjects/new
+  def create
+    @term = Term.find(params[:term_identifier])
+    @subject = @term.subjects.new
+    if params[:subject][:subject_syllabus_html].blank?
+      flash[:error] = "htmlソースを貼りつけてください。"
+      render action: :new
+      return
+    end
+    @subject.subject_syllabus_html = params[:subject][:subject_syllabus_html]
+    @subject.get_subject_informations
+
+    if @subject.save
+      flash[:info] = '教科を追加しました！'
+      redirect_to '/terms'
+    else
+      render action: :new
+    end
+  end
+
+  # GET /terms/:term_identifier/subjects/:subject_identifier/edit
+  def edit
+    @term = Term.find(params[:term_identifier])
+    @subject = Subject.find(params[:subject_identifier])
+  end
+
+  # PUT /terms/:term_identifier/subjects/:subject_identifier/edit
+  def update
+    @term = Term.find(params[:term_identifier])
+    @subject = Subject.find(params[:subject_identifier])
+    p = params[:subject]
+    @subject.term_identifier = p[:term_identifier]
+    @subject.subject_identifier = p[:subject_identifier]
+    @subject.subject_name = p[:subject_name]
+    @subject.subject_staff = p[:subject_staff]
+    @subject.subject_lct_cd = p[:subject_lct_cd]
+
+    if @subject.save
+      flash[:info] = '教科情報を修正しました。'
+      redirect_to '/terms'
+    else
+      render action: :edit
+    end
+  end
+end

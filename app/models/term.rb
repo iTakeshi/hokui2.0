@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class Term < ActiveRecord::Base
+  has_many :subjects, primary_key: :term_identifier, foreign_key: :term_identifier
 
   validates :term_identifier,
     presence: { message: "学期コードを入力してください。" },
