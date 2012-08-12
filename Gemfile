@@ -53,3 +53,4 @@ gem 'capistrano'
 
 gem 'rmagick', require: 'RMagick'
 gem 'colorbox-rails'
+gem 'nokogiri'
