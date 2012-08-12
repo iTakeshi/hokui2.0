@@ -56,4 +56,43 @@ private
       nil
     end
   end
+
+  def get_extension(content_type)
+    case content_type
+    when 'application/pdf'
+      return 'pdf'
+    when 'image/jpeg'
+      return 'jpg'
+    when 'image/png'
+      return 'png'
+    when 'image/gif'
+      return 'gif'
+    when 'image/tiff'
+      return 'tif'
+    when 'application/msword'
+      return 'doc'
+    when 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      return 'docx'
+    when 'application/vnd.ms-powerpoint'
+      return 'ppt'
+    when 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      return 'pptx'
+    when 'text/plain'
+      return 'txt'
+    when 'text/rtf'
+      return 'rtf'
+    when 'text/html'
+      return 'html'
+    when 'application/rtf'
+      return 'rtf'
+    when 'application/x-zip-compressed'
+      return 'zip'
+    when 'application/x-rar-compressed'
+      return 'rar'
+    else
+      return nil
+    end
+  end
+
+  helper_method :current_user, :get_extension
 end

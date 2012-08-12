@@ -1,0 +1,34 @@
+<h1>学期情報</h1>
+<dl>
+  <dt>学期コード</dt>
+  <dd><%= @term.term_identifier %></dd>
+  <dt>学期名</dt>
+  <dd><%= @term.term_name %></dd>
+</dl>
+
+<h2>時間割表を更新</h2>
+<% if @term.errors.any? %>
+  <% messages = @term.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
+  <% messages.delete("Password doesn't match confirmation") %>
+  <div id="error_explanation">
+    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
+    <ul>
+      <% messages.each do |msg| %>
+        <li><%= slice_error_message(msg) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_tag "/terms/#{@term.term_identifier}/edit", multipart: true do %>
+  <div class="field">
+    <%= label_tag :term_timetable_img, '時間割表' %><br>
+    学校配布の時間割表をスキャンした画像ファイルを選択してください。<br>
+    利用可能なファイル形式：jpeg, png, gif, tiff<br>
+    <%= file_field_tag :term_timetable_img, accept: 'image/jpeg, image/png, image/gif, image/tiff' %>
+  </div>
+
+  <div class="field">
+    <%= submit_tag '更新' %>
+  </div>
+<% end %>

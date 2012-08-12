@@ -50,3 +50,6 @@ gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'rmagick', require: 'RMagick'
+gem 'colorbox-rails'

@@ -1,0 +1,33 @@
+<h1>新学期を追加</h1>
+
+<% if @term.errors.any? %>
+  <% messages = @term.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
+  <% messages.delete("Password doesn't match confirmation") %>
+  <div id="error_explanation">
+    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
+    <ul>
+      <% messages.each do |msg| %>
+        <li><%= slice_error_message(msg) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @term, url: '/terms/new', html: {multipart: true} do |f| %>
+  <div class="field">
+    <%= f.label :term_identifier, '学期コード' %><br>
+    "2a" などの形式で、"学年 + (前期ならa, 後期ならb)"と半角英数字で入力してください。ダブルクオーテーションは不要です。<br>
+    <%= f.text_field :term_identifier %>
+  </div>
+
+  <div class="field">
+    <%= f.label :term_timetable_img, '時間割表' %><br>
+    学校配布の時間割表をスキャンした画像ファイルを選択してください。<br>
+    利用可能なファイル形式：jpeg, png, gif, tiff<br>
+    <%= f.file_field :term_timetable_img, accept: 'image/jpeg, image/png, image/gif, image/tiff' %>
+  </div>
+
+  <div class="action">
+    <%= f.submit '追加' %>
+  </div>
+<% end %>

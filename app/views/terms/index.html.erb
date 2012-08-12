@@ -1,0 +1,21 @@
+<h1>学期一覧</h1>
+
+<table class="term_table">
+  <tr>
+    <th>学期コード</th>
+    <th>学期名</th>
+    <th>時間割表のMIMEタイプ</th>
+    <th>時間割(画像クリックで拡大)</th>
+  </tr>
+  <% @terms.each do |term| %>
+    <% mime = term.term_timetable_img_content_type %>
+    <tr>
+      <td><%= term.term_identifier %></td>
+      <td><%= term.term_name %></td>
+      <td><%= mime %></td>
+      <td><%= link_to image_tag("/terms/#{term.term_identifier}/thumb/#{term.term_name}_thumb.#{get_extension(mime)}", type: mime, height: '100px', alt: "時間割サムネイル"),
+                      "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}",
+                      data: { colorbox: true, colorbox_height: '800px' } %></td>
+    </tr>
+  <% end %>
+</table>
