@@ -12,7 +12,7 @@ class Subject < ActiveRecord::Base
     self.subject_lct_cd = html.css("#Detail_lbl_lct_cd").children[0].text.strip
   end
 
-  def self.find(subject_idntifier)
+  def self.find(subject_identifier)
     self.find_by_subject_identifier(subject_identifier)
   end
 end
