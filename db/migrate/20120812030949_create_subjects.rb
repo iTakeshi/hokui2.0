@@ -5,6 +5,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :subject_identifier, null: false
       t.string :subject_name, null: false
       t.string :subject_staff, null: false
+      t.string :subject_lct_cd
       t.text :subject_syllabus_html, null: false
 
       t.timestamps
