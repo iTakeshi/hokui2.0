@@ -40,6 +40,7 @@ class TermsController < ApplicationController
       img = params[:term_timetable_img]
       @term.term_timetable_img = img.read
       @term.term_timetable_img_content_type = img.content_type
+      @term.generate_timetable_thumb
     end
 
     if @term.save
