@@ -30,6 +30,8 @@ Hokui::Application.routes.draw do
   get '/terms/:term_identifier/img/:file_name', to: 'terms#download_timetable_img'
   get '/terms/:term_identifier/thumb/:file_name', to: 'terms#download_timetable_thumb'
 
+  get '/terms/:term_identifier/subjects/new', to: 'subjects#new'
+
   # temp root
   root to: 'users#index'
 

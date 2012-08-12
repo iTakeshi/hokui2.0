@@ -6,6 +6,7 @@
     <th>学期名</th>
     <th>時間割表のMIMEタイプ</th>
     <th>時間割(画像クリックで拡大)</th>
+    <th>教科を追加</th>
   </tr>
   <% @terms.each do |term| %>
     <% mime = term.term_timetable_img_content_type %>
@@ -16,6 +17,7 @@
       <td><%= link_to image_tag("/terms/#{term.term_identifier}/thumb/#{term.term_name}_thumb.#{get_extension(mime)}", type: mime, height: '100px', alt: "時間割サムネイル"),
                       "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}",
                       data: { colorbox: true, colorbox_height: '800px' } %></td>
+      <td><%= link_to '教科を追加', "/terms/#{term.term_identifier}/subjects/new" %>
     </tr>
   <% end %>
 </table>

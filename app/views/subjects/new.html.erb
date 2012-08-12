@@ -1,0 +1,27 @@
+<h1>教科を追加</h1>
+学期：<%= @term.term_name %>
+
+<% if @subject.errors.any? %>
+  <% messages = @subject.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
+  <% messages.delete("Password doesn't match confirmation") %>
+  <div id="error_explanation">
+    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
+    <ul>
+      <% messages.each do |msg| %>
+        <li><%= slice_error_message(msg) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @subject, url: "/terms/#{@term.term_identifier}/subjects/new" do |f| %>
+  <div class="field">
+    <%= f.label :subject_syllabus_html, 'シラバスページのHTMLソース' %><br>
+    北大の授業シラバスページのソースコードをそのまま貼りつけてください。<br>
+    <%= f.text_area :subject_syllabus_html, size: "80x30" %>
+  </div>
+
+  <div class="action">
+    <%= f.submit '追加' %>
+  </div>
+<% end %>
