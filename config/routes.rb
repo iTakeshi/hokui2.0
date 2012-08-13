@@ -37,6 +37,10 @@ Hokui::Application.routes.draw do
   get '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#edit'
   put '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#update'
 
+  get '/study', to: 'study#help'
+  get '/study/:term_identifier', to: 'study#term'
+  get '/study/:term_identifier/:subject_identifier', to: 'study#subject'
+
   # temp root
   root to: 'index#index'
 
