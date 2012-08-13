@@ -1,5 +1,7 @@
 Hokui::Application.routes.draw do
 
+  get "index/index"
+
   get  '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
@@ -36,7 +38,7 @@ Hokui::Application.routes.draw do
   put '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#update'
 
   # temp root
-  root to: 'users#index'
+  root to: 'index#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
