@@ -1,0 +1,85 @@
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#grobal-wrapper {
+    width: 960px;
+    margin: auto;
+    padding: 0;
+}
+
+#grobal-header {
+    height: 115px;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+
+    #grobal-header-banner {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 80px;
+        position: relative;
+
+        img {
+        }
+
+        #grobal-header-user {
+            position: absolute;
+            top: 20px; right: 30px;
+        }
+    }
+
+    #grobal-header-menu {
+        ul {
+            li {
+                display: block;
+                float: left;
+                margin: 0;
+                padding: 0;
+                width: 120px;
+                height: 30px;
+                text-align: center;
+                font-size: 150%;
+
+                a {
+                    i {
+                        margin-right: 7px;
+                    }
+                    i:before {
+                        display: block;
+                        margin-top: 10px;
+                        font-size: 120%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#grobal-footer {
+    position: relative;
+    text-align: center;
+
+    address {
+        margin-top: 5px;
+    }
+
+    #grobal-footer-credits {
+        position: absolute;
+        top: 0; right: 10px;
+
+        ul {
+            li {
+                float: left;
+                margin: 5px;
+            }
+
+            li#grobal-footer-rails {
+                margin-top: 8px;
+            }
+        }
+    }
+}
