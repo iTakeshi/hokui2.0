@@ -1,24 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hokui</title>
+  <title><%= @page_title ? @page_title + ' - 北医ネット93' : '北医ネット93' %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'favicon.gif' %>
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
 </head>
 <body>
-  <% if flash[:error] %>
-    <div id="flash-error">
-      <%= flash[:error] %>
-    </div>
-  <% end %>
-  <% if flash[:info] %>
-    <div id="flash-info">
-      <%= flash[:info] %>
-    </div>
-  <% end %>
+  <div id="grobal-wrapper">
 
-<%= yield %>
+    <header id="grobal-header">
+      <div id="grobal-header-banner">
+        <%= image_tag 'grobal/header_banner.png', alt: 'page-top' %>
+        <div id="grobal-header-user">
+          <%= link_to 'Log Out', '/logout' %><br>
+          <%= link_to 'Profile', '/edit_profile' %>
+        </div>
+      </div>
+
+      <nav id="grobal-header-menu">
+        <ul>
+          <li>
+            <% if @index_page %>
+              <%= link_to raw('<i class="icon-home"></i>Home'), '/',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-home"></i>Home'), '/' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @study_page %>
+              <%= link_to raw('<i class="icon-book-open"></i>Study'), '/study',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-book-open"></i>Study'), '/study' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @calendar_page %>
+              <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @enquete_page %>
+              <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @bbs_page %>
+              <%= link_to raw('<i class="icon-chat-1"></i>BBS'), '/bbs',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-chat-1"></i>BBS'), '/bbs' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @ml_page %>
+              <%= link_to raw('<i class="icon-mail"></i>freeML'), '/free-ml',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-mail"></i>freeML'), '/free-ml' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @admin_page %>
+              <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin' %>
+            <% end %>
+          </li>
+          <li>
+            <% if @help_page %>
+              <%= link_to raw('<i class="icon-help-circle-1"></i>Help'), '/help',  class: "self_link" %>
+            <% else %>
+              <%= link_to raw('<i class="icon-help-circle-1"></i>Help'), '/help' %>
+            <% end %>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <% if content_for?(:side) %>
+
+      <div id="grobal-side">
+        <%= yield(:side) %>
+      </div>
+      <div id="grobal-content">
+        <% if flash[:error] %>
+          <div id="flash-error">
+            <%= flash[:error] %>
+          </div>
+        <% end %>
+        <% if flash[:info] %>
+          <div id="flash-info">
+            <%= flash[:info] %>
+          </div>
+        <% end %>
+        <%= yield(:content) %>
+      </div>
+
+    <% else %>
+
+      <div id="grobal-full-width-content">
+        <% if flash[:error] %>
+          <div id="flash-error">
+            <%= flash[:error] %>
+          </div>
+        <% end %>
+        <% if flash[:info] %>
+          <div id="flash-info">
+            <%= flash[:info] %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+
+    <% end %>
+
+    <footer id="grobal-footer">
+      <hr>
+      <address>
+        Copyright 2011-2012 Hokui-Net Developer Team
+      </address>
+    </footer>
+
+  </div>
 
 </body>
 </html>
