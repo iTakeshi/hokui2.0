@@ -10,7 +10,6 @@
  *
  *= require_self
  *= require jquery.ui.all
- *= require bootstrap
  *= require font-awesome
  *= require colorbox-rails
  *= require_tree .
