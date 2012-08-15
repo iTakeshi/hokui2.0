@@ -1,7 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 ul {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+i {
+    margin-right: 7px;
+}
+
+i::before {
+    display: inline-block;
+    font-size: 120%;
+    vertical-align: -2px !important;
+}
+
+a.dropdown-toggle + ul {
+    min-width: 120px;
 }
 
 #grobal-wrapper {
@@ -28,7 +47,7 @@ ul {
 
         #grobal-header-user {
             position: absolute;
-            top: 20px; right: 30px;
+            top: 20px; right: 20px;
         }
     }
 
@@ -43,17 +62,6 @@ ul {
                 height: 30px;
                 text-align: center;
                 font-size: 150%;
-
-                a {
-                    i {
-                        margin-right: 7px;
-                    }
-                    i:before {
-                        display: block;
-                        margin-top: 10px;
-                        font-size: 120%;
-                    }
-                }
             }
         }
     }
