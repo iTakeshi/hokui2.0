@@ -33,9 +33,9 @@
           </li>
           <li>
             <% if @study_page %>
-              <%= link_to raw('<i class="icon-book-open"></i>Study'), '/study',  class: "self_link" %>
+              <%= link_to raw('<i class="icon-book"></i>Study'), '/study',  class: "self_link" %>
             <% else %>
-              <%= link_to raw('<i class="icon-book-open"></i>Study'), '/study' %>
+              <%= link_to raw('<i class="icon-book"></i>Study'), '/study' %>
             <% end %>
           </li>
           <li>
@@ -54,16 +54,16 @@
           </li>
           <li>
             <% if @bbs_page %>
-              <%= link_to raw('<i class="icon-chat-1"></i>BBS'), '/bbs',  class: "self_link" %>
+              <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs',  class: "self_link" %>
             <% else %>
-              <%= link_to raw('<i class="icon-chat-1"></i>BBS'), '/bbs' %>
+              <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs' %>
             <% end %>
           </li>
           <li>
             <% if @ml_page %>
-              <%= link_to raw('<i class="icon-mail"></i>freeML'), '/free-ml',  class: "self_link" %>
+              <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml',  class: "self_link" %>
             <% else %>
-              <%= link_to raw('<i class="icon-mail"></i>freeML'), '/free-ml' %>
+              <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml' %>
             <% end %>
           </li>
           <li>
@@ -75,9 +75,9 @@
           </li>
           <li>
             <% if @help_page %>
-              <%= link_to raw('<i class="icon-help-circle-1"></i>Help'), '/help',  class: "self_link" %>
+              <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help',  class: "self_link" %>
             <% else %>
-              <%= link_to raw('<i class="icon-help-circle-1"></i>Help'), '/help' %>
+              <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
             <% end %>
           </li>
         </ul>
