@@ -36,8 +36,7 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-ui-bootstrap-rails', git: 'git@github.com:iTakeshi/jquery-ui-bootstrap-rails.git'
-gem 'font-awesome-rails'
+gem 'twitter-bootstrap-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
