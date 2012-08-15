@@ -14,6 +14,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'simplecov', :require => false
   gem 'spork'
+  gem 'guard-livereload'
 end
 
 group :production do
