@@ -4,7 +4,7 @@
   <% if @subject.errors.any? %>
     <div id="error_explanation" class="alert alert-block alert-error">
       <a class="close" data-dismiss="alert" href="#">×</a>
-      <h4 class="alert-heading"><%= messages.count %>個の項目にエラーがあります。</h4>
+      <h4 class="alert-heading"><%= @subject.errors.full_messages.count %>個の項目にエラーがあります。</h4>
       <ul>
         <% @subject.errors.full_messages.each do |msg| %>
           <li><%= slice_error_message(msg) %></li>
