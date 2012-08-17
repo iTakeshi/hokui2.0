@@ -96,32 +96,64 @@
         <%= yield(:side) %>
       </div>
       <div id="grobal-content">
+
         <% if flash[:error] %>
-          <div id="flash-error">
+          <div id="flash-error" class="alert alert-error">
+            <button class="close" data-dismiss="alert">×</button>
             <%= flash[:error] %>
           </div>
         <% end %>
+        <% if flash[:warning] %>
+          <div id="flash-error" class="alert alert-block">
+            <button class="close" data-dismiss="alert">×</button>
+            <%= flash[:warning] %>
+          </div>
+        <% end %>
         <% if flash[:info] %>
-          <div id="flash-info">
+          <div id="flash-info" class="alert alert-info">
+            <button class="close" data-dismiss="alert">×</button>
             <%= flash[:info] %>
           </div>
         <% end %>
+        <% if flash[:success] %>
+          <div id="flash-info" class="alert alert-success">
+            <button class="close" data-dismiss="alert">×</button>
+            <%= flash[:success] %>
+          </div>
+        <% end %>
+
         <%= yield(:content) %>
       </div>
 
     <% else %>
 
       <div id="grobal-full-width-content">
+
         <% if flash[:error] %>
-          <div id="flash-error">
+          <div id="flash-error" class="alert alert-error">
+            <button class="close" data-dismiss="alert">×</button>
             <%= flash[:error] %>
           </div>
         <% end %>
+        <% if flash[:warning] %>
+          <div id="flash-error" class="alert alert-block">
+            <button class="close" data-dismiss="alert">×</button>
+            <%= flash[:warning] %>
+          </div>
+        <% end %>
         <% if flash[:info] %>
-          <div id="flash-info">
+          <div id="flash-info" class="alert alert-info">
+            <button class="close" data-dismiss="alert">×</button>
             <%= flash[:info] %>
           </div>
         <% end %>
+        <% if flash[:success] %>
+          <div id="flash-info" class="alert alert-success">
+            <button class="close" data-dismiss="alert">×</button>
+            <%= flash[:success] %>
+          </div>
+        <% end %>
+
         <%= yield %>
       </div>
 
