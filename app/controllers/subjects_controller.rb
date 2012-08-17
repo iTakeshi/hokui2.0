@@ -13,7 +13,7 @@ class SubjectsController < ApplicationController
     @term = Term.find(params[:term_identifier])
     @subject = @term.subjects.new
     if params[:subject][:subject_syllabus_html].blank?
-      flash[:error] = "htmlソースを貼りつけてください。"
+      @no_html_error = true
       render action: :new
       return
     end
