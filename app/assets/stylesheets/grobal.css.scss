@@ -23,6 +23,18 @@ span.caret {
     margin-left: 5px !important;
 }
 
+form {
+    margin-top: 30px;
+
+    .form-actions {
+        background: linear-gradient(top, #f5f5f5, #ffffff);
+        background: -webkit-linear-gradient(top, #f5f5f5, #ffffff);
+        background: -moz-linear-gradient(top, #f5f5f5, #ffffff);
+        background: -o-linear-gradient(top, #f5f5f5, #ffffff);
+        background: -ms-linear-gradient(top, #f5f5f5, #ffffff);
+    }
+}
+
 #grobal-wrapper {
     width: 960px;
     margin: auto;
