@@ -9,8 +9,8 @@ ul {
     padding: 0;
 }
 
-i {
-    margin-right: 7px;
+a.dropdown-toggle + ul {
+    min-width: 120px;
 }
 
 i::before {
@@ -19,8 +19,8 @@ i::before {
     vertical-align: -2px !important;
 }
 
-a.dropdown-toggle + ul {
-    min-width: 120px;
+span.caret {
+    margin-left: 5px !important;
 }
 
 #grobal-wrapper {
@@ -70,6 +70,9 @@ a.dropdown-toggle + ul {
 #grobal-footer {
     position: relative;
     text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 
     address {
         margin-top: 5px;

@@ -19,7 +19,7 @@
         <div id="grobal-header-user" class="btn-toolbar">
           <div class="btn-group">
             <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
-            <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %></a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
               <li><%= link_to 'Log Out', '/logout' %></li>
