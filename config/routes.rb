@@ -6,7 +6,7 @@ Hokui::Application.routes.draw do
   post '/signup', to: 'users#create'
 
   get '/users/confirm/:user_auth_token', to: 'users#confirm_email'
-  get '/users/index', to: 'users#index'
+  get '/users', to: 'users#index'
   get '/users/approve/:id', to: 'users#approve'
   get '/users/reject/:id', to: 'users#reject'
 

@@ -1,7 +1,7 @@
 <h1>ユーザー管理</h1>
 
 <h2>管理者</h2>
-<table class="user_table" id="admins">
+<table class="table" id="admins">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -25,7 +25,7 @@
 </table>
 
 <h2>承認待ちユーザー</h2>
-<table class="user_table" id="status2">
+<table class="table" id="status2">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -46,15 +46,15 @@
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
       <td>
-        <button class="approve_user" data-user-id="<%= user.id %>">承認</button>
-        <button class="reject_user" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
+        <button class="approve_user btn btn-mini btn-success" data-user-id="<%= user.id %>">承認</button>
+        <button class="reject_user btn btn-mini btn-danger" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
       </td>
     </tr>
   <%end %>
 </table>
 
 <h2>一般ユーザー</h2>
-<table class="user_table" id="status0">
+<table class="table" id="status0">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -78,7 +78,7 @@
 </table>
 
 <h2>パスワード再設定処理中のユーザー</h2>
-<table class="user_table" id="status3">
+<table class="table" id="status3">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -103,7 +103,7 @@
 
 <h2>新規登録ユーザー</h2>
 メールアドレス確認手続きを完了していないので、承認することはできません。
-<table class="user_table" id="status1">
+<table class="table" id="status1">
   <tr>
     <th>ID</th>
     <th>氏名</th>
