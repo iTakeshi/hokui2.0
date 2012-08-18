@@ -82,6 +82,22 @@ form {
     }
 }
 
+#grobal-side {
+    float: left;
+    width: 180px;
+    margin: 0 20px 0 0;
+}
+
+#grobal-content {
+    width: 760px;
+}
+
+#grobal-content:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
 #grobal-footer {
     position: relative;
     text-align: center;

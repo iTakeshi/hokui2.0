@@ -1,4 +1,6 @@
 class StudyController < ApplicationController
+  layout 'study'
+
   def term
   end
 
