@@ -10,6 +10,13 @@
     <dt>責任教員</dt>
     <dd><%= @subject.subject_staff %></dd>
     <dt>シラバス</dt>
-    <dd><%= link_to 'シラバスページを表示', '#', data: { toggle: 'modal' } %></dd>
+    <dd><%= link_to 'シラバスページを表示', '#syllabus', data: { toggle: 'modal' } %></dd>
   </dl>
 </section>
+
+<!-- modal用シラバスページ -->
+<div class="modal hide fade" id="syllabus">
+  <div class="modal-body">
+    <%= raw(@subject.subject_syllabus_html) %>
+  </div>
+</div>
