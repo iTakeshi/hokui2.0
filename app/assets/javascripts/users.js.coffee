@@ -16,29 +16,34 @@ $ ->
                     $tr.children('td').last().remove()
                     $tr.appendTo('#status0')
                 else if res.status == 'forbidden'
-                    jAlert('この操作は管理者にしか認められていません。')
+                    $('#modal-forbidden').modal('toggle')
                 else
-                    jAlert('予期しないエラーが発生しました。\nこの操作はすでに完了している可能性があります。\nページを再読み込みしてください。')
+                    $('#modal-fatal').modal('toggle')
             error: (res) ->
-                jAlert('通信に失敗しました。')
+                $('#modal-transmission-error').modal('toggle')
 
     $(".reject_user").click (event) ->
         user_id = $(@).attr('data-user-id')
         user_name = $(@).attr('data-user-name')
-        $tr = $(@).closest('tr')
-        jConfirm user_name + ' さんの登録申請を拒否し、登録情報を抹消します。よろしいですか？', '確認してください', (r) ->
-            if(r)
-                $.ajax
-                    type: 'GET'
-                    scriptCharset: 'utf-8'
-                    dataType: 'json'
-                    url: '/users/reject/' + user_id
-                    success: (res) ->
-                        if res.status == 'success'
-                            $tr.remove()
-                        else if res.status == 'forbidden'
-                            jAlert('この操作は管理者にしか認められていません。')
-                        else
-                            jAlert('予期しないエラーが発生しました。\nこの操作はすでに完了している可能性があります。\nページを再読み込みしてください。')
-                    error: (res) ->
-                        jAlert('通信に失敗しました。')
+        $('#modal-reject').bind 'show', (e) ->
+            $('#rejection_target_user_name').html(user_name)
+            $('#rejection_target_user_id').html(user_id)
+        .modal('toggle')
+
+    $("#confirm_user_rejection").click (event) ->
+        user_id = $('#rejection_target_user_id').text()
+        $.ajax
+            type: 'GET'
+            scriptCharset: 'utf-8'
+            dataType: 'json'
+            url: '/users/reject/' + user_id
+            success: (res) ->
+                if res.status == 'success'
+                    $('button[data-user-id="' + user_id + '"]:first').closest('tr').remove()
+                    $('#modal-reject').modal('toggle')
+                else if res.status == 'forbidden'
+                    $('#modal-forbidden').modal('toggle')
+                else
+                    $('#modal-fatal').modal('toggle')
+            error: (res) ->
+                $('#modal-transmission-error').modal('toggle')
