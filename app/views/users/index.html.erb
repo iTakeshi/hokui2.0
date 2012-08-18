@@ -21,7 +21,7 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
-      <td><button class="demote btn btn-mini btn-warning"
+      <td><button class="demote_user btn btn-mini btn-warning"
                   data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>"
                   <% if user.id == current_user.id %>disabled="disabled"<% end %>>降格</button></td>
     </tr>
@@ -50,7 +50,7 @@
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
       <td>
-        <button class="approve_user btn btn-mini btn-success" data-user-id="<%= user.id %>">承認</button>
+        <button class="approve_user btn btn-mini btn-success" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">承認</button>
         <button class="reject_user btn btn-mini btn-danger" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
       </td>
     </tr>
@@ -78,7 +78,7 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
-      <td><button class="promote btn btn-mini btn-info" data-user-id="<%= user.id %>"
+      <td><button class="promote_user btn btn-mini btn-info" data-user-id="<%= user.id %>"
                   data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">昇格</button></td>
     </tr>
   <%end %>
@@ -146,6 +146,20 @@
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">キャンセル</button>
     <button id="confirm_user_rejection" class="btn btn-danger">拒否</button>
+  </div>
+</div>
+
+<div class="modal hide fade" id="modal-demote">
+  <div class="modal-header">
+    <h3>ユーザーを降格しますか？</h3>
+  </div>
+  <div class="modal-body">
+      <span id="demotion_target_user_name"></span> さんから管理者権限を剥奪します。<br>よろしいですか？
+    <span id="demotion_target_user_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_user_demotion" class="btn btn-danger">降格</button>
   </div>
 </div>
 

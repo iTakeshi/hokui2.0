@@ -9,6 +9,7 @@ Hokui::Application.routes.draw do
   get '/users', to: 'users#index'
   get '/users/approve/:id', to: 'users#approve'
   get '/users/reject/:id', to: 'users#reject'
+  get '/users/demote/:id', to: 'users#demote'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

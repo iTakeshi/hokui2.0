@@ -5,6 +5,7 @@
 $ ->
     $(".approve_user").click (event) ->
         user_id = $(@).attr('data-user-id')
+        user_name = $(@).attr('data-user-name')
         $tr = $(@).closest('tr')
         $.ajax
             type: 'GET'
@@ -13,7 +14,8 @@ $ ->
             url: '/users/approve/' + user_id
             success: (res) ->
                 if res.status == 'success'
-                    $tr.children('td').last().remove()
+                    $tr.children('td').last().html('<button class="promote btn btn-mini btn-info" data-user-id="' + user_id + '"
+                                                    data-user-name="' + user_name + '">昇格</button>')
                     $tr.appendTo('#status0')
                 else if res.status == 'forbidden'
                     $('#modal-forbidden').modal('toggle')
@@ -47,3 +49,36 @@ $ ->
                     $('#modal-fatal').modal('toggle')
             error: (res) ->
                 $('#modal-transmission-error').modal('toggle')
+
+    $(".demote_user").click (event) ->
+        user_id = $(@).attr('data-user-id')
+        user_name = $(@).attr('data-user-name')
+        $('#modal-demote').bind 'show', (e) ->
+            $('#demotion_target_user_name').html(user_name)
+            $('#demotion_target_user_id').html(user_id)
+        .modal('toggle')
+
+    $("#confirm_user_demotion").click (event) ->
+        user_id = $('#demotion_target_user_id').text()
+        user_name = $('#demotion_target_user_name').text()
+        $.ajax
+            type: 'GET'
+            scriptCharset: 'utf-8'
+            dataType: 'json'
+            url: '/users/demote/' + user_id
+            success: (res) ->
+                if res.status == 'success'
+                    $tr = $('button[data-user-id="' + user_id + '"]:first').closest('tr')
+                    $tr.children('td').last().html('<button class="promote btn btn-mini btn-info" data-user-id="' + user_id + '"
+                                                    data-user-name="' + user_name + '">昇格</button>')
+                    $tr.appendTo('#status0')
+                    $('#modal-demote').modal('toggle')
+                else if res.status == 'forbidden'
+                    $('#modal-forbidden').modal('toggle')
+                else
+                    $('#modal-fatal').modal('toggle')
+            error: (res) ->
+                $('#modal-transmission-error').modal('toggle')
+
+
+

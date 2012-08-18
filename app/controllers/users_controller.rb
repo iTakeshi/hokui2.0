@@ -74,6 +74,17 @@ class UsersController < ApplicationController
     render json: { status: :error }
   end
 
+  # GET /users/demote/:id
+  def demote
+    user = User.find(params[:id])
+    user.user_is_admin = false
+    user.save!
+    # TODO notify for user
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
+
   # GET /reset_password
   def forget_password
     @dummy_user = User.new
