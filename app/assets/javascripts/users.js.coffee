@@ -80,5 +80,35 @@ $ ->
             error: (res) ->
                 $('#modal-transmission-error').modal('toggle')
 
+    $(".promote_user").click (event) ->
+        user_id = $(@).attr('data-user-id')
+        user_name = $(@).attr('data-user-name')
+        $('#modal-promote').bind 'show', (e) ->
+            $('#promotion_target_user_name').html(user_name)
+            $('#promotion_target_user_id').html(user_id)
+        .modal('toggle')
+
+    $("#confirm_user_promotion").click (event) ->
+        user_id = $('#promotion_target_user_id').text()
+        user_name = $('#promotion_target_user_name').text()
+        $.ajax
+            type: 'GET'
+            scriptCharset: 'utf-8'
+            dataType: 'json'
+            url: '/users/promote/' + user_id
+            success: (res) ->
+                if res.status == 'success'
+                    $tr = $('button[data-user-id="' + user_id + '"]:first').closest('tr')
+                    $tr.children('td').last().html('<button class="demote_user btn btn-mini btn-warning" data-user-id="' + user_id + '"
+                                                    data-user-name="' + user_name + '">降格</button>')
+                    $tr.appendTo('#admins')
+                    $('#modal-promote').modal('toggle')
+                else if res.status == 'forbidden'
+                    $('#modal-forbidden').modal('toggle')
+                else
+                    $('#modal-fatal').modal('toggle')
+            error: (res) ->
+                $('#modal-transmission-error').modal('toggle')
+
 
 

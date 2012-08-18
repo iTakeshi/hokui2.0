@@ -85,6 +85,17 @@ class UsersController < ApplicationController
     render json: { status: :error }
   end
 
+  # GET /users/promote/:id
+  def promote
+    user = User.find(params[:id])
+    user.user_is_admin = true
+    user.save!
+    # TODO notify for user
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
+
   # GET /reset_password
   def forget_password
     @dummy_user = User.new
