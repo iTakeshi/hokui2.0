@@ -18,11 +18,11 @@ $ ->
                                                     data-user-name="' + user_name + '">昇格</button>')
                     $tr.appendTo('#status0')
                 else if res.status == 'forbidden'
-                    $('#modal-forbidden').modal('toggle')
+                    $('#modal-forbidden').modal('show')
                 else
-                    $('#modal-fatal').modal('toggle')
+                    $('#modal-fatal').modal('show')
             error: (res) ->
-                $('#modal-transmission-error').modal('toggle')
+                $('#modal-transmission-error').modal('show')
 
     $(".reject_user").click (event) ->
         user_id = $(@).attr('data-user-id')
@@ -30,7 +30,7 @@ $ ->
         $('#modal-reject').bind 'show', (e) ->
             $('#rejection_target_user_name').html(user_name)
             $('#rejection_target_user_id').html(user_id)
-        .modal('toggle')
+        .modal('show')
 
     $("#confirm_user_rejection").click (event) ->
         user_id = $('#rejection_target_user_id').text()
@@ -42,13 +42,16 @@ $ ->
             success: (res) ->
                 if res.status == 'success'
                     $('button[data-user-id="' + user_id + '"]:first').closest('tr').remove()
-                    $('#modal-reject').modal('toggle')
+                    $('#modal-reject').modal('hide')
                 else if res.status == 'forbidden'
-                    $('#modal-forbidden').modal('toggle')
+                    $('#modal-reject').modal('hide')
+                    $('#modal-forbidden').modal('show')
                 else
-                    $('#modal-fatal').modal('toggle')
+                    $('#modal-reject').modal('hide')
+                    $('#modal-fatal').modal('show')
             error: (res) ->
-                $('#modal-transmission-error').modal('toggle')
+                $('#modal-reject').modal('hide')
+                $('#modal-transmission-error').modal('show')
 
     $(".demote_user").click (event) ->
         user_id = $(@).attr('data-user-id')
@@ -56,7 +59,7 @@ $ ->
         $('#modal-demote').bind 'show', (e) ->
             $('#demotion_target_user_name').html(user_name)
             $('#demotion_target_user_id').html(user_id)
-        .modal('toggle')
+        .modal('show')
 
     $("#confirm_user_demotion").click (event) ->
         user_id = $('#demotion_target_user_id').text()
@@ -72,13 +75,16 @@ $ ->
                     $tr.children('td').last().html('<button class="promote btn btn-mini btn-info" data-user-id="' + user_id + '"
                                                     data-user-name="' + user_name + '">昇格</button>')
                     $tr.appendTo('#status0')
-                    $('#modal-demote').modal('toggle')
+                    $('#modal-demote').modal('hide')
                 else if res.status == 'forbidden'
-                    $('#modal-forbidden').modal('toggle')
+                    $('#modal-demote').modal('hide')
+                    $('#modal-forbidden').modal('show')
                 else
-                    $('#modal-fatal').modal('toggle')
+                    $('#modal-demote').modal('hide')
+                    $('#modal-fatal').modal('show')
             error: (res) ->
-                $('#modal-transmission-error').modal('toggle')
+                $('#modal-demote').modal('hide')
+                $('#modal-transmission-error').modal('show')
 
     $(".promote_user").click (event) ->
         user_id = $(@).attr('data-user-id')
@@ -86,7 +92,7 @@ $ ->
         $('#modal-promote').bind 'show', (e) ->
             $('#promotion_target_user_name').html(user_name)
             $('#promotion_target_user_id').html(user_id)
-        .modal('toggle')
+        .modal('show')
 
     $("#confirm_user_promotion").click (event) ->
         user_id = $('#promotion_target_user_id').text()
@@ -102,13 +108,16 @@ $ ->
                     $tr.children('td').last().html('<button class="demote_user btn btn-mini btn-warning" data-user-id="' + user_id + '"
                                                     data-user-name="' + user_name + '">降格</button>')
                     $tr.appendTo('#admins')
-                    $('#modal-promote').modal('toggle')
+                    $('#modal-promote').modal('hide')
                 else if res.status == 'forbidden'
-                    $('#modal-forbidden').modal('toggle')
+                    $('#modal-promote').modal('hide')
+                    $('#modal-forbidden').modal('show')
                 else
-                    $('#modal-fatal').modal('toggle')
+                    $('#modal-promote').modal('hide')
+                    $('#modal-fatal').modal('show')
             error: (res) ->
-                $('#modal-transmission-error').modal('toggle')
+                $('#modal-promote').modal('hide')
+                $('#modal-transmission-error').modal('show')
 
     $(".delete_user").click (event) ->
         user_id = $(@).attr('data-user-id')
@@ -116,7 +125,7 @@ $ ->
         $('#modal-delete-user').bind 'show', (e) ->
             $('#deletion_target_user_name').html(user_name)
             $('#deletion_target_user_id').html(user_id)
-        .modal('toggle')
+        .modal('show')
 
     $("#confirm_user_deletion").click (event) ->
         user_id = $('#deletion_target_user_id').text()
@@ -128,12 +137,15 @@ $ ->
             success: (res) ->
                 if res.status == 'success'
                     $('button[data-user-id="' + user_id + '"]:first').closest('tr').remove()
-                    $('#modal-delete-user').modal('toggle')
+                    $('#modal-delete-user').modal('hide')
                 else if res.status == 'forbidden'
-                    $('#modal-forbidden').modal('toggle')
+                    $('#modal-delete-user').modal('hide')
+                    $('#modal-forbidden').modal('show')
                 else
-                    $('#modal-fatal').modal('toggle')
+                    $('#modal-delete-user').modal('hide')
+                    $('#modal-fatal').modal('show')
             error: (res) ->
-                $('#modal-transmission-error').modal('toggle')
+                $('#modal-delete-user').modal('hide')
+                $('#modal-transmission-error').modal('show')
 
 
