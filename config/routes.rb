@@ -44,7 +44,8 @@ Hokui::Application.routes.draw do
   get '/study/:term_identifier', to: 'study#term'
   get '/study/:term_identifier/:subject_identifier', to: 'study#subject'
 
-  # temp root
+  get '/admin', to: 'admin#index'
+
   root to: 'index#index'
 
   # The priority is based upon order of creation:

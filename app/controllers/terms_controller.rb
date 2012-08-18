@@ -1,7 +1,8 @@
 # coding: utf-8
 
 class TermsController < ApplicationController
-  before_filter :authorize_as_admin
+  before_filter :authorize_as_admin, except: [:download_timetable_img, :download_timetable_thumb]
+  layout 'admin'
 
   # GET /terms/new
   def new

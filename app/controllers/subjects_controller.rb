@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class SubjectsController < ApplicationController
+  layout 'admin'
 
   # GET /terms/:term_identifier/subjects/new
   def new
