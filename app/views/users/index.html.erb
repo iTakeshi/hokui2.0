@@ -10,6 +10,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>降格</th>
   </tr>
   <% @admins.each do |user| %>
     <tr>
@@ -20,6 +21,9 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="demote btn btn-mini btn-warning"
+                  data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>"
+                  <% if user.id == current_user.id %>disabled="disabled"<% end %>>降格</button></td>
     </tr>
   <%end %>
 </table>
@@ -63,6 +67,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>昇格</th>
   </tr>
   <% @status0.each do |user| %>
     <tr>
@@ -73,6 +78,8 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="promote btn btn-mini btn-info" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">昇格</button></td>
     </tr>
   <%end %>
 </table>
