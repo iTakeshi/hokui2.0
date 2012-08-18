@@ -1,2 +1,15 @@
-<h1>Study#subject</h1>
-<p>Find me in app/views/study/subject.html.erb</p>
+<h1><%= @subject.subject_name %></h1>
+
+<section>
+  <h3>シラバス情報</h3>
+  <dl class="dl-horizontal">
+    <dt>教科名</dt>
+    <dd><%= @subject.subject_name %></dd>
+    <dt>学期</dt>
+    <dd><%= @subject.term.term_name %></dd>
+    <dt>責任教員</dt>
+    <dd><%= @subject.subject_staff %></dd>
+    <dt>シラバス</dt>
+    <dd><%= link_to 'シラバスページを表示', '#', data: { toggle: 'modal' } %></dd>
+  </dl>
+</section>

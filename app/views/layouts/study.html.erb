@@ -8,7 +8,7 @@
           <%= term.term_name %>
         </a>
       </div>
-      <div class="accordion-body collapse <%= i == 0 ? 'in' : '' %>" id="term-<%= term.term_identifier %>">
+      <div class="accordion-body collapse<%= i == 0 ? '' : ' in' %>" id="term-<%= term.term_identifier %>">
         <div class="accordion-inner">
           <ul>
             <% term.subjects.select('subject_identifier,  subject_name').each do |subject| %>

@@ -4,7 +4,9 @@ class StudyController < ApplicationController
   def term
   end
 
+  # GET /study/:term_identifier/:subject_identifier
   def subject
+    @subject = Subject.find(params[:subject_identifier])
   end
 
   def help
