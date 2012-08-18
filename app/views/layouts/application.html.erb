@@ -16,77 +16,49 @@
     <header id="grobal-header">
       <div id="grobal-header-banner">
         <%= image_tag 'banner.png', alt: 'page-top' %>
-        <div id="grobal-header-user" class="btn-toolbar">
-          <div class="btn-group">
-            <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
-              <li><%= link_to 'Log Out', '/logout' %></li>
-            </ul>
-          </div>
-        </div>
       </div>
 
-      <nav id="grobal-header-menu">
-        <ul>
-          <li>
-            <% if @index_page %>
-              <%= link_to raw('<i class="icon-home"></i>Home'), '/',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-home"></i>Home'), '/' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @study_page %>
-              <%= link_to raw('<i class="icon-book"></i>Study'), '/study',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-book"></i>Study'), '/study' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @calendar_page %>
-              <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @enquete_page %>
-              <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @bbs_page %>
-              <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @ml_page %>
-              <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @admin_page %>
-              <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin' %>
-            <% end %>
-          </li>
-          <li>
-            <% if @help_page %>
-              <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help',  class: "self_link" %>
-            <% else %>
-              <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
-            <% end %>
-          </li>
-        </ul>
+      <nav class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="<%= @index_page %>">
+                  <%= link_to raw('<i class="icon-home"></i>Home'), '/' %>
+                </li>
+                <li class="<%= @study_page %>">
+                  <%= link_to raw('<i class="icon-book"></i>Study'), '/study' %>
+                </li>
+                <li class="<%= @calendar_page %>">
+                  <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar' %>
+                </li>
+                <li class="<%= @enquete_page %>">
+                  <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete' %>
+                </li>
+                <li class="<%= @bbs_page %>">
+                  <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs' %>
+                </li>
+                <li class="<%= @ml_page %>">
+                  <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml' %>
+                </li>
+                <li class="<%= @admin_page %>">
+                  <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin' %>
+                </li>
+                <li class="<%= @help_page %>">
+                  <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
+                </li>
+                <li class="dropdown <%= @user_page %>" id="user-menu">
+                  <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
+                    <li><%= link_to 'Log Out', '/logout' %></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
 
