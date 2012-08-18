@@ -110,5 +110,30 @@ $ ->
             error: (res) ->
                 $('#modal-transmission-error').modal('toggle')
 
+    $(".delete_user").click (event) ->
+        user_id = $(@).attr('data-user-id')
+        user_name = $(@).attr('data-user-name')
+        $('#modal-delete-user').bind 'show', (e) ->
+            $('#deletion_target_user_name').html(user_name)
+            $('#deletion_target_user_id').html(user_id)
+        .modal('toggle')
+
+    $("#confirm_user_deletion").click (event) ->
+        user_id = $('#deletion_target_user_id').text()
+        $.ajax
+            type: 'GET'
+            scriptCharset: 'utf-8'
+            dataType: 'json'
+            url: '/users/delete/' + user_id
+            success: (res) ->
+                if res.status == 'success'
+                    $('button[data-user-id="' + user_id + '"]:first').closest('tr').remove()
+                    $('#modal-delete-user').modal('toggle')
+                else if res.status == 'forbidden'
+                    $('#modal-forbidden').modal('toggle')
+                else
+                    $('#modal-fatal').modal('toggle')
+            error: (res) ->
+                $('#modal-transmission-error').modal('toggle')
 
 

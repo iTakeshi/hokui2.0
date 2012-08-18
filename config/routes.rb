@@ -11,6 +11,7 @@ Hokui::Application.routes.draw do
   get '/users/reject/:id', to: 'users#reject'
   get '/users/demote/:id', to: 'users#demote'
   get '/users/promote/:id', to: 'users#promote'
+  get '/users/delete/:id', to: 'users#delete'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

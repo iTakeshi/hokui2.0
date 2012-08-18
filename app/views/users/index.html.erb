@@ -68,6 +68,7 @@
     <th>携帯メール</th>
     <th>登録日</th>
     <th>昇格</th>
+    <th>退会</th>
   </tr>
   <% @status0.each do |user| %>
     <tr>
@@ -80,6 +81,8 @@
       <td><%= user.created_at.to_date.to_s %></td>
       <td><button class="promote_user btn btn-mini btn-info" data-user-id="<%= user.id %>"
                   data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">昇格</button></td>
+      <td><button class="delete_user btn btn-mini btn-danger" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">退会</button></td>
     </tr>
   <%end %>
 </table>
@@ -94,6 +97,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>退会</th>
   </tr>
   <% @status3.each do |user| %>
     <tr>
@@ -104,6 +108,8 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="delete_user btn btn-mini btn-danger" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">退会</button></td>
     </tr>
   <%end %>
 </table>
@@ -119,6 +125,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>退会</th>
   </tr>
   <% @status1.each do |user| %>
     <tr>
@@ -129,6 +136,8 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="delete_user btn btn-mini btn-danger" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">退会</button></td>
     </tr>
   <%end %>
 </table>
@@ -159,7 +168,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">キャンセル</button>
-    <button id="confirm_user_demotion" class="btn btn-danger">降格</button>
+    <button id="confirm_user_demotion" class="btn btn-warning">降格</button>
   </div>
 </div>
 
@@ -174,6 +183,20 @@
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">キャンセル</button>
     <button id="confirm_user_promotion" class="btn btn-info">昇格</button>
+  </div>
+</div>
+
+<div class="modal hide fade" id="modal-delete-user">
+  <div class="modal-header">
+    <h3>ユーザーを退会処理しますか？</h3>
+  </div>
+  <div class="modal-body">
+    <span id="deletion_target_user_name"></span> さんを退会処理し、登録情報を抹消します。<br>よろしいですか？
+    <span id="deletion_target_user_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_user_deletion" class="btn btn-danger">退会</button>
   </div>
 </div>
 
