@@ -11,64 +11,67 @@
   <![endif]-->
 </head>
 <body>
-  <div id="grobal-wrapper">
+  <div class="container">
 
-    <header id="grobal-header">
-      <div id="grobal-header-banner">
-        <%= image_tag 'banner.png', alt: 'page-top' %>
-      </div>
+    <header id="grobal-header" class="row">
+      <div class="span12">
+        <div id="grobal-header-banner">
+          <%= image_tag 'banner.png', alt: 'page-top' %>
+        </div>
 
-      <nav class="navbar">
-        <div class="navbar-inner">
-          <div class="container">
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="<%= @index_page %>">
-                  <%= link_to raw('<i class="icon-home"></i>Home'), '/' %>
-                </li>
-                <li class="<%= @study_page %>">
-                  <%= link_to raw('<i class="icon-book"></i>Study'), '/study' %>
-                </li>
-                <li class="<%= @calendar_page %>">
-                  <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar' %>
-                </li>
-                <li class="<%= @enquete_page %>">
-                  <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete' %>
-                </li>
-                <li class="<%= @bbs_page %>">
-                  <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs' %>
-                </li>
-                <li class="<%= @ml_page %>">
-                  <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml' %>
-                </li>
-                <li class="<%= @admin_page %>">
-                  <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin' %>
-                </li>
-                <li class="<%= @help_page %>">
-                  <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
-                </li>
-                <li class="dropdown <%= @user_page %>" id="user-menu">
-                  <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
-                    <li><%= link_to 'Log Out', '/logout' %></li>
-                  </ul>
-                </li>
-              </ul>
+        <nav class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li class="<%= @index_page %>">
+                    <%= link_to raw('<i class="icon-home"></i>Home'), '/' %>
+                  </li>
+                  <li class="<%= @study_page %>">
+                    <%= link_to raw('<i class="icon-book"></i>Study'), '/study' %>
+                  </li>
+                  <li class="<%= @calendar_page %>">
+                    <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar' %>
+                  </li>
+                  <li class="<%= @enquete_page %>">
+                    <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete' %>
+                  </li>
+                  <li class="<%= @bbs_page %>">
+                    <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs' %>
+                  </li>
+                  <li class="<%= @ml_page %>">
+                    <%= link_to raw('<i class="icon-envelope"></i>freeML'), '/free-ml' %>
+                  </li>
+                  <li class="<%= @admin_page %>">
+                    <%= link_to raw('<i class="icon-wrench"></i>Admin'), '/admin' %>
+                  </li>
+                  <li class="<%= @help_page %>">
+                    <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
+                  </li>
+                  <li class="dropdown <%= @user_page %>" id="user-menu">
+                    <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
+                      <li><%= link_to 'Log Out', '/logout' %></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </header>
 
     <% if content_for?(:side) %>
 
-      <div id="grobal-side">
+    <div class="row">
+      <div id="grobal-side" class="span3">
         <%= yield(:side) %>
       </div>
-      <div id="grobal-content">
 
+      <div id="grobal-content" class="span9">
         <% if flash[:error] %>
           <div id="flash-error" class="alert alert-error">
             <button class="close" data-dismiss="alert">×</button>
@@ -101,9 +104,11 @@
         <%= yield(:content) %>
       </div>
 
+    </div>
     <% else %>
+    <div class="row">
 
-      <div id="grobal-full-width-content">
+      <div id="grobal-full-width-content" class="span12">
 
         <% if flash[:error] %>
           <div id="flash-error" class="alert alert-error">
@@ -137,21 +142,24 @@
         <%= yield %>
       </div>
 
+    </div>
     <% end %>
 
-    <footer id="grobal-footer">
-      <address>
-        Copyright 2011-2012 Hokui-Net Developer Team
-      </address>
-      <div id="grobal-footer-credits">
-        <ul>
-          <li id="grobal-footer-octocat">
-            <%= link_to image_tag('octocat.png', alt: 'Find me on Github!'), 'http://github.com/iTakeshi/hokui2.0', target: '_blank', rel: 'tooltip', title: 'Find me on Github!' %>
-          </li>
-          <li id="grobal-footer-rails">
-            <%= link_to image_tag('rails.png', alt: 'This application is built on Rails.'), 'http://rubyonrails.org/', target: '_blank', rel: 'tooptip', title: 'This application is built on Rails' %>
-          </li>
-        </ul>
+    <footer id="grobal-footer" class="row">
+      <div class="span12">
+        <address>
+          Copyright 2011-2012 Hokui-Net Developer Team
+        </address>
+        <div id="grobal-footer-credits">
+          <ul>
+            <li id="grobal-footer-octocat">
+              <%= link_to image_tag('octocat.png', alt: 'Find me on Github!'), 'http://github.com/iTakeshi/hokui2.0', target: '_blank', rel: 'tooltip', title: 'Find me on Github!' %>
+            </li>
+            <li id="grobal-footer-rails">
+              <%= link_to image_tag('rails.png', alt: 'This application is built on Rails.'), 'http://rubyonrails.org/', target: '_blank', rel: 'tooptip', title: 'This application is built on Rails' %>
+            </li>
+          </ul>
+        </div>
       </div>
     </footer>
 

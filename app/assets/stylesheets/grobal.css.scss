@@ -45,17 +45,7 @@ form {
     max-height: 800px;
 }
 
-#grobal-wrapper {
-    width: 960px;
-    margin: auto;
-    padding: 0;
-}
-
 #grobal-header {
-    width: 100%;
-    margin: 0 0 15px 0;
-    padding: 0;
-
     #grobal-header-banner {
         margin: 0;
         padding: 0;
@@ -82,46 +72,33 @@ form {
     }
 }
 
-#grobal-side {
-    float: left;
-    width: 180px;
-    margin: 0 20px 0 0;
-}
-
-#grobal-content {
-    width: 760px;
-}
-
-#grobal-content:after {
-    content: "";
-    display: block;
-    clear: both;
-}
-
 #grobal-footer {
-    position: relative;
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
+    .span12 {
+        position: relative;
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
 
-    address {
-        margin-top: 5px;
-    }
+        address {
+            margin-top: 5px;
+        }
 
-    #grobal-footer-credits {
-        position: absolute;
-        top: 0; right: 10px;
+        #grobal-footer-credits {
+            position: absolute;
+            top: 0; right: 10px;
 
-        ul {
-            li {
-                float: left;
-                margin: 5px;
-            }
+            ul {
+                li {
+                    float: left;
+                    margin: 5px;
+                }
 
-            li#grobal-footer-rails {
-                margin-top: 7px;
+                li#grobal-footer-rails {
+                    margin-top: 7px;
+                }
             }
         }
     }
 }
+
