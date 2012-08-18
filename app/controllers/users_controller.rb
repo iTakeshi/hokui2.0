@@ -2,7 +2,8 @@
 
 class UsersController < ApplicationController
   skip_before_filter :authorize_as_user, only: [:new, :create, :confirm_email, :forget_password, :reset_password, :set_new_password, :create_new_password]
-  before_filter :authorize_as_admin, only: [:index, :approve, :reject]
+  before_filter :authorize_as_admin, only: [:index, :approve, :reject, :demote, :promote, :delete]
+  layout 'admin', only: :index
 
   # GET /signup
   def new
@@ -69,6 +70,39 @@ class UsersController < ApplicationController
     raise unless user.user_status == 2
     user.delete
     user.send_rejection_notification
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
+
+  # GET /users/demote/:id
+  def demote
+    user = User.find(params[:id])
+    user.user_is_admin = false
+    user.save!
+    # TODO notify for user
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
+
+  # GET /users/promote/:id
+  def promote
+    user = User.find(params[:id])
+    user.user_is_admin = true
+    user.save!
+    # TODO notify for user
+    render json: { status: :success }
+  rescue
+    render json: { status: :error }
+  end
+
+  # GET /users/delete/:id
+  def delete
+    user = User.find(params[:id])
+    raise if user.user_is_admin
+    user.delete
+    # TODO notify for user
     render json: { status: :success }
   rescue
     render json: { status: :error }
@@ -147,7 +181,7 @@ class UsersController < ApplicationController
     @user.user_handle_name = params[:user][:user_handle_name]
     @user.user_email_sub = params[:user][:user_email_sub]
     if @user.save
-      flash[:info] = 'プロフィールを変更しました！'
+      flash[:success] = 'プロフィールを変更しました！'
       redirect_to '/edit_profile'
     else
       render action: :edit

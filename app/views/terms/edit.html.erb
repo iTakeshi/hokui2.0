@@ -1,34 +1,45 @@
-<h1>学期情報</h1>
-<dl>
-  <dt>学期コード</dt>
-  <dd><%= @term.term_identifier %></dd>
-  <dt>学期名</dt>
-  <dd><%= @term.term_name %></dd>
-</dl>
+<h1>学期情報を修正</h1>
 
-<h2>時間割表を更新</h2>
-<% if @term.errors.any? %>
-  <% messages = @term.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
-  <% messages.delete("Password doesn't match confirmation") %>
-  <div id="error_explanation">
-    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
-    <ul>
-      <% messages.each do |msg| %>
-        <li><%= slice_error_message(msg) %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= form_tag "/terms/#{@term.term_identifier}/edit", { class: 'form-horizontal',  multipart: true } do %>
+  <% if @term.errors.any? %>
+    <div id="error_explanation" class="alert alert-block alert-error">
+      <h2><%= @term.errors.full_messages.count %>個の項目にエラーがあります。</h2>
+      <ul>
+        <% @term.errors.full_messages.each do |msg| %>
+          <li><%= slice_error_message(msg) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_tag "/terms/#{@term.term_identifier}/edit", multipart: true do %>
-  <div class="field">
-    <%= label_tag :term_timetable_img, '時間割表' %><br>
-    学校配布の時間割表をスキャンした画像ファイルを選択してください。<br>
-    利用可能なファイル形式：jpeg, png, gif, tiff<br>
-    <%= file_field_tag :term_timetable_img, accept: 'image/jpeg, image/png, image/gif, image/tiff' %>
-  </div>
+  <fieldset>
+    <div class="control-group">
+      <%= label_tag :term_identifier, '学期コード', class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :term_identifier, @term.term_identifier, disabled: true %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= submit_tag '更新' %>
-  </div>
+    <div class="control-group">
+      <%= label_tag :term_name, '学期名', class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :term_name, @term.term_name, disabled: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :term_timetable_img, '時間割表', class: 'control-label' %>
+      <div class="controls">
+        <%= file_field_tag :term_timetable_img, accept: 'image/jpeg, image/png, image/gif, image/tiff' %>
+        <p>
+          学校配布の時間割表をスキャンした画像ファイルを選択してください。<br>
+          利用可能なファイル形式：jpeg, png, gif, tiff
+        </p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= submit_tag '更新', class: 'btn btn-primary', disable_with: '送信中...' %>
+    </div>
+  </fieldset>
 <% end %>

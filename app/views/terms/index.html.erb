@@ -1,13 +1,16 @@
 <h1>学期一覧</h1>
+<p>
+  <%= link_to '新学期', '/terms/new' %>
+</p>
 
-<table class="term_table">
+<table class="table">
   <tr>
     <th>学期コード</th>
     <th>学期名</th>
     <th>教科</th>
-    <th>教科を追加</th>
-    <th>時間割表のMIMEタイプ</th>
+    <th>画像の種類</th>
     <th>時間割(画像クリックで拡大)</th>
+    <th>修正</th>
   </tr>
   <% @terms.each do |term| %>
     <% mime = term.term_timetable_img_content_type %>
@@ -17,18 +20,29 @@
       <td>
         <% subjects = term.subjects %>
         <% number_of_subjects = subjects.length %>
-        <% subjects.each.with_index do |subject, i| %>
-          <%= subject.subject_name %>
-          <% if i < number_of_subjects - 1 %>
-            <br>
-          <% end %>
+        <% subjects.each do |subject| %>
+          <%= link_to subject.subject_name, "/terms/#{term.term_identifier}/subjects/#{subject.subject_identifier}/edit" %>
         <% end %>
+        <br>
+        <%= link_to '教科を追加', "/terms/#{term.term_identifier}/subjects/new" %>
       </td>
-      <td><%= link_to '教科を追加', "/terms/#{term.term_identifier}/subjects/new" %>
       <td><%= mime %></td>
       <td><%= link_to image_tag("/terms/#{term.term_identifier}/thumb/#{term.term_name}_thumb.#{get_extension(mime)}", type: mime, height: '100px', alt: "時間割サムネイル"),
-                      "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}",
-                      data: { colorbox: true, colorbox_height: '800px' } %></td>
+                      "#modal-#{term.term_identifier}", data: { toggle: 'modal' } %></td>
+      <td><%= link_to '修正', "/terms/#{term.term_identifier}/edit" %></td>
     </tr>
   <% end %>
 </table>
+
+<% @terms.each do |term| %>
+  <% mime = term.term_timetable_img_content_type %>
+  <div class="modal hide fade timetable-modal" id="modal-<%= term.term_identifier %>">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3>時間割表 - <%= term.term_name %></h3>
+    </div>
+    <div class="modal-body">
+      <%= image_tag "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}", type: mime, height: '800px', alt: '時間割表' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,32 @@
+<% content_for :side do %>
+
+<div class="accordion" id="study-submenu">
+  <% Term.select('term_identifier, term_name').order('term_identifier DESC').each.with_index do |term, i| %>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#study-submenu" href="#term-<%= term.term_identifier %>">
+          <%= term.term_name %>
+        </a>
+      </div>
+      <div class="accordion-body collapse<%= i == 0 ? '' : ' in' %>" id="term-<%= term.term_identifier %>">
+        <div class="accordion-inner">
+          <ul>
+            <% term.subjects.select('subject_identifier,  subject_name').each do |subject| %>
+              <li><%= link_to subject.subject_name, "/study/#{term.term_identifier}/#{subject.subject_identifier}" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% end %>
+
+<% content_for :content do %>
+<%= yield %>
+<% end %>
+
+<% @study_page = 'active' %>
+<% @page_title = 'Study' %>
+<%= render template: 'layouts/application' %>

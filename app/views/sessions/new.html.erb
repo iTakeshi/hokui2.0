@@ -1,29 +1,34 @@
-<h1>Login</h1>
+<h1>北医ネットにようこそ。</h1>
+<p>利用するためには、ログインする必要があります。</p>
 
-<%= form_tag url: '/login' do %>
-  <div class="field">
-    <%= label_tag :user_email, 'ELMSメールアドレス' %><br>
-    <%= text_field_tag :user_email %>
-  </div>
+<%= form_tag '/login', class: 'form-horizontal' do %>
+  <fieldset>
+    <div class="control-group">
+      <%= label_tag :user_email, 'ELMSメールアドレス', class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :user_email %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= label_tag :password, 'パスワード' %><br>
-    <%= password_field_tag %>
-  </div>
+    <div class="control-group">
+      <%= label_tag :password, 'パスワード', class: 'control-label' %>
+      <div class="controls">
+        <%= password_field_tag %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= label_tag :remember_me, 'ログイン状態を保持' %><br>
-    <%= check_box_tag :remember_me %>
-  </div>
+    <div class="control-group">
+      <%= label_tag :remember_me, 'ログイン状態を保持', class: 'control-label' %>
+      <div class="controls">
+        <%= check_box_tag :remember_me %>
+      </div>
+    </div>
 
-  <div class="action">
-    <%= submit_tag 'GO!' %>
-  </div>
+    <div class="form-actions">
+      <p><%= submit_tag 'GO!', class: 'btn btn-primary', disable_with: '送信中...' %></p>
+      <p><%= link_to 'パスワードをお忘れですか？', '/reset_password' %></p>
+      <p>初めての方へ： 北医ネットを利用するには<%= link_to 'ユーザー登録', '/signup' %>が必要です。</p>
+    </div>
+  </fieldset>
 <% end %>
 
-<div>
-  <%= link_to 'パスワードをお忘れですか？', '/reset_password' %>
-</div>
-
-<div>
-  <%= link_to '北医ネットを利用するにはユーザー登録が必要です。', '/signup' %>

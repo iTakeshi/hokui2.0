@@ -1,27 +1,33 @@
 <h1>教科を追加</h1>
-学期：<%= @term.term_name %>
 
-<% if @subject.errors.any? %>
-  <% messages = @subject.errors.full_messages.delete_if{ |msg| msg.scan('Password digest').length > 0 } %>
-  <% messages.delete("Password doesn't match confirmation") %>
-  <div id="error_explanation">
-    <h2><%= messages.count %>個の項目にエラーがあります。</h2>
-    <ul>
-      <% messages.each do |msg| %>
-        <li><%= slice_error_message(msg) %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= form_for @subject, url: "/terms/#{@term.term_identifier}/subjects/new", html: { class: 'form-horizontal' } do |f| %>
+  <% if @no_html_error %>
+    <div id="error_explanation" class="alert alert-block alert-error">
+      <a class="close" data-dismiss="alert" href="#">×</a>
+      <h4 class="alert-heading">1個の項目にエラーがあります。</h4>
+      <ul>
+        <li>HTMLソースを貼りつけてください。</li>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_for @subject, url: "/terms/#{@term.term_identifier}/subjects/new" do |f| %>
-  <div class="field">
-    <%= f.label :subject_syllabus_html, 'シラバスページのHTMLソース' %><br>
-    北大の授業シラバスページのソースコードをそのまま貼りつけてください。<br>
-    <%= f.text_area :subject_syllabus_html, size: "80x30" %>
-  </div>
+  <fieldset>
+    <div class="control-group">
+      <%= label_tag :term_name, '学期', class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :term_name, @term.term_name, disabled: true %>
+      </div>
+    </div>
 
-  <div class="action">
-    <%= f.submit '追加' %>
-  </div>
+    <div class="control-group">
+      <%= f.label :subject_syllabus_html, raw('大学シラバスページの<br>HTMLソース'), class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :subject_syllabus_html, class: 'input-xlarge', size: '200x10' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit '追加', class: 'btn btn-primary', disable_with: '送信中...' %>
+    </div>
+  </fieldset>
 <% end %>

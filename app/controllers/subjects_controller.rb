@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class SubjectsController < ApplicationController
+  layout 'admin'
 
   # GET /terms/:term_identifier/subjects/new
   def new
@@ -13,7 +14,7 @@ class SubjectsController < ApplicationController
     @term = Term.find(params[:term_identifier])
     @subject = @term.subjects.new
     if params[:subject][:subject_syllabus_html].blank?
-      flash[:error] = "htmlソースを貼りつけてください。"
+      @no_html_error = true
       render action: :new
       return
     end
@@ -21,7 +22,7 @@ class SubjectsController < ApplicationController
     @subject.get_subject_informations
 
     if @subject.save
-      flash[:info] = '教科を追加しました！'
+      flash[:success] = '教科を追加しました！'
       redirect_to '/terms'
     else
       render action: :new

@@ -1,7 +1,7 @@
 <h1>ユーザー管理</h1>
 
 <h2>管理者</h2>
-<table class="user_table" id="admins">
+<table class="table" id="admins">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -10,6 +10,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>降格</th>
   </tr>
   <% @admins.each do |user| %>
     <tr>
@@ -20,12 +21,15 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="demote_user btn btn-mini btn-warning"
+                  data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>"
+                  <% if user.id == current_user.id %>disabled="disabled"<% end %>>降格</button></td>
     </tr>
   <%end %>
 </table>
 
 <h2>承認待ちユーザー</h2>
-<table class="user_table" id="status2">
+<table class="table" id="status2">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -46,15 +50,15 @@
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
       <td>
-        <button class="approve_user" data-user-id="<%= user.id %>">承認</button>
-        <button class="reject_user" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
+        <button class="approve_user btn btn-mini btn-success" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">承認</button>
+        <button class="reject_user btn btn-mini btn-danger" data-user-id="<%= user.id %>" data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">拒否</button>
       </td>
     </tr>
   <%end %>
 </table>
 
 <h2>一般ユーザー</h2>
-<table class="user_table" id="status0">
+<table class="table" id="status0">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -63,6 +67,8 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>昇格</th>
+    <th>退会</th>
   </tr>
   <% @status0.each do |user| %>
     <tr>
@@ -73,12 +79,16 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="promote_user btn btn-mini btn-info" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">昇格</button></td>
+      <td><button class="delete_user btn btn-mini btn-danger" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">退会</button></td>
     </tr>
   <%end %>
 </table>
 
 <h2>パスワード再設定処理中のユーザー</h2>
-<table class="user_table" id="status3">
+<table class="table" id="status3">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -87,6 +97,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>退会</th>
   </tr>
   <% @status3.each do |user| %>
     <tr>
@@ -97,13 +108,15 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="delete_user btn btn-mini btn-danger" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">退会</button></td>
     </tr>
   <%end %>
 </table>
 
 <h2>新規登録ユーザー</h2>
 メールアドレス確認手続きを完了していないので、承認することはできません。
-<table class="user_table" id="status1">
+<table class="table" id="status1">
   <tr>
     <th>ID</th>
     <th>氏名</th>
@@ -112,6 +125,7 @@
     <th>ELMSメール</th>
     <th>携帯メール</th>
     <th>登録日</th>
+    <th>退会</th>
   </tr>
   <% @status1.each do |user| %>
     <tr>
@@ -122,6 +136,107 @@
       <td><%= user.user_email %></td>
       <td><%= user.user_email_sub %></td>
       <td><%= user.created_at.to_date.to_s %></td>
+      <td><button class="delete_user btn btn-mini btn-danger" data-user-id="<%= user.id %>"
+                  data-user-name="<%= user.user_family_name %><%= user.user_given_name %>">退会</button></td>
     </tr>
   <%end %>
 </table>
+
+
+<!-- modal window用の雛形 -->
+<div class="modal hide fade" id="modal-reject">
+  <div class="modal-header">
+    <h3>新規登録を拒否しますか？</h3>
+  </div>
+  <div class="modal-body">
+    <span id="rejection_target_user_name"></span> さんの登録申請を拒否し、登録情報を抹消します。<br>よろしいですか？
+    <span id="rejection_target_user_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_user_rejection" class="btn btn-danger">拒否</button>
+  </div>
+</div>
+
+<div class="modal hide fade" id="modal-demote">
+  <div class="modal-header">
+    <h3>ユーザーを降格しますか？</h3>
+  </div>
+  <div class="modal-body">
+      <span id="demotion_target_user_name"></span> さんから管理者権限を剥奪します。<br>よろしいですか？
+    <span id="demotion_target_user_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_user_demotion" class="btn btn-warning">降格</button>
+  </div>
+</div>
+
+<div class="modal hide fade" id="modal-promote">
+  <div class="modal-header">
+    <h3>ユーザーを昇格しますか？</h3>
+  </div>
+  <div class="modal-body">
+      <span id="promotion_target_user_name"></span> さんに管理者権限を付与します。<br>よろしいですか？
+    <span id="promotion_target_user_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_user_promotion" class="btn btn-info">昇格</button>
+  </div>
+</div>
+
+<div class="modal hide fade" id="modal-delete-user">
+  <div class="modal-header">
+    <h3>ユーザーを退会処理しますか？</h3>
+  </div>
+  <div class="modal-body">
+    <span id="deletion_target_user_name"></span> さんを退会処理し、登録情報を抹消します。<br>よろしいですか？
+    <span id="deletion_target_user_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_user_deletion" class="btn btn-danger">退会</button>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-forbidden">
+  <div class="modal-header">
+    <h3>Forbidden</h3>
+  </div>
+  <div class="modal-body">
+    この操作は管理者にしか認められていません。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-fatal">
+  <div class="modal-header">
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    予期しないエラーが発生しました。<br>
+    この操作はすでに完了している可能性があります。<br>
+    ページを再読み込みしてください。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-transmission-error">
+  <div class="modal-header">
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    通信に失敗しました。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+
+

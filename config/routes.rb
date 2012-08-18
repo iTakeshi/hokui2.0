@@ -1,12 +1,17 @@
 Hokui::Application.routes.draw do
 
+  get "index/index"
+
   get  '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
   get '/users/confirm/:user_auth_token', to: 'users#confirm_email'
-  get '/users/index', to: 'users#index'
+  get '/users', to: 'users#index'
   get '/users/approve/:id', to: 'users#approve'
   get '/users/reject/:id', to: 'users#reject'
+  get '/users/demote/:id', to: 'users#demote'
+  get '/users/promote/:id', to: 'users#promote'
+  get '/users/delete/:id', to: 'users#delete'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -35,8 +40,13 @@ Hokui::Application.routes.draw do
   get '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#edit'
   put '/terms/:term_identifier/subjects/:subject_identifier/edit', to: 'subjects#update'
 
-  # temp root
-  root to: 'users#index'
+  get '/study', to: 'study#help'
+  get '/study/:term_identifier', to: 'study#term'
+  get '/study/:term_identifier/:subject_identifier', to: 'study#subject'
+
+  get '/admin', to: 'admin#index'
+
+  root to: 'index#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
