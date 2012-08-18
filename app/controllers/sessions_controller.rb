@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       else
         cookies.permanent[:remember_me] = false
       end
-      flash[:info] = 'ログインに成功しました！'
+      flash[:success] = 'ログインに成功しました！'
       if session[:requested_url]
         temp_url = session[:requested_url]
         session[:requested_url] = nil

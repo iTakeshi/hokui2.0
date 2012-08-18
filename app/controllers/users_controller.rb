@@ -180,7 +180,7 @@ class UsersController < ApplicationController
     @user.user_handle_name = params[:user][:user_handle_name]
     @user.user_email_sub = params[:user][:user_email_sub]
     if @user.save
-      flash[:info] = 'プロフィールを変更しました！'
+      flash[:success] = 'プロフィールを変更しました！'
       redirect_to '/edit_profile'
     else
       render action: :edit

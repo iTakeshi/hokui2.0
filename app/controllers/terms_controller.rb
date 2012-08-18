@@ -21,7 +21,7 @@ class TermsController < ApplicationController
     end
 
     if @term.save
-      flash[:info] = '新学期を追加しました！'
+      flash[:success] = '新学期を追加しました！'
       redirect_to '/terms'
     else
       render action: :new

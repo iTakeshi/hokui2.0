@@ -21,7 +21,7 @@ class SubjectsController < ApplicationController
     @subject.get_subject_informations
 
     if @subject.save
-      flash[:info] = '教科を追加しました！'
+      flash[:success] = '教科を追加しました！'
       redirect_to '/terms'
     else
       render action: :new
