@@ -35,6 +35,8 @@ set :scm_verbose, true
 set :use_sudo, false
 set :rails_env, :production
 
+default_run_options[:pty] = true
+
 namespace :deploy do
   desc "cause Passenger to initiate a restart"
   task :restart do
