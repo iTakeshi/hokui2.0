@@ -30,7 +30,7 @@ role :db,  domain, :primary => true # This is where Rails migrations will run
 
 
 set :deploy_via, :remote_cache
-set :branch, 'master'
+set :branch, 'development'
 set :scm_verbose, true
 set :use_sudo, false
 set :rails_env, :production
