@@ -28,10 +28,11 @@
           <th colspan="3">問題</th>
           <th colspan="3">解答</th>
         </tr>
-        <% (@subject.past_exams.minimum(:material_year)..@subject.past_exams.maximum(:material_year)).to_a.each.with_index do |year, i| %>
+        <% @subject.past_exams.group(:material_year).map{|obj| obj.material_year}.each.with_index do |year, i| %>
           <% materials = @subject.past_exams.where(material_year: year) %>
+
           <% rowspan = 0 %>
-          <% (materials.minimum(:material_number)..materials.maximum(:material_number)).to_a.each do |number| %>
+          <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
             <% questions = @subject.past_exams.where(material_number: number, material_with_answer: false) %>
             <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true) %>
             <% rowspan += [questions.length, answers.length].max %>
@@ -40,7 +41,7 @@
           <tr>
             <td rowspan="<%= rowspan %>"><%= year %></td>
             <% materials = @subject.past_exams.where(material_year: year) %>
-            <% (materials.minimum(:material_number)..materials.maximum(:material_number)).to_a.each.with_index do |number, j| %>
+            <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
               <% questions = @subject.past_exams.where(material_number: number, material_with_answer: false) %>
               <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true) %>
               <% rows = [questions.length, answers.length].max %>
