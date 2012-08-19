@@ -1,0 +1,84 @@
+<h1>新規ファイルアップロード</h1>
+
+<%= form_for @material, url: "/study/#{@material.subject.term.term_identifier}/#{@material.subject.subject_identifier}/new_#{@type}_file", html: { class: 'form-horizontal', multipart: true } do |f| %>
+  <% if @material.errors.any? %>
+    <div id="error_explanation" class="alert alert-block alert-error">
+      <h2><%= @material.errors.full_messages.count %>個の項目にエラーがあります。</h2>
+      <ul>
+        <% @material.errors.full_messages.each do |msg| %>
+          <li><%= slice_error_message(msg) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :subject_identifier, '教科名', class: 'control-label' %>
+      <div class="controls">
+        <%= f.grouped_collection_select :subject_identifier, Term.all, :subjects, :term_name, :subject_identifier, :subject_name %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_type, 'ファイルの種類', class: 'control-label' %>
+      <div class="controls">
+        <%= f.select :material_type, { '過去問' => 0, '小テスト' => 1, '授業資料' => 2, '個人作成資料' => 3 } %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_year, '年度', class: 'control-label' %>
+      <div class="controls">
+        <% years = Hash.new %>
+        <% for i in 85..93 %>
+          <% years["#{i}期"] = i %>
+        <% end %>
+        <%= f.select :material_year, years, prompt: '期を選択' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_number, '回数', class: 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :material_number %>
+        回数 ×10、追試の時は+1
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_number_alias, '名称', class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :material_number_alias %>
+        空欄可。「中間」「期末」などの名称があれば記入。
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_with_answer, '問題/解答', class: 'control-label' %>
+      <div class="controls">
+        <%= f.check_box :material_with_answer %>
+        解答付きの時はチェックを入れる。
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_comments, '説明', class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :material_comments %>
+        簡潔な説明。(必要があるときのみ。)
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :material_file, 'ファイル', class: 'control-label' %>
+      <div class="controls">
+        <%= file_field_tag :material_file %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit 'アップロード', class: 'btn btn-primary', disable_sith: '送信中...' %>
+    </div>
+  </fieldset>
+<% end %>
