@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   before_filter :authorize_as_user
   protect_from_forgery
 
+  require '/var/app/setting/hokui/server_name.rb'
+  SERVER_NAME = hokui_server_name
+
 private
   def authorize_as_user
     unless current_user
