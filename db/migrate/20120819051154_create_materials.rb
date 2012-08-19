@@ -6,7 +6,6 @@ class CreateMaterials < ActiveRecord::Migration
       t.integer :material_type, null: false
       t.integer :material_year, null: false
       t.integer :material_number, null: false
-      t.string :material_number_alias
       t.boolean :material_with_answer
       t.integer :material_page, null: false
       t.string :material_comments

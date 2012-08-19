@@ -31,7 +31,7 @@
       <%= f.label :material_year, '年度', class: 'control-label' %>
       <div class="controls">
         <% years = Hash.new %>
-        <% for i in 85..93 %>
+        <% for i in 84..93 %>
           <% years["#{i}期"] = i %>
         <% end %>
         <%= f.select :material_year, years, prompt: '期を選択' %>
@@ -39,18 +39,17 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :material_number, '回数', class: 'control-label' %>
+      <%= label_tag :material_number, '試験名', class: 'control-label' %>
       <div class="controls">
-        <%= f.number_field :material_number %>
-        回数 ×10、追試の時は+1
+        <%= select_tag :material_number_base, options_for_select({ '中間' => 10, '期末' => 11, '第1回' => 1, '第2回' => 2, '第3回' => 3, '第4回' => 4, '第5回' => 5, '第6回' => 6 }), prompt: '選択' %>
+        <p>(追試を含めない)試験の回数が2回以下の時は「中間 or 期末」、3回以上の時は「第n回」</p>
       </div>
     </div>
 
     <div class="control-group">
-      <%= f.label :material_number_alias, '名称', class: 'control-label' %>
+      <%= label_tag :material_number_appending, '本試/追試', class: 'control-label' %>
       <div class="controls">
-        <%= f.text_field :material_number_alias %>
-        空欄可。「中間」「期末」などの名称があれば記入。
+        <%= select_tag :material_number_appending, options_for_select({ '本試' => 0, '追試' => 1, '追々試' => 2, '追々々試' => 3 }), prompt: '選択' %>
       </div>
     </div>
 
