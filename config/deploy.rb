@@ -35,6 +35,7 @@ set :scm_verbose, true
 set :use_sudo, false
 set :rails_env, :production
 
+ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
 namespace :deploy do
