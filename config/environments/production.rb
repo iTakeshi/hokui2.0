@@ -31,7 +31,7 @@ Hokui::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -64,4 +64,20 @@ Hokui::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  config.paths['config/database'] = '/var/app/setting/hokui/database.yml'
+
+  require '/var/app/setting/hokui/gmail.rb'
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    authentification: :plain,
+    enable_starttls_auto: true,
+    user_name: gmail_user,
+    password: gmail_password
+  }
+
 end
