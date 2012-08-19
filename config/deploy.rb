@@ -1,9 +1,10 @@
 set :user, 'itakeshi'
 set :domain, 'www.itakeshi.net'
+set :port, '11122'
 set :application, 'hokui'
 
 set :ssh_options, port: '11122'
-set :repository, "#{user}@#{domain}:git/#{application}.git"
+set :repository, "ssh://#{user}@#{domain}:#{port}/home/#{user}/git/#{application}.git"
 set :deploy_to, "/var/app/rails/#{application}"
 
 set :scm, :git
