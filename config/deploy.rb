@@ -7,9 +7,6 @@ set :ssh_option, port: '11122'
 set :repository, "#{user}@#{domain}:git/#{application}.git"
 set :deploy_to, "/var/app/rails/#{application}"
 
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
-
 set :scm, :git
 
 role :web, domain                   # Your HTTP server, Apache/etc
