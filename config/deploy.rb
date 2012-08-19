@@ -40,7 +40,7 @@ set :rails_env, :production
 
 namespace :deploy do
   desc "cause Passenger to initiate a restart"
-  tast :restart do
+  task :restart do
     run "touch #{current_path}/tmp/restart.txt"
   end
 end
