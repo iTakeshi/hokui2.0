@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812030949) do
+ActiveRecord::Schema.define(:version => 20120819031541) do
 
   create_table "subjects", :force => true do |t|
     t.string   "term_identifier",       :null => false
@@ -60,6 +60,5 @@ ActiveRecord::Schema.define(:version => 20120812030949) do
 
   add_index "users", ["user_auth_token"], :name => "index_users_on_user_auth_token", :unique => true
   add_index "users", ["user_email"], :name => "index_users_on_user_email", :unique => true
-  add_index "users", ["user_email_sub"], :name => "index_users_on_user_email_sub", :unique => true
 
 end
