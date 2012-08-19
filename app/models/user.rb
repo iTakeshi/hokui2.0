@@ -2,6 +2,7 @@
 
 class User < ActiveRecord::Base
   has_secure_password
+  has_many :materials
   attr_accessible :user_family_name, :user_given_name, :user_handle_name,
                   :user_birthday, :user_email, :user_email_sub,
                   :password, :password_confirmation
