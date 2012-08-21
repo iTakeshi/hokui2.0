@@ -46,11 +46,31 @@
               <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true) %>
               <% rows = [questions.length, answers.length].max %>
               <%= j != 0 ? raw('<tr>') : '' %>
-              <td rowspan="<%= rows %>"><%= number %></td>
+              <td rowspan="<%= rows %>"><%= get_exam_title number %></td>
               <% rows.times do |k| %>
                 <%= k != 0 ? raw('<tr>') : '' %>
-                  <td><%= questions[k] ? questions[k].material_file_name : '' %></td><td></td><td></td>
-                  <td><%= answers[k] ? answers[k].material_file_name : '' %></td><td></td><td></td>
+                  <% if questions[k] %>
+                    <% file_name = questions[k].material_file_name + questions[k].material_file_ext %>
+                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                    <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
+                    <td>
+                      <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-id="<%= questions[k].id %>">削除</button>
+                    </td>
+                  <% else %>
+                    <td></td><td></td><td></td>
+                  <% end %>
+                  <% if answers[k] %>
+                    <% file_name = answers[k].material_file_name + answers[k].material_file_ext %>
+                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %></td>
+                    <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
+                    <td>
+                      <%= link_to '修正', "/materials/#{answers[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-id="<%= answers[k].id %>">削除</button>
+                    </td>
+                  <% else %>
+                    <td></td><td></td><td></td>
+                  <% end %>
                 </tr>
               <% end %>
             </tr>
