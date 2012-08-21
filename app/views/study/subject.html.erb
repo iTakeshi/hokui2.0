@@ -42,8 +42,8 @@
             <td rowspan="<%= rowspan %>"><%= year %></td>
             <% materials = @subject.past_exams.where(material_year: year) %>
             <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
-              <% questions = @subject.past_exams.where(material_number: number, material_with_answer: false) %>
-              <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true) %>
+              <% questions = @subject.past_exams.where(material_number: number, material_with_answer: false).order('material_page ASC') %>
+              <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true).order('material_page ASC') %>
               <% rows = [questions.length, answers.length].max %>
               <%= j != 0 ? raw('<tr>') : '' %>
               <td rowspan="<%= rows %>"><%= get_exam_title number %></td>
@@ -105,8 +105,8 @@
             <td rowspan="<%= rowspan %>"><%= year %></td>
             <% materials = @subject.quizzes.where(material_year: year) %>
             <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
-              <% questions = @subject.quizzes.where(material_number: number, material_with_answer: false) %>
-              <% answers = @subject.quizzes.where(material_number: number, material_with_answer: true) %>
+              <% questions = @subject.quizzes.where(material_number: number, material_with_answer: false).order('material_page ASC') %>
+              <% answers = @subject.quizzes.where(material_number: number, material_with_answer: true).order('material_page ASC') %>
               <% rows = [questions.length, answers.length].max %>
               <%= j != 0 ? raw('<tr>') : '' %>
               <td rowspan="<%= rows %>"><%= number %> 回</td>
@@ -146,6 +146,47 @@
   <section>
     <h4>授業資料</h4>
     <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_summary_file", class: 'btn btn-primary btn-mini' %>
+    <% if @subject.summaries.any? %>
+      <table class="table">
+        <tr>
+          <th>年度</th>
+          <th>回</th>
+          <th colspan="5">ファイル</th>
+        </tr>
+        <% @subject.summaries.group(:material_year).map{|obj| obj.material_year}.each.with_index do |year, i| %>
+          <% materials = @subject.summaries.where(material_year: year) %>
+
+          <% rowspan = 0 %>
+          <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
+            <% questions = @subject.summaries.where(material_number: number) %>
+            <% rowspan += questions.length %>
+          <% end %>
+
+          <tr>
+            <td rowspan="<%= rowspan %>"><%= year %></td>
+            <% materials = @subject.summaries.where(material_year: year) %>
+            <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
+              <% questions = @subject.summaries.where(material_number: number).order('id DESC') %>
+              <% rows = questions.length %>
+              <%= j != 0 ? raw('<tr>') : '' %>
+              <td rowspan="<%= rows %>"><%= number %> 回</td>
+              <% rows.times do |k| %>
+                <%= k != 0 ? raw('<tr>') : '' %>
+                  <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
+                  <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                  <td><%= questions[k].user.user_handle_name %></td><td><%= questions[k].material_download_count %> 回</td>
+                  <td><%= questions[k].material_comments %></td>
+                  <td>
+                    <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %>
+                    <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= questions[k].id %>">削除</button>
+                  </td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    <% end %>
   </section>
 
   <section>
