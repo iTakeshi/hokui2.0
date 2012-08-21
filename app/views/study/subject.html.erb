@@ -192,6 +192,25 @@
   <section>
     <h4>個人ファイル</h4>
     <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_personal_file", class: 'btn btn-primary btn-mini' %>
+    <% if @subject.personal_materials.any? %>
+      <table class="table">
+        <tr>
+          <th colspan="5">ファイル</th>
+        </tr>
+        <tr>
+          <% @subject.personal_materials.each do |material| %>
+            <% file_name = "#{material.material_file_name}.#{material.material_file_ext}" %>
+            <td><%= link_to file_name, "/materials/#{material.id}/download/#{file_name}" %></td>
+            <td><%= material.user.user_handle_name %></td><td><%= material.material_download_count %> 回</td>
+            <td><%= material.material_comments %></td>
+            <td>
+              <%= link_to '修正', "/materials/#{material.id}/edit", class: 'btn btn-mini btn-info' %>
+              <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= material.id %>">削除</button>
+            </td>
+          <% end %>
+        </tr>
+      </table>
+    <% end %>
   </section>
 </section>
 

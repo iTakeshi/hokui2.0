@@ -34,6 +34,19 @@ class MaterialsController < ApplicationController
     render :new
   end
 
+  # GET /study/:term_identifier/:subject_identifier/new_personal_file
+  def new_personal
+    @material = Material.new(
+      subject_identifier: params[:subject_identifier],
+      material_type: 3,
+      material_with_answer: false,
+      material_number: 1,
+      material_year: 93
+    )
+    @type = 'personal'
+    render :new
+  end
+
   # POST /study/:term_identifier/:subject_identifier/new_exam_file
   def create
     @material = Material.new(params[:material])
@@ -50,6 +63,11 @@ class MaterialsController < ApplicationController
     end
     if @material.material_type == 2
       @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{@material.material_page}"
+    end
+    if @material.material_type == 3
+      @material.material_year = 93
+      @material.material_number = 1
+      @material.material_file_name = "#{@material.subject.subject_name}-#{@material.material_page}"
     end
     @material.material_file_content_type = params[:material_file].content_type
     @material.material_file_ext = get_extension(@material.material_file_content_type)

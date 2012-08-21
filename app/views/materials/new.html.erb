@@ -27,16 +27,18 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :material_year, '年度', class: 'control-label' %>
-      <div class="controls">
-        <% years = Hash.new %>
-        <% for i in 84..93 %>
-          <% years["#{i}期"] = i %>
-        <% end %>
-        <%= f.select :material_year, years, prompt: '期を選択' %>
+    <% unless @type == 'personal' %>
+      <div class="control-group">
+        <%= f.label :material_year, '年度', class: 'control-label' %>
+        <div class="controls">
+          <% years = Hash.new %>
+          <% for i in 84..93 %>
+            <% years["#{i}期"] = i %>
+          <% end %>
+          <%= f.select :material_year, years, prompt: '期を選択' %>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <% if @type == 'exam' %>
       <div class="control-group">
@@ -78,7 +80,7 @@
       <%= f.label :material_comments, '説明', class: 'control-label' %>
       <div class="controls">
         <%= f.text_field :material_comments %>
-        簡潔な説明。(必要があるときのみ。)
+        簡潔な説明。
       </div>
     </div>
 
