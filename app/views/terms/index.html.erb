@@ -24,7 +24,7 @@
           <%= link_to subject.subject_name, "/terms/#{term.term_identifier}/subjects/#{subject.subject_identifier}/edit" %>
         <% end %>
         <br>
-        <%= link_to '教科を追加', "/terms/#{term.term_identifier}/subjects/new" %>
+        <%= link_to '教科を追加', "/terms/#{term.term_identifier}/subjects/new", class: 'btn btn-mini btn-primary' %>
       </td>
       <td><%= mime %></td>
       <td><%= link_to image_tag("/terms/#{term.term_identifier}/thumb/#{term.term_name}_thumb.#{get_extension(mime)}", type: mime, height: '100px', alt: "時間割サムネイル"),
