@@ -13,13 +13,25 @@ class MaterialsController < ApplicationController
     render :new
   end
 
+  # GET /study/:term_identifier/:subject_identifier/new_quiz_file
+  def new_quiz
+    @material = Material.new(
+      subject_identifier: params[:subject_identifier],
+      material_type: 1
+    )
+    @type = 'quiz'
+    render :new
+  end
+
   # POST /study/:term_identifier/:subject_identifier/new_exam_file
   def create
     @material = Material.new(params[:material])
-    @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
     @material.user_id = current_user.id
     @material.get_page
-    exam_title = get_exam_title(@material.material_number)
+    if @material.material_type == 0
+      @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
+      exam_title = get_exam_title(@material.material_number)
+    end
     q_a = ( @material.material_with_answer ? 'a' : 'q' )
     @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
     @material.material_file_content_type = params[:material_file].content_type
@@ -59,10 +71,14 @@ class MaterialsController < ApplicationController
     @material.material_year = p[:material_year]
     @material.material_with_answer = p[:material_with_answer]
     @material.material_comments = p[:material_comments]
-    @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
+    if @material.material_type == 0
+      @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
+      exam_title = get_exam_title(@material.material_number)
+    else
+      @material.material_number = p[:material_number]
+    end
     @material.get_page
     if params[:material_file]
-      exam_title = get_exam_title(@material.material_number)
       q_a = ( @material.material_with_answer ? 'a' : 'q' )
       @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
       @material.material_file_content_type = params[:material_file].content_type

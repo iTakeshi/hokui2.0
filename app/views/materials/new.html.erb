@@ -38,20 +38,31 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <%= label_tag :material_number, '試験名', class: 'control-label' %>
-      <div class="controls">
-        <%= select_tag :material_number_base, options_for_select({ '中間' => 10, '期末' => 11, '第1回' => 1, '第2回' => 2, '第3回' => 3, '第4回' => 4, '第5回' => 5, '第6回' => 6 }), prompt: '選択' %>
-        <p>(追試を含めない)試験の回数が2回以下の時は「中間 or 期末」、3回以上の時は「第n回」</p>
+    <% if @type == 'exam' %>
+      <div class="control-group">
+        <%= label_tag :material_number, '試験名', class: 'control-label' %>
+        <div class="controls">
+          <%= select_tag :material_number_base, options_for_select({ '中間' => 10, '期末' => 11, '第1回' => 1, '第2回' => 2, '第3回' => 3, '第4回' => 4, '第5回' => 5, '第6回' => 6 }), prompt: '選択' %>
+          <p>(追試を含めない)試験の回数が2回以下の時は「中間 or 期末」、3回以上の時は「第n回」</p>
+        </div>
       </div>
-    </div>
 
-    <div class="control-group">
-      <%= label_tag :material_number_appending, '本試/追試', class: 'control-label' %>
-      <div class="controls">
-        <%= select_tag :material_number_appending, options_for_select({ '本試' => 0, '追試' => 1, '追々試' => 2, '追々々試' => 3 }), prompt: '選択' %>
+      <div class="control-group">
+        <%= label_tag :material_number_appending, '本試/追試', class: 'control-label' %>
+        <div class="controls">
+          <%= select_tag :material_number_appending, options_for_select({ '本試' => 0, '追試' => 1, '追々試' => 2, '追々々試' => 3 }), prompt: '選択' %>
+        </div>
       </div>
-    </div>
+    <% end %>
+
+    <% if @type == 'quiz' %>
+      <div class="control-group">
+        <%= f.label :material_number, '回数', class: 'control-label' %>
+        <div class="controls">
+          <%= f.number_field :material_number %>
+        </div>
+      </div>
+    <% end %>
 
     <div class="control-group">
       <%= f.label :material_with_answer, '問題/解答', class: 'control-label' %>

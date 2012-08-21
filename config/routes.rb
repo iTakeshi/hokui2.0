@@ -45,6 +45,8 @@ Hokui::Application.routes.draw do
   get '/study/:term_identifier/:subject_identifier', to: 'study#subject'
   get '/study/:term_identifier/:subject_identifier/new_exam_file', to: 'materials#new_exam'
   post '/study/:term_identifier/:subject_identifier/new_exam_file', to: 'materials#create'
+  get '/study/:term_identifier/:subject_identifier/new_quiz_file', to: 'materials#new_quiz'
+  post '/study/:term_identifier/:subject_identifier/new_quiz_file', to: 'materials#create'
 
   get '/materials/:material_id/download/:material_file_name', to: 'materials#download'
   get '/materials/:material_id/edit', to: 'materials#edit'
