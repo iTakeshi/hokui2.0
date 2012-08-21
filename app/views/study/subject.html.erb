@@ -50,7 +50,7 @@
               <% rows.times do |k| %>
                 <%= k != 0 ? raw('<tr>') : '' %>
                   <% if questions[k] %>
-                    <% file_name = questions[k].material_file_name + questions[k].material_file_ext %>
+                    <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
                     <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
                     <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
                     <td>
@@ -61,7 +61,7 @@
                     <td></td><td></td><td></td>
                   <% end %>
                   <% if answers[k] %>
-                    <% file_name = answers[k].material_file_name + answers[k].material_file_ext %>
+                    <% file_name = "#{answers[k].material_file_name}.#{answers[k].material_file_ext}" %>
                     <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %></td>
                     <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
                     <td>

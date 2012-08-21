@@ -37,6 +37,12 @@ class MaterialsController < ApplicationController
     end
   end
 
+  # GET /materials/:material_id/download/:material_file_name
+  def download
+    material = Material.find(params[:material_id])
+    send_file "/var/app/files/hokui/#{params[:material_file_name]}.#{params[:format]}", filename: params[:file_name], disposition: 'inline', content_type: material.material_file_content_type
+  end
+
 private
   def get_exam_title(number)
     base_name = case ( number / 10 )
