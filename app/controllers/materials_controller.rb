@@ -73,7 +73,7 @@ class MaterialsController < ApplicationController
     end
 
     if @material.save
-      flash[:success] = "ファイルのアップロードに成功しました！"
+      flash[:info] = "ファイル情報を変更しました。"
       redirect_to "/study/#{@material.subject.term_identifier}/#{@material.subject_identifier}"
     else
       render :new
