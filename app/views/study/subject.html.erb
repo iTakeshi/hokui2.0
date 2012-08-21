@@ -55,7 +55,7 @@
                     <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
                     <td>
                       <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
-                      <button class="btn btn-mini btn-danger delete_material" data-material-id="<%= questions[k].id %>">削除</button>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= questions[k].id %>">削除</button>
                     </td>
                   <% else %>
                     <td></td><td></td><td></td>
@@ -66,7 +66,7 @@
                     <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
                     <td>
                       <%= link_to '修正', "/materials/#{answers[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
-                      <button class="btn btn-mini btn-danger delete_material" data-material-id="<%= answers[k].id %>">削除</button>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= answers[k].id %>">削除</button>
                     </td>
                   <% else %>
                     <td></td><td></td><td></td>
@@ -97,6 +97,57 @@
 </section>
 
 
+<div class="modal hide fade" id="modal-delete">
+  <div class="modal-header">
+    <h3>ファイルを削除しますか？</h3>
+  </div>
+  <div class="modal-body">
+    <span id="deletion_target_material_name"></span> を削除します。<br>よろしいですか？
+    <span id="deletion_target_material_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_material_deletion" class="btn btn-danger">削除</button>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-forbidden">
+  <div class="modal-header">
+    <h3>Forbidden</h3>
+  </div>
+  <div class="modal-body">
+    この操作は管理者とファイル投稿者本人にしか認められていません。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-fatal">
+  <div class="modal-header">
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    予期しないエラーが発生しました。<br>
+    この操作はすでに完了している可能性があります。<br>
+    ページを再読み込みしてください。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-transmission-error">
+  <div class="modal-header">
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    通信に失敗しました。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
 
 
 

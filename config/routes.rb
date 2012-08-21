@@ -49,6 +49,7 @@ Hokui::Application.routes.draw do
   get '/materials/:material_id/download/:material_file_name', to: 'materials#download'
   get '/materials/:material_id/edit', to: 'materials#edit'
   put '/materials/:material_id/edit', to: 'materials#update'
+  get '/materials/delete/:material_id', to: 'materials#delete'
 
   get '/admin', to: 'admin#index'
 

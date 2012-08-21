@@ -80,6 +80,20 @@ class MaterialsController < ApplicationController
     end
   end
 
+  # GET /materials/delete/:material_id
+  def delete
+    material = Material.find(params[:material_id])
+    unless current_user.user_is_admin or current_user.id == material.user.id
+      render json: { status: :forbidden }
+      return
+    end
+    File.delete("/var/app/files/hokui/#{material.id}.#{material.material_file_ext}")
+    material.delete
+    render json: { status: :success }
+  rescue
+    render json: { status: :error}
+  end
+
 private
   def get_exam_title(number)
     base_name = case ( number / 10 )
