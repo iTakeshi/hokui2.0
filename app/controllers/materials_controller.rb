@@ -43,6 +43,41 @@ class MaterialsController < ApplicationController
     send_file "/var/app/files/hokui/#{params[:material_file_name]}.#{params[:format]}", filename: params[:file_name], disposition: 'inline', content_type: material.material_file_content_type
   end
 
+  # GET /materials/:material_id/edit
+  def edit
+    @material = Material.find(params[:material_id])
+  end
+
+  # PUT /materials/:material_id/edit
+  def update
+    @material = Material.find(params[:material_id])
+    p = params[:material]
+    @material.subject_identifier = p[:subject_identifier]
+    @material.material_type = p[:material_type]
+    @material.material_year = p[:material_year]
+    @material.material_with_answer = p[:material_with_answer]
+    @material.material_comments = p[:material_comments]
+    @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
+    @material.get_page
+    if params[:material_file]
+      exam_title = get_exam_title(@material.material_number)
+      q_a = ( @material.material_with_answer ? 'a' : 'q' )
+      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
+      @material.material_file_content_type = params[:material_file].content_type
+      @material.material_file_ext = get_extension(@material.material_file_content_type)
+      File.open( "/var/app/files/hokui/#{@material.material_file_name}.#{@material.material_file_ext}", 'wb') do |f|
+        f.write(params[:material_file].read)
+      end
+    end
+
+    if @material.save
+      flash[:success] = "ファイルのアップロードに成功しました！"
+      redirect_to "/study/#{@material.subject.term_identifier}/#{@material.subject_identifier}"
+    else
+      render :new
+    end
+  end
+
 private
   def get_exam_title(number)
     base_name = case ( number / 10 )

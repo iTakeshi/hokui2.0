@@ -47,6 +47,8 @@ Hokui::Application.routes.draw do
   post '/study/:term_identifier/:subject_identifier/new_exam_file', to: 'materials#create'
 
   get '/materials/:material_id/download/:material_file_name', to: 'materials#download'
+  get '/materials/:material_id/edit', to: 'materials#edit'
+  put '/materials/:material_id/edit', to: 'materials#update'
 
   get '/admin', to: 'admin#index'
 

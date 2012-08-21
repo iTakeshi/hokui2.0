@@ -1,0 +1,84 @@
+<h1>ファイル情報を修正</h1>
+
+<%= form_for @material, url: "/materials/#{@material.id}/edit", html: { multipart: true, class: 'form-horizontal' } do |f| %>
+  <% if @material.errors.any? %>
+    <div id="error_explanation" class="alert alert-block alert-error">
+      <h2><%= @material.errors.full_messages.count %>個の項目にエラーがあります。</h2>
+      <ul>
+        <% @material.errors.full_messages.each do |msg| %>
+          <li><%= slice_error_message(msg) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :subject_identifier, '教科名', class: 'control-label' %>
+      <div class="controls">
+        <%= f.grouped_collection_select :subject_identifier, Term.all, :subjects, :term_name, :subject_identifier, :subject_name %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_type, 'ファイルの種類', class: 'control-label' %>
+      <div class="controls">
+        <%= f.select :material_type, { '過去問' => 0, '小テスト' => 1, '授業資料' => 2, '個人作成資料' => 3 } %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_year, '年度', class: 'control-label' %>
+      <div class="controls">
+        <% years = Hash.new %>
+        <% for i in 84..93 %>
+          <% years["#{i}期"] = i %>
+        <% end %>
+        <%= f.select :material_year, years, prompt: '期を選択' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :material_number, '試験名', class: 'control-label' %>
+      <div class="controls">
+        <%= select_tag :material_number_base, options_for_select({ '中間' => 10, '期末' => 11, '第1回' => 1, '第2回' => 2, '第3回' => 3, '第4回' => 4, '第5回' => 5, '第6回' => 6 }, @material.material_number / 10), prompt: '選択' %>
+        <p>(追試を含めない)試験の回数が2回以下の時は「中間 or 期末」、3回以上の時は「第n回」</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :material_number_appending, '本試/追試', class: 'control-label' %>
+      <div class="controls">
+        <%= select_tag :material_number_appending, options_for_select({ '本試' => 0, '追試' => 1, '追々試' => 2, '追々々試' => 3 }, @material.material_number % 10), prompt: '選択' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_with_answer, '問題/解答', class: 'control-label' %>
+      <div class="controls">
+        <%= f.check_box :material_with_answer %>
+        解答付きの時はチェックを入れる。
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :material_comments, '説明', class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :material_comments %>
+        簡潔な説明。(必要があるときのみ。)
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :material_file, 'ファイル', class: 'control-label' %>
+      <div class="controls">
+        <%= file_field_tag :material_file %>
+        空欄の時は既存ファイルを適用します。
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit 'アップロード', class: 'btn btn-primary', disable_sith: '送信中...' %>
+    </div>
+  </fieldset>
+<% end %>
