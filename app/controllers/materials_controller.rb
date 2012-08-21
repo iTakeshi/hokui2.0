@@ -24,12 +24,12 @@ class MaterialsController < ApplicationController
     @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
     @material.material_file_content_type = params[:material_file].content_type
     @material.material_file_ext = get_extension(@material.material_file_content_type)
-    File.open( "/var/app/files/hokui/#{@material.material_file_name}.#{@material.material_file_ext}", 'wb') do |f|
-      f.write(params[:material_file].read)
-    end
     @material.material_download_count = 0
 
     if @material.save
+      File.open( "/var/app/files/hokui/#{@material.id}.#{@material.material_file_ext}", 'wb') do |f|
+        f.write(params[:material_file].read)
+      end
       flash[:success] = "ファイルのアップロードに成功しました！"
       redirect_to "/study/#{@material.subject.term_identifier}/#{@material.subject_identifier}"
     else
@@ -40,7 +40,9 @@ class MaterialsController < ApplicationController
   # GET /materials/:material_id/download/:material_file_name
   def download
     material = Material.find(params[:material_id])
-    send_file "/var/app/files/hokui/#{params[:material_file_name]}.#{params[:format]}", filename: params[:file_name], disposition: 'inline', content_type: material.material_file_content_type
+    material.increment(:material_download_count)
+    send_file "/var/app/files/hokui/#{params[:material_id]}.#{params[:format]}", filename: "#{params[:file_name]}", disposition: 'inline', content_type: material.material_file_content_type
+    material.save!
   end
 
   # GET /materials/:material_id/edit
@@ -65,7 +67,7 @@ class MaterialsController < ApplicationController
       @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
       @material.material_file_content_type = params[:material_file].content_type
       @material.material_file_ext = get_extension(@material.material_file_content_type)
-      File.open( "/var/app/files/hokui/#{@material.material_file_name}.#{@material.material_file_ext}", 'wb') do |f|
+      File.open( "/var/app/files/hokui/#{@material.id}.#{@material.material_file_ext}", 'wb') do |f|
         f.write(params[:material_file].read)
       end
     end
