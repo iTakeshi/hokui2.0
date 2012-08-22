@@ -49,7 +49,15 @@
                   <li class="<%= @help_page %>">
                     <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
                   </li>
-                  <li class="dropdown <%= @user_page %>" id="user-menu">
+                  <li class="dropdown visible-desktop <%= @user_page %>" id="user-menu">
+                    <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
+                      <li><%= link_to 'Log Out', '/logout' %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown hidden-desktop <%= @user_page %>">
                     <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
