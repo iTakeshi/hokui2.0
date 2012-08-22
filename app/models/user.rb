@@ -80,6 +80,18 @@ class User < ActiveRecord::Base
     UserMailer.notify_rejected(self).deliver
   end
 
+  def send_promotion_notification
+    UserMailer.notify_promoted(self).deliver
+  end
+
+  def send_demotion_notification
+    UserMailer.notify_demoted(self).deliver
+  end
+
+  def send_deletion_notification
+    UserMailer.notify_deleted(self).deliver
+  end
+
   def reset_password
     self.user_status = 3
     self.generate_user_secret_token
