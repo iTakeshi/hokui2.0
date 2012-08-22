@@ -1,6 +1,11 @@
 <h1>新規ファイルアップロード</h1>
 
-<%= form_for @material, url: "/study/#{@material.subject.term.term_identifier}/#{@material.subject.subject_identifier}/new_#{@type}_file", html: { class: 'form-horizontal', multipart: true } do |f| %>
+<% type = 'exam' if @material.material_type == 0 %>
+<% type = 'quiz' if @material.material_type == 1 %>
+<% type = 'summary' if @material.material_type == 2 %>
+<% type = 'personal' if @material.material_type == 3 %>
+
+<%= form_for @material, url: "/study/#{@material.subject.term.term_identifier}/#{@material.subject.subject_identifier}/new_#{type}_file", html: { class: 'form-horizontal', multipart: true } do |f| %>
   <% if @material.errors.any? %>
     <div id="error_explanation" class="alert alert-block alert-error">
       <h2><%= @material.errors.full_messages.count %>個の項目にエラーがあります。</h2>
@@ -27,7 +32,7 @@
       </div>
     </div>
 
-    <% unless @type == 'personal' %>
+    <% unless @material.material_type == 3 %>
       <div class="control-group">
         <%= f.label :material_year, '年度', class: 'control-label' %>
         <div class="controls">
@@ -38,9 +43,11 @@
           <%= f.select :material_year, years, prompt: '期を選択' %>
         </div>
       </div>
+    <% else %>
+      <%= f.hidden_field :material_year, value: 93 %>
     <% end %>
 
-    <% if @type == 'exam' %>
+    <% if @material.material_type == 0 %>
       <div class="control-group">
         <%= label_tag :material_number, '試験名', class: 'control-label' %>
         <div class="controls">
@@ -55,18 +62,18 @@
           <%= select_tag :material_number_appending, options_for_select({ '本試' => 0, '追試' => 1, '追々試' => 2, '追々々試' => 3 }), prompt: '選択' %>
         </div>
       </div>
-    <% end %>
-
-    <% if @type == 'quiz' or @type == 'summary' %>
+    <% elsif @material.material_type == 1 or @material.material_type == 2 %>
       <div class="control-group">
         <%= f.label :material_number, '回数', class: 'control-label' %>
         <div class="controls">
           <%= f.number_field :material_number %>
         </div>
       </div>
+    <% else %>
+      <%= f.hidden_field :material_number, value: 1 %>
     <% end %>
 
-    <% if @type == 'exam' or @type == 'quiz' %>
+    <% if @material.material_type == 0 or @material.material_type == 1 %>
       <div class="control-group">
         <%= f.label :material_with_answer, '問題/解答', class: 'control-label' %>
         <div class="controls">
@@ -74,6 +81,8 @@
           解答付きの時はチェックを入れる。
         </div>
       </div>
+    <% else %>
+      <%= f.hidden_field :material_with_answer, value: false %>
     <% end %>
 
     <div class="control-group">

@@ -27,16 +27,20 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :material_year, '年度', class: 'control-label' %>
-      <div class="controls">
-        <% years = Hash.new %>
-        <% for i in 84..93 %>
-          <% years["#{i}期"] = i %>
-        <% end %>
-        <%= f.select :material_year, years, prompt: '期を選択' %>
+    <% unless @material.material_type == 3 %>
+      <div class="control-group">
+        <%= f.label :material_year, '年度', class: 'control-label' %>
+        <div class="controls">
+          <% years = Hash.new %>
+          <% for i in 84..93 %>
+            <% years["#{i}期"] = i %>
+          <% end %>
+          <%= f.select :material_year, years, prompt: '期を選択' %>
+        </div>
       </div>
-    </div>
+    <% else %>
+      <%= f.hidden_field :material_year, value: 93 %>
+    <% end %>
 
     <% if @material.material_type == 0 %>
       <div class="control-group">
@@ -53,15 +57,15 @@
           <%= select_tag :material_number_appending, options_for_select({ '本試' => 0, '追試' => 1, '追々試' => 2, '追々々試' => 3 }, @material.material_number % 10), prompt: '選択' %>
         </div>
       </div>
-    <% end %>
-
-    <% if @material.material_type == 1 or @material.material_type == 2 %>
+    <% elsif @material.material_type == 1 or @material.material_type == 2 %>
       <div class="control-group">
         <%= f.label :material_number, '回数', class: 'control-label' %>
         <div class="controls">
           <%= f.number_field :material_number %>
         </div>
       </div>
+    <% else %>
+      <%= f.hidden_field :material_number, value: 1 %>
     <% end %>
 
     <% if @material.material_type == 0 or @material.material_type == 1 %>
@@ -72,6 +76,8 @@
           解答付きの時はチェックを入れる。
         </div>
       </div>
+    <% else %>
+      <%= f.hidden_field :material_with_answer, value: false %>
     <% end %>
 
     <div class="control-group">

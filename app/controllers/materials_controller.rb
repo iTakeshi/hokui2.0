@@ -9,7 +9,6 @@ class MaterialsController < ApplicationController
       subject_identifier: params[:subject_identifier],
       material_type: 0
     )
-    @type = 'exam'
     render :new
   end
 
@@ -19,7 +18,6 @@ class MaterialsController < ApplicationController
       subject_identifier: params[:subject_identifier],
       material_type: 1
     )
-    @type = 'quiz'
     render :new
   end
 
@@ -28,9 +26,9 @@ class MaterialsController < ApplicationController
     @material = Material.new(
       subject_identifier: params[:subject_identifier],
       material_type: 2,
+      material_year: 93,
       material_with_answer: false
     )
-    @type = 'summary'
     render :new
   end
 
@@ -39,39 +37,46 @@ class MaterialsController < ApplicationController
     @material = Material.new(
       subject_identifier: params[:subject_identifier],
       material_type: 3,
-      material_with_answer: false,
+      material_year: 93,
       material_number: 1,
-      material_year: 93
+      material_with_answer: false
     )
-    @type = 'personal'
     render :new
   end
 
   # POST /study/:term_identifier/:subject_identifier/new_exam_file
   def create
-    @material = Material.new(params[:material])
+    p = params[:material]
+    @material = Material.new()
+    @material.subject_identifier = p[:subject_identifier]
     @material.user_id = current_user.id
-    @material.get_page
-    q_a = ( @material.material_with_answer ? 'a' : 'q' )
+    @material.material_type = p[:material_type]
+    @material.material_year = p[:material_year]
     if @material.material_type == 0
       @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
-      exam_title = get_exam_title(@material.material_number)
-      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
+    else
+      @material.material_number = p[:material_number]
     end
-    if @material.material_type == 1
-      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{q_a}-#{@material.material_page}"
-    end
-    if @material.material_type == 2
-      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{@material.material_page}"
-    end
-    if @material.material_type == 3
-      @material.material_year = 93
-      @material.material_number = 1
-      @material.material_file_name = "#{@material.subject.subject_name}-#{@material.material_page}"
-    end
+    @material.material_with_answer = p[:material_with_answer]
+    @material.get_page
+    @material.material_comments = p[:material_comments]
     @material.material_file_content_type = params[:material_file].content_type
     @material.material_file_ext = get_extension(@material.material_file_content_type)
     @material.material_download_count = 0
+
+    case @material.material_type
+    when 0
+      exam_title = get_exam_title(@material.material_number)
+      q_a = ( @material.material_with_answer ? 'a' : 'q' )
+      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
+    when 1
+      q_a = ( @material.material_with_answer ? 'a' : 'q' )
+      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{q_a}-#{@material.material_page}"
+    when 2
+      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{@material.material_page}"
+    when 3
+      @material.material_file_name = "#{@material.subject.subject_name}-#{@material.material_page}"
+    end
 
     if @material.save
       File.open( "/var/app/files/hokui/#{@material.id}.#{@material.material_file_ext}", 'wb') do |f|
@@ -99,28 +104,37 @@ class MaterialsController < ApplicationController
 
   # PUT /materials/:material_id/edit
   def update
-    @material = Material.find(params[:material_id])
     p = params[:material]
+    @material = Material.new()
     @material.subject_identifier = p[:subject_identifier]
+    @material.user_id = current_user.id
     @material.material_type = p[:material_type]
     @material.material_year = p[:material_year]
-    @material.material_with_answer = p[:material_with_answer]
-    @material.material_comments = p[:material_comments]
-    @material.get_page
-    q_a = ( @material.material_with_answer ? 'a' : 'q' )
     if @material.material_type == 0
       @material.material_number = params[:material_number_base].to_i * 10 + params[:material_number_appending].to_i
-      exam_title = get_exam_title(@material.material_number)
-      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
     else
       @material.material_number = p[:material_number]
     end
-    if @material.material_type == 1
+    @material.material_with_answer = p[:material_with_answer]
+    @material.get_page
+    @material.material_comments = p[:material_comments]
+    @material.material_file_content_type = params[:material_file].content_type
+    @material.material_file_ext = get_extension(@material.material_file_content_type)
+
+    case @material.material_type
+    when 0
+      exam_title = get_exam_title(@material.material_number)
+      q_a = ( @material.material_with_answer ? 'a' : 'q' )
+      @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}#{exam_title}-#{q_a}-#{@material.material_page}"
+    when 1
+      q_a = ( @material.material_with_answer ? 'a' : 'q' )
       @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{q_a}-#{@material.material_page}"
-    end
-    if @material.material_type == 2
+    when 2
       @material.material_file_name = "#{@material.subject.subject_name}#{@material.material_year}-#{@material.material_number}-#{@material.material_page}"
+    when 3
+      @material.material_file_name = "#{@material.subject.subject_name}-#{@material.material_page}"
     end
+
     if params[:material_file]
       @material.material_file_content_type = params[:material_file].content_type
       @material.material_file_ext = get_extension(@material.material_file_content_type)
