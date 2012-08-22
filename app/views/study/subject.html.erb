@@ -10,7 +10,7 @@
     <dt>責任教員</dt>
     <dd><%= @subject.subject_staff %></dd>
     <dt>シラバス</dt>
-    <dd><%= link_to 'シラバスページを表示', '#syllabus', data: { toggle: 'modal' } %></dd>
+    <dd><%= link_to 'シラバスページを表示', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/syllabus.html", data: { colorbox: true, colorbox_height: '2900px', colorbox_innerwidth: '1200px'} %> 環境によっては表示が乱れます。</dd>
   </dl>
 </section>
 
@@ -264,15 +264,5 @@
   </div>
   <div class="modal-footer">
     <a href="#" class="btn" data-dismiss="modal">OK</a>
-  </div>
-</div>
-
-
-
-
-<!-- modal用シラバスページ -->
-<div class="modal hide fade" id="syllabus">
-  <div class="modal-body">
-    <%= raw(@subject.subject_syllabus_html) %>
   </div>
 </div>

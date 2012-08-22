@@ -28,21 +28,8 @@
       </td>
       <td><%= mime %></td>
       <td><%= link_to image_tag("/terms/#{term.term_identifier}/thumb/#{term.term_name}_thumb.#{get_extension(mime)}", type: mime, height: '100px', alt: "時間割サムネイル"),
-                      "#modal-#{term.term_identifier}", data: { toggle: 'modal' } %></td>
+                                "/terms/#{term.term_identifier}/img/#{term.term_name}_img.#{get_extension(mime)}", data: { colorbox: true, colorbox_height: '1000px' } %></td>
       <td><%= link_to '修正', "/terms/#{term.term_identifier}/edit" %></td>
     </tr>
   <% end %>
 </table>
-
-<% @terms.each do |term| %>
-  <% mime = term.term_timetable_img_content_type %>
-  <div class="modal hide fade timetable-modal" id="modal-<%= term.term_identifier %>">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">×</button>
-      <h3>時間割表 - <%= term.term_name %></h3>
-    </div>
-    <div class="modal-body">
-      <%= image_tag "/terms/#{term.term_identifier}/img/#{term.term_name}.#{get_extension(mime)}", type: mime, height: '800px', alt: '時間割表' %>
-    </div>
-  </div>
-<% end %>
