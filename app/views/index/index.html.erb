@@ -1,2 +1,26 @@
-<h1>Index#index</h1>
-<p>Find me in app/views/index/index.html.erb</p>
+<div class="row-fluid" style="min-height: 50px;">
+  <div class="span3" style="padding-left: 3%;">
+    <h1 style="font-size: 300%;">What's new?</h1>
+  </div>
+  <div class="span8">
+    <!-- 重要更新情報 -->
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="span4">
+    <h2><%= link_to image_tag('study.gif') + raw('&nbsp;&nbsp;Study'), '/study', style: 'color: #333;' %></h2>
+    <dl class="dl-horizontal" style="margin-top: 0;">
+      <% Material.find(:all, order: 'id DESC', limit: 10).each do |material| %>
+        <dt><%= material.created_at.strftime("%Y/%m/%d %H:%M").gsub('/0', '/') %></dt>
+        <dd>
+          <% file_name = "#{material.material_file_name}.#{material.material_file_ext}" %>
+          <% file_type = case material.material_type; when 0; '過去問'; when 1; '小テスト'; when 2; '授業資料'; when 3; '個人作成資料'; end %>
+          <%= material.user.user_handle_name %>さんが<%= file_type %>をup<br>
+          <%= raw '&nbsp;' * 5 %><%= link_to file_name, "/materials/#{material.id}/download/#{file_name}" %>
+        </dd>
+      <% end %>
+  </div>
+  <div class="span8">
+  </div>
+</div>

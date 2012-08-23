@@ -14,8 +14,10 @@ $ ->
             url: '/users/approve/' + user_id
             success: (res) ->
                 if res.status == 'success'
-                    $tr.children('td').last().html('<button class="promote btn btn-mini btn-info" data-user-id="' + user_id + '"
+                    $tr.children('td').last().html('<button class="promote_user btn btn-mini btn-info" data-user-id="' + user_id + '"
                                                     data-user-name="' + user_name + '">昇格</button>')
+                    $tr.append('<td><button class="delete_user btn btn-mini btn-danger" data-user-id="' + user_id + '"
+                                data-user-name="' + user_name + '">退会</button></td>')
                     $tr.appendTo('#status0')
                 else if res.status == 'forbidden'
                     $('#modal-forbidden').modal('show')
@@ -53,7 +55,7 @@ $ ->
                 $('#modal-reject').modal('hide')
                 $('#modal-transmission-error').modal('show')
 
-    $(".demote_user").click (event) ->
+    $(".demote_user").live 'click', (event) ->
         user_id = $(@).attr('data-user-id')
         user_name = $(@).attr('data-user-name')
         $('#modal-demote').bind 'show', (e) ->
@@ -72,8 +74,10 @@ $ ->
             success: (res) ->
                 if res.status == 'success'
                     $tr = $('button[data-user-id="' + user_id + '"]:first').closest('tr')
-                    $tr.children('td').last().html('<button class="promote btn btn-mini btn-info" data-user-id="' + user_id + '"
+                    $tr.children('td').last().html('<button class="promote_user btn btn-mini btn-info" data-user-id="' + user_id + '"
                                                     data-user-name="' + user_name + '">昇格</button>')
+                    $tr.append('<td><button class="delete_user btn btn-mini btn-danger" data-user-id="' + user_id + '"
+                                data-user-name="' + user_name + '">退会</button></td>')
                     $tr.appendTo('#status0')
                     $('#modal-demote').modal('hide')
                 else if res.status == 'forbidden'
@@ -86,7 +90,7 @@ $ ->
                 $('#modal-demote').modal('hide')
                 $('#modal-transmission-error').modal('show')
 
-    $(".promote_user").click (event) ->
+    $(".promote_user").live 'click', (event) ->
         user_id = $(@).attr('data-user-id')
         user_name = $(@).attr('data-user-name')
         $('#modal-promote').bind 'show', (e) ->
@@ -105,8 +109,9 @@ $ ->
             success: (res) ->
                 if res.status == 'success'
                     $tr = $('button[data-user-id="' + user_id + '"]:first').closest('tr')
+                    $tr.children('td').last().remove()
                     $tr.children('td').last().html('<button class="demote_user btn btn-mini btn-warning" data-user-id="' + user_id + '"
-                                                    data-user-name="' + user_name + '">降格</button>')
+                                                             data-user-name="' + user_name + '">降格</button>')
                     $tr.appendTo('#admins')
                     $('#modal-promote').modal('hide')
                 else if res.status == 'forbidden'
@@ -119,7 +124,7 @@ $ ->
                 $('#modal-promote').modal('hide')
                 $('#modal-transmission-error').modal('show')
 
-    $(".delete_user").click (event) ->
+    $(".delete_user").live 'click', (event) ->
         user_id = $(@).attr('data-user-id')
         user_name = $(@).attr('data-user-name')
         $('#modal-delete-user').bind 'show', (e) ->

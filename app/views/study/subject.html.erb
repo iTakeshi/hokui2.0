@@ -10,13 +10,259 @@
     <dt>責任教員</dt>
     <dd><%= @subject.subject_staff %></dd>
     <dt>シラバス</dt>
-    <dd><%= link_to 'シラバスページを表示', '#syllabus', data: { toggle: 'modal' } %></dd>
+    <dd><%= link_to 'シラバスページを表示', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/syllabus.html", data: { colorbox: true, colorbox_height: '2900px', colorbox_innerwidth: '1200px'} %> 環境によっては表示が乱れます。</dd>
   </dl>
 </section>
 
-<!-- modal用シラバスページ -->
-<div class="modal hide fade" id="syllabus">
+<section>
+  <h3>資料</h3>
+
+  <section>
+    <h4>過去問</h4>
+    <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_exam_file", class: 'btn btn-primary btn-mini' %>
+    <% if @subject.past_exams.any? %>
+      <table class="table">
+        <tr>
+          <th>年度</th>
+          <th>回</th>
+          <th colspan="3">問題</th>
+          <th colspan="3">解答</th>
+        </tr>
+        <% @subject.past_exams.group(:material_year).map{|obj| obj.material_year}.each.with_index do |year, i| %>
+          <% materials = @subject.past_exams.where(material_year: year) %>
+
+          <% rowspan = 0 %>
+          <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
+            <% questions = @subject.past_exams.where(material_number: number, material_with_answer: false) %>
+            <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true) %>
+            <% rowspan += [questions.length, answers.length].max %>
+          <% end %>
+
+          <tr>
+            <td rowspan="<%= rowspan %>"><%= year %></td>
+            <% materials = @subject.past_exams.where(material_year: year) %>
+            <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
+              <% questions = @subject.past_exams.where(material_number: number, material_with_answer: false).order('material_page ASC') %>
+              <% answers = @subject.past_exams.where(material_number: number, material_with_answer: true).order('material_page ASC') %>
+              <% rows = [questions.length, answers.length].max %>
+              <%= j != 0 ? raw('<tr>') : '' %>
+              <td rowspan="<%= rows %>"><%= get_exam_title number %></td>
+              <% rows.times do |k| %>
+                <%= k != 0 ? raw('<tr>') : '' %>
+                  <% if questions[k] %>
+                    <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
+                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                    <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
+                    <td>
+                      <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= questions[k].id %>">削除</button>
+                    </td>
+                  <% else %>
+                    <td></td><td></td><td></td>
+                  <% end %>
+                  <% if answers[k] %>
+                    <% file_name = "#{answers[k].material_file_name}.#{answers[k].material_file_ext}" %>
+                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %></td>
+                    <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
+                    <td>
+                      <%= link_to '修正', "/materials/#{answers[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= answers[k].id %>">削除</button>
+                    </td>
+                  <% else %>
+                    <td></td><td></td><td></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    <% end %>
+  </section>
+
+  <section>
+    <h4>小テスト</h4>
+    <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_quiz_file", class: 'btn btn-primary btn-mini' %>
+    <% if @subject.quizzes.any? %>
+      <table class="table">
+        <tr>
+          <th>年度</th>
+          <th>回</th>
+          <th colspan="3">問題</th>
+          <th colspan="3">解答</th>
+        </tr>
+        <% @subject.quizzes.group(:material_year).map{|obj| obj.material_year}.each.with_index do |year, i| %>
+          <% materials = @subject.quizzes.where(material_year: year) %>
+
+          <% rowspan = 0 %>
+          <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
+            <% questions = @subject.quizzes.where(material_number: number, material_with_answer: false) %>
+            <% answers = @subject.quizzes.where(material_number: number, material_with_answer: true) %>
+            <% rowspan += [questions.length, answers.length].max %>
+          <% end %>
+
+          <tr>
+            <td rowspan="<%= rowspan %>"><%= year %></td>
+            <% materials = @subject.quizzes.where(material_year: year) %>
+            <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
+              <% questions = @subject.quizzes.where(material_number: number, material_with_answer: false).order('material_page ASC') %>
+              <% answers = @subject.quizzes.where(material_number: number, material_with_answer: true).order('material_page ASC') %>
+              <% rows = [questions.length, answers.length].max %>
+              <%= j != 0 ? raw('<tr>') : '' %>
+              <td rowspan="<%= rows %>"><%= number %> 回</td>
+              <% rows.times do |k| %>
+                <%= k != 0 ? raw('<tr>') : '' %>
+                  <% if questions[k] %>
+                    <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
+                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                    <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
+                    <td>
+                      <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= questions[k].id %>">削除</button>
+                    </td>
+                  <% else %>
+                    <td></td><td></td><td></td>
+                  <% end %>
+                  <% if answers[k] %>
+                    <% file_name = "#{answers[k].material_file_name}.#{answers[k].material_file_ext}" %>
+                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %></td>
+                    <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
+                    <td>
+                      <%= link_to '修正', "/materials/#{answers[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
+                      <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= answers[k].id %>">削除</button>
+                    </td>
+                  <% else %>
+                    <td></td><td></td><td></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    <% end %>
+  </section>
+
+  <section>
+    <h4>授業資料</h4>
+    <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_summary_file", class: 'btn btn-primary btn-mini' %>
+    <% if @subject.summaries.any? %>
+      <table class="table">
+        <tr>
+          <th>年度</th>
+          <th>回</th>
+          <th colspan="5">ファイル</th>
+        </tr>
+        <% @subject.summaries.group(:material_year).map{|obj| obj.material_year}.each.with_index do |year, i| %>
+          <% materials = @subject.summaries.where(material_year: year) %>
+
+          <% rowspan = 0 %>
+          <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
+            <% questions = @subject.summaries.where(material_number: number) %>
+            <% rowspan += questions.length %>
+          <% end %>
+
+          <tr>
+            <td rowspan="<%= rowspan %>"><%= year %></td>
+            <% materials = @subject.summaries.where(material_year: year) %>
+            <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
+              <% questions = @subject.summaries.where(material_number: number).order('id DESC') %>
+              <% rows = questions.length %>
+              <%= j != 0 ? raw('<tr>') : '' %>
+              <td rowspan="<%= rows %>"><%= number %> 回</td>
+              <% rows.times do |k| %>
+                <%= k != 0 ? raw('<tr>') : '' %>
+                  <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
+                  <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                  <td><%= questions[k].user.user_handle_name %></td><td><%= questions[k].material_download_count %> 回</td>
+                  <td><%= questions[k].material_comments %></td>
+                  <td>
+                    <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %>
+                    <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= questions[k].id %>">削除</button>
+                  </td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    <% end %>
+  </section>
+
+  <section>
+    <h4>個人ファイル</h4>
+    <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_personal_file", class: 'btn btn-primary btn-mini' %>
+    <% if @subject.personal_materials.any? %>
+      <table class="table">
+        <tr>
+          <th colspan="5">ファイル</th>
+        </tr>
+        <% @subject.personal_materials.each do |material| %>
+          <tr>
+            <% file_name = "#{material.material_file_name}.#{material.material_file_ext}" %>
+            <td><%= link_to file_name, "/materials/#{material.id}/download/#{file_name}" %></td>
+            <td><%= material.user.user_handle_name %></td><td><%= material.material_download_count %> 回</td>
+            <td><%= material.material_comments %></td>
+            <td>
+              <%= link_to '修正', "/materials/#{material.id}/edit", class: 'btn btn-mini btn-info' %>
+              <button class="btn btn-mini btn-danger delete_material" data-material-name="<%= file_name %>" data-material-id="<%= material.id %>">削除</button>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </section>
+</section>
+
+
+<div class="modal hide fade" id="modal-delete">
+  <div class="modal-header">
+    <h3>ファイルを削除しますか？</h3>
+  </div>
   <div class="modal-body">
-    <%= raw(@subject.subject_syllabus_html) %>
+    <span id="deletion_target_material_name"></span> を削除します。<br>よろしいですか？
+    <span id="deletion_target_material_id" style="display: none;"></span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">キャンセル</button>
+    <button id="confirm_material_deletion" class="btn btn-danger">削除</button>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-forbidden">
+  <div class="modal-header">
+    <h3>Forbidden</h3>
+  </div>
+  <div class="modal-body">
+    この操作は管理者とファイル投稿者本人にしか認められていません。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-fatal">
+  <div class="modal-header">
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    予期しないエラーが発生しました。<br>
+    この操作はすでに完了している可能性があります。<br>
+    ページを再読み込みしてください。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<div class="modal hide" id="modal-transmission-error">
+  <div class="modal-header">
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    通信に失敗しました。
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
   </div>
 </div>

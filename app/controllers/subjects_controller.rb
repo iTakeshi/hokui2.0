@@ -53,4 +53,10 @@ class SubjectsController < ApplicationController
       render action: :edit
     end
   end
+
+  # GET /study/:term_identifier/:subject_identifier/syllabus.html
+  def download_syllabus_html
+    subject = Subject.find(params[:subject_identifier])
+    send_data subject.subject_syllabus_html.scan(/<form.*form>/m).first
+  end
 end

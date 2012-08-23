@@ -2,6 +2,7 @@
 
 class User < ActiveRecord::Base
   has_secure_password
+  has_many :materials
   attr_accessible :user_family_name, :user_given_name, :user_handle_name,
                   :user_birthday, :user_email, :user_email_sub,
                   :password, :password_confirmation
@@ -77,6 +78,18 @@ class User < ActiveRecord::Base
 
   def send_rejection_notification
     UserMailer.notify_rejected(self).deliver
+  end
+
+  def send_promotion_notification
+    UserMailer.notify_promoted(self).deliver
+  end
+
+  def send_demotion_notification
+    UserMailer.notify_demoted(self).deliver
+  end
+
+  def send_deletion_notification
+    UserMailer.notify_deleted(self).deliver
   end
 
   def reset_password

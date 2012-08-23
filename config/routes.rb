@@ -43,6 +43,20 @@ Hokui::Application.routes.draw do
   get '/study', to: 'study#help'
   get '/study/:term_identifier', to: 'study#term'
   get '/study/:term_identifier/:subject_identifier', to: 'study#subject'
+  get '/study/:term_identifier/:subject_identifier/syllabus.html', to: 'subjects#download_syllabus_html'
+  get '/study/:term_identifier/:subject_identifier/new_exam_file', to: 'materials#new_exam'
+  post '/study/:term_identifier/:subject_identifier/new_exam_file', to: 'materials#create'
+  get '/study/:term_identifier/:subject_identifier/new_quiz_file', to: 'materials#new_quiz'
+  post '/study/:term_identifier/:subject_identifier/new_quiz_file', to: 'materials#create'
+  get '/study/:term_identifier/:subject_identifier/new_summary_file', to: 'materials#new_summary'
+  post '/study/:term_identifier/:subject_identifier/new_summary_file', to: 'materials#create'
+  get '/study/:term_identifier/:subject_identifier/new_personal_file', to: 'materials#new_personal'
+  post '/study/:term_identifier/:subject_identifier/new_personal_file', to: 'materials#create'
+
+  get '/materials/:material_id/download/:material_file_name', to: 'materials#download'
+  get '/materials/:material_id/edit', to: 'materials#edit'
+  put '/materials/:material_id/edit', to: 'materials#update'
+  get '/materials/delete/:material_id', to: 'materials#delete'
 
   get '/admin', to: 'admin#index'
 

@@ -11,7 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120819031541) do
+ActiveRecord::Schema.define(:version => 20120819051154) do
+
+  create_table "materials", :force => true do |t|
+    t.string   "subject_identifier",         :null => false
+    t.integer  "user_id",                    :null => false
+    t.integer  "material_type",              :null => false
+    t.integer  "material_year",              :null => false
+    t.integer  "material_number",            :null => false
+    t.boolean  "material_with_answer"
+    t.integer  "material_page",              :null => false
+    t.string   "material_comments"
+    t.string   "material_file_name",         :null => false
+    t.string   "material_file_ext",          :null => false
+    t.string   "material_file_content_type", :null => false
+    t.integer  "material_download_count",    :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "materials", ["material_file_name"], :name => "index_materials_on_material_file_name", :unique => true
 
   create_table "subjects", :force => true do |t|
     t.string   "term_identifier",       :null => false

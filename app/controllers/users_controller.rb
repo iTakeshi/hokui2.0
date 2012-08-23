@@ -80,7 +80,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.user_is_admin = false
     user.save!
-    # TODO notify for user
+    user.send_demotion_notification
     render json: { status: :success }
   rescue
     render json: { status: :error }
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.user_is_admin = true
     user.save!
-    # TODO notify for user
+    user.send_promotion_notification
     render json: { status: :success }
   rescue
     render json: { status: :error }
@@ -102,7 +102,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     raise if user.user_is_admin
     user.delete
-    # TODO notify for user
+    user.send_deletion_notification
     render json: { status: :success }
   rescue
     render json: { status: :error }

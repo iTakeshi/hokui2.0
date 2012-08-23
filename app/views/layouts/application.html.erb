@@ -5,15 +5,16 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= favicon_link_tag 'favicon.gif' %>
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
 
-    <header id="grobal-header" class="row">
+    <header id="grobal-header" class="row-fluid">
       <div class="span12">
         <div id="grobal-header-banner">
           <%= image_tag 'banner.png', alt: 'page-top' %>
@@ -48,7 +49,15 @@
                   <li class="<%= @help_page %>">
                     <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
                   </li>
-                  <li class="dropdown <%= @user_page %>" id="user-menu">
+                  <li class="dropdown visible-desktop <%= @user_page %>" id="user-menu">
+                    <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
+                      <li><%= link_to 'Log Out', '/logout' %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown hidden-desktop <%= @user_page %>">
                     <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -66,7 +75,7 @@
 
     <% if content_for?(:side) %>
 
-    <div class="row">
+    <div class="row-fluid">
       <div id="grobal-side" class="span3">
         <%= yield(:side) %>
       </div>
@@ -106,7 +115,7 @@
 
     </div>
     <% else %>
-    <div class="row">
+    <div class="row-fluid">
 
       <div id="grobal-full-width-content" class="span12">
 
@@ -145,7 +154,7 @@
     </div>
     <% end %>
 
-    <footer id="grobal-footer" class="row">
+    <footer id="grobal-footer" class="row-fluid">
       <div class="span12">
         <address>
           Copyright 2011-2012 Hokui-Net Developer Team

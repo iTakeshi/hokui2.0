@@ -2,6 +2,7 @@
 
 class Subject < ActiveRecord::Base
   belongs_to :term, primary_key: :term_identifier, foreign_key: :term_identifier
+  has_many :materials, primary_key: :subject_identifier, foreign_key: :subject_identifier
 
   validates :term_identifier,
     presence: { message: "学期コードを入力してください。" },
@@ -27,10 +28,26 @@ class Subject < ActiveRecord::Base
 
   def get_subject_informations
     html = Nokogiri::HTML(self.subject_syllabus_html)
-    self.subject_identifier = html.css("#Detail_lbl_sbj_name_e").children[0].text.gsub(/(\)|\[|\])/, '').sub('(', '_').gsub(' ', '_').sub('Ⅰ', '_1').sub('Ⅱ', '_2').downcase.strip
+    self.subject_identifier = html.css("#Detail_lbl_sbj_name_e").children[0].text.gsub(/(\)|\[|\])/, '').gsub('& ', '').sub('(', '_').gsub(' ', '_').sub('Ⅰ', '_1').sub('Ⅱ', '_2').downcase.strip
     self.subject_name = html.css("#Detail_lbl_sbj_name").children[0].text.strip
     self.subject_staff = html.css("#Detail_lbl_admin_staff_alias").children[0].text.split('[')[0].sub('　', ' ').strip
     self.subject_lct_cd = html.css("#Detail_lbl_lct_cd").children[0].text.strip
+  end
+
+  def past_exams
+    Material.where(subject_identifier: self.subject_identifier, material_type: 0).order('material_year ASC, material_number ASC, material_page ASC')
+  end
+
+  def quizzes
+    Material.where(subject_identifier: self.subject_identifier, material_type: 1).order('material_year ASC, material_number ASC, material_page ASC')
+  end
+
+  def summaries
+    Material.where(subject_identifier: self.subject_identifier, material_type: 2).order('material_year ASC, material_number ASC, material_page ASC')
+  end
+
+  def personal_materials
+    Material.where(subject_identifier: self.subject_identifier, material_type: 3).order('material_year ASC, material_number ASC, material_page ASC')
   end
 
   def self.find(subject_identifier)

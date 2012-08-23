@@ -22,6 +22,24 @@ class UserMailer < ActionMailer::Base
     mail to: @user.user_email, subject: '北医ネット：登録申請が拒否されました'
   end
 
+  def notify_promoted(user)
+    @server_name = hokui_server_name
+    @user = user
+    mail to: @user.user_email, subject: '北医ネット：管理者に昇格しました'
+  end
+
+  def notify_demoted(user)
+    @server_name = hokui_server_name
+    @user = user
+    mail to: @user.user_email, subject: '北医ネット：一般ユーザーに降格しました'
+  end
+
+  def notify_deleted(user)
+    @server_name = hokui_server_name
+    @user = user
+    mail to: @user.user_email, subject: '北医ネット：退会処理されました'
+  end
+
   def notify_resetting_password(user)
     @server_name = hokui_server_name
     @user = user
