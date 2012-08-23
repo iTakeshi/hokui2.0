@@ -26,8 +26,6 @@ class MaterialsController < ApplicationController
     @material = Material.new(
       subject_identifier: params[:subject_identifier],
       material_type: 2,
-      material_year: 93,
-      material_with_answer: false
     )
     render :new
   end
@@ -37,9 +35,6 @@ class MaterialsController < ApplicationController
     @material = Material.new(
       subject_identifier: params[:subject_identifier],
       material_type: 3,
-      material_year: 93,
-      material_number: 1,
-      material_with_answer: false
     )
     render :new
   end
