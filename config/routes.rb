@@ -58,6 +58,8 @@ Hokui::Application.routes.draw do
   put '/materials/:material_id/edit', to: 'materials#update'
   get '/materials/delete/:material_id', to: 'materials#delete'
 
+  get '/freeml/batch', to: 'freeml#batch'
+
   get '/admin', to: 'admin#index'
 
   root to: 'index#index'
