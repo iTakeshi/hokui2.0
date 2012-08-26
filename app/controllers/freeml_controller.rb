@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class FreemlController < ApplicationController
+  skip_before_filter :authorize_as_user, only: :batch
 
   # GET /freeml/batch
   def batch
