@@ -8,6 +8,18 @@ class FreemlController < ApplicationController
     @entries = FreemlEntry.all
   end
 
+  # GET /freeml/body/:id
+  def download_body
+    entry = FreemlEntry.find(params[:id])
+    body = entry.freeml_body.gsub(/\r|\n/, '<br>')
+    body += '<br><br>'
+    unless entry.freeml_readable
+      body += 'このメールの全文を表示することができません。以下のリンクよりご覧ください。<br>'
+    end
+    body += ('<a href="http://www.freeml.com/hokudaimedicine93/' + entry.freeml_id.to_s + '" target="_blank">freeMLサイトで見る</a>')
+    send_data body
+  end
+
   # GET /freeml/batch
   def batch
     raise unless request.remote_ip == "127.0.0.1"

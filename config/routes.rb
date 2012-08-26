@@ -59,6 +59,7 @@ Hokui::Application.routes.draw do
   get '/materials/delete/:material_id', to: 'materials#delete'
 
   get '/freeml', to: 'freeml#index'
+  get '/freeml/body/:id', to: 'freeml#download_body'
   get '/freeml/batch', to: 'freeml#batch'
 
   get '/admin', to: 'admin#index'
