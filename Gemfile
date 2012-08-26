@@ -55,3 +55,4 @@ gem 'capistrano'
 
 gem 'rmagick', require: 'RMagick'
 gem 'nokogiri'
+gem 'mechanize'
