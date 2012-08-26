@@ -22,7 +22,12 @@ class FreemlController < ApplicationController
 
   # GET /freeml/batch
   def batch
-    raise unless request.remote_ip == "127.0.0.1"
+    begin
+      raise unless request.remote_ip == "127.0.0.1"
+    rescue
+      render status: 404, file: "#{Rails.root}/public/404.html", layout: false
+      return
+    end
 
     agent = Mechanize.new
     agent.user_agent_alias = 'Mac Safari'
@@ -33,7 +38,11 @@ class FreemlController < ApplicationController
       id = entry.css('a')[0][:href].split('/')[2].strip.gsub(/\r|\n/, '')
       next if FreemlEntry.find(id)
 
-      user = entry.css('a')[1].children[0].text.strip.gsub(/\r|\n/, '').sub('　', ' ')
+      begin
+        user = entry.css('a')[1].children[0].text.strip.gsub(/\r|\n/, '').sub('　', ' ')
+      rescue
+        user = 'unknown'
+      end
       title = entry.css('h4').children[0].text.strip.gsub(/\r|\n/, '')
       datetime = entry.css('.s_10.c_666')[0].children.text.scan(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/).first
 
@@ -56,8 +65,6 @@ class FreemlController < ApplicationController
     end
 
     render text: 'ok', status: 200
-  rescue
-    render status: 404, file: "#{Rails.root}/public/404.html", layout: false
   end
 
 =begin
