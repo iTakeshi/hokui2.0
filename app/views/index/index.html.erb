@@ -21,6 +21,18 @@
         </dd>
       <% end %>
   </div>
-  <div class="span8">
+  <div class="span4">
+    <h2><%= link_to image_tag('freeml.gif') + raw('&nbsp;&nbsp;freeML'), '/freeml', style: 'color: #333;' %></h2>
+    <dl class="dl-horizontal" style="margin-top: 0;">
+      <% FreemlEntry.order('freeml_id DESC').limit(5).each do |entry| %>
+        <dt><%= entry.freeml_datetime.strftime("%Y/%m/%d %H:%M").gsub('/0', '/') %></dt>
+        <dd>
+          <%= entry.freeml_user %>さんが新しいメールを投稿<br>
+          <%= raw '&nbsp;' * 5 %>title: <%= entry.freeml_title %>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+  <div class="span4">
   </div>
 </div>
