@@ -1,0 +1,43 @@
+<h1>freeML 投稿一覧</h1>
+毎時00分に更新
+
+<ul class="pager">
+  <% previous_enable = (@page > 1) %>
+  <li class="previous <%= previous_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= previous_enable ? @page - 1 : @page %>">&larr; 新しい投稿</a>
+  </li>
+  <% next_enable = (@page < @page_max) %>
+  <li class="next <%= next_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= next_enable ? @page + 1 : @page %>">古い投稿 &rarr;</a>
+  </li>
+</ul>
+
+<table class="table">
+  <tr>
+    <th>投稿ID</th>
+    <th>投稿者</th>
+    <th>日時</th>
+    <th>件名</th>
+    <th>本文（クリックすると全文を表示します。）</th>
+  </tr>
+  <% @entries.each do |entry| %>
+    <tr>
+      <td><%= entry.freeml_id %></td>
+      <td><%= entry.freeml_user %></td>
+      <td><%= entry.freeml_datetime.strftime("%Y/%m/%d %H:%M").gsub('/0', '/') %></td>
+      <td><%= entry.freeml_title %></td>
+      <td><%= link_to truncate(entry.freeml_body), "/freeml/body/#{entry.freeml_id}", data: { colorbox: true, colorbox_innerwidth: '760px' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<ul class="pager">
+  <% previous_enable = (@page > 1) %>
+  <li class="previous <%= previous_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= previous_enable ? @page - 1 : @page %>">&larr; 新しい投稿</a>
+  </li>
+  <% next_enable = (@page < @page_max) %>
+  <li class="next <%= next_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= next_enable ? @page + 1 : @page %>">古い投稿 &rarr;</a>
+  </li>
+</ul>

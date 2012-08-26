@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120819051154) do
+ActiveRecord::Schema.define(:version => 20120824070048) do
+
+  create_table "freeml_entries", :force => true do |t|
+    t.integer  "freeml_id",       :null => false
+    t.string   "freeml_user",     :null => false
+    t.text     "freeml_body",     :null => false
+    t.string   "freeml_title",    :null => false
+    t.datetime "freeml_datetime", :null => false
+    t.boolean  "freeml_readable", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "freeml_entries", ["freeml_id"], :name => "index_freeml_entries_on_freeml_id", :unique => true
 
   create_table "materials", :force => true do |t|
     t.string   "subject_identifier",         :null => false
