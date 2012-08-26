@@ -35,6 +35,7 @@ class FreemlController < ApplicationController
     agent = Mechanize.new
     agent.user_agent_alias = 'Mac Safari'
     require '/var/app/setting/hokui/freeml.rb'
+    agent.agent.http.ca_file = '/etc/ssl/certs/ca-certificates.crt'
     agent.post('https://www.freeml.com/ep.umzx/grid/General/node/SpLoginProcess', freeml_login_info)
     doc = Nokogiri::HTML(agent.get('http://www.freeml.com/hokudaimedicine93/topics').body.toutf8)
     doc.css('.entry_r').each do |entry|
