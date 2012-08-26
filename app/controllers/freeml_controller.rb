@@ -5,7 +5,9 @@ class FreemlController < ApplicationController
 
   # GET /freeml
   def index
-    @entries = FreemlEntry.all
+    @page = (params[:page] ? params[:page].to_i : 1)
+    @page_max = (FreemlEntry.count.to_f / 25).ceil
+    @entries = FreemlEntry.order('freeml_id DESC').offset(25 * (@page - 1)).limit(25)
   end
 
   # GET /freeml/body/:id

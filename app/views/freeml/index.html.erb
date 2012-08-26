@@ -1,5 +1,16 @@
 <h1>freeML 投稿一覧</h1>
 
+<ul class="pager">
+  <% previous_enable = (@page > 1) %>
+  <li class="previous <%= previous_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= previous_enable ? @page - 1 : @page %>">&larr; 新しい投稿</a>
+  </li>
+  <% next_enable = (@page < @page_max) %>
+  <li class="next <%= next_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= next_enable ? @page + 1 : @page %>">古い投稿 &rarr;</a>
+  </li>
+</ul>
+
 <table class="table">
   <tr>
     <th>投稿ID</th>
@@ -18,3 +29,14 @@
     </tr>
   <% end %>
 </table>
+
+<ul class="pager">
+  <% previous_enable = (@page > 1) %>
+  <li class="previous <%= previous_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= previous_enable ? @page - 1 : @page %>">&larr; 新しい投稿</a>
+  </li>
+  <% next_enable = (@page < @page_max) %>
+  <li class="next <%= next_enable ? '' : 'disabled' %>">
+    <a href="/freeml/entries/<%= next_enable ? @page + 1 : @page %>">古い投稿 &rarr;</a>
+  </li>
+</ul>
