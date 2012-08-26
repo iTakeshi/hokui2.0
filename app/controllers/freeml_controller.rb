@@ -3,6 +3,11 @@
 class FreemlController < ApplicationController
   skip_before_filter :authorize_as_user, only: :batch
 
+  # GET /freeml
+  def index
+    @entries = FreemlEntry.all
+  end
+
   # GET /freeml/batch
   def batch
     raise unless request.remote_ip == "127.0.0.1"
