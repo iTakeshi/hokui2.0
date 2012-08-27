@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'openssl'
+
 class FreemlController < ApplicationController
   skip_before_filter :authorize_as_user, only: :batch
 
@@ -25,7 +27,8 @@ class FreemlController < ApplicationController
   # GET /freeml/batch
   def batch
     begin
-      raise unless request.remote_ip == "127.0.0.1"
+      require '/var/app/setting/hokui/server_name.rb'
+      raise unless request.remote_ip == hokui_server_ip
     rescue
       render status: 404, file: "#{Rails.root}/public/404.html", layout: false
       return
