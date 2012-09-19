@@ -9,15 +9,18 @@ class User < ActiveRecord::Base
 
   validates :user_family_name,
     presence: { message: '氏を入力してください。' },
-    length: { maximum: 15, allow_blank: true, message: '氏は15字以内で入力してください。' }
+    length: { maximum: 15, allow_blank: true, message: '氏は15字以内で入力してください。' },
+    uniqueness: { message: 'すでに同じニックネームを使用しているユーザーが存在します。' }
 
   validates :user_given_name,
     presence: { message: '名を入力してください。' },
-    length: { maximum: 15, allow_blank: true, message: '名は15字以内で入力してください。' }
+    length: { maximum: 15, allow_blank: true, message: '名は15字以内で入力してください。' },
+    uniqueness: { message: 'すでに同じニックネームを使用しているユーザーが存在します。' }
 
   validates :user_handle_name,
     presence: { message: 'ニックネームを入力してください。' },
-    length: { minimum: 3, maximum: 10, allow_blank: true, message: 'ニックネームは3字以上、10字以内で入力してください。' }
+    length: { minimum: 3, maximum: 10, allow_blank: true, message: 'ニックネームは3字以上、10字以内で入力してください。' },
+    uniqueness: { message: 'すでに同じニックネームを使用しているユーザーが存在します。' }
 
   validates :user_birthday,
     presence: { message: '生年月日を入力してください。' }
