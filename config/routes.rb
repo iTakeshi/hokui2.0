@@ -65,6 +65,8 @@ Hokui::Application.routes.draw do
 
   get '/admin', to: 'admin#index'
 
+  get '/help', to: 'index#help'
+
   root to: 'index#index'
 
   # The priority is based upon order of creation:
