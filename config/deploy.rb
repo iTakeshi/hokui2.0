@@ -1,5 +1,5 @@
 ssh_options[:forward_agent] = true
-ssh_options[:port] = '1122'
+ssh_options[:port] = '11122'
 default_run_options[:pty] = true
 
 set :scm, :git
@@ -10,12 +10,18 @@ set :scm_verbose, true
 set :use_sudo, false
 set :rails_env, :production
 
+set :application, 'hokui'
+
 task :staging do
   set :user, 'itakeshi'
   set :domain, 'www.itakeshi.net'
-  set :port, '1122'
-  set :application, 'hokui'
+  set :port, '11122'
   set :branch, 'development'
+
+  set :deploy_to, "/var/app/rails/#{application}"
+  role :web, domain                   # Your HTTP server, Apache/etc
+  role :app, domain                   # This may be the same as your `Web` server
+  role :db,  domain, :primary => true # This is where Rails migrations will run
 end
 
 task :production do
@@ -31,15 +37,14 @@ task :production do
   }
   set :user, 'ruby-passenger'
   set :domain, 'hokui93.net'
-  set :port, '1122'
-  set :application, 'hokui'
+  set :port, '11122'
   set :branch, 'master'
-end
 
-set :deploy_to, "/var/app/rails/#{application}"
-role :web, domain                   # Your HTTP server, Apache/etc
-role :app, domain                   # This may be the same as your `Web` server
-role :db,  domain, :primary => true # This is where Rails migrations will run
+  set :deploy_to, "/var/app/rails/#{application}"
+  role :web, domain                   # Your HTTP server, Apache/etc
+  role :app, domain                   # This may be the same as your `Web` server
+  role :db,  domain, :primary => true # This is where Rails migrations will run
+end
 
 namespace :deploy do
   desc "cause Passenger to initiate a restart"
