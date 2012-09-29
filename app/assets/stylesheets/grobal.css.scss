@@ -7,6 +7,10 @@ body {
     padding: 0;
 }
 
+section {
+    margin: 15px 0;
+}
+
 ul {
     list-style: none;
 }
@@ -17,6 +21,7 @@ a.dropdown-toggle + ul {
 
 i {
     margin-right: 3px;
+    background: none !important;
 }
 
 i:before {
