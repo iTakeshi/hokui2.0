@@ -7,6 +7,10 @@ body {
     padding: 0;
 }
 
+section {
+    margin: 15px 0;
+}
+
 ul {
     list-style: none;
 }
@@ -17,6 +21,7 @@ a.dropdown-toggle + ul {
 
 i {
     margin-right: 3px;
+    background: none !important;
 }
 
 i:before {
@@ -50,7 +55,7 @@ form {
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 80px;
+        height: 85px;
     }
 
     nav .container {
@@ -63,6 +68,10 @@ form {
             #user-menu {
                 position: absolute;
                 right: 0;
+
+                .dropdown-menu {
+                    width: 143px
+                }
             }
             ul {
                 font-size: 13px;

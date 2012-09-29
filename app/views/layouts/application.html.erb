@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= favicon_link_tag 'favicon.gif' %>
+  <%= favicon_link_tag 'icon.gif' %>
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -17,10 +17,10 @@
     <header id="grobal-header" class="row-fluid">
       <div class="span12">
         <div id="grobal-header-banner">
-          <%= image_tag 'banner.png', alt: 'page-top' %>
+          <%= image_tag 'banner.jpg', alt: 'page-top' %>
         </div>
 
-        <nav class="navbar">
+        <nav class="navbar navbar-inverse">
           <div class="navbar-inner">
             <div class="container">
               <div class="nav-collapse collapse">
@@ -34,8 +34,8 @@
                   <li class="<%= @calendar_page %>">
                     <%= link_to raw('<i class="icon-calendar"></i>Calendar'), '/calendar' %>
                   </li>
-                  <li class="<%= @enquete_page %>">
-                    <%= link_to raw('<i class="icon-thumbs-up"></i>Enquete'), '/enquete' %>
+                  <li class="<%= @questionnaire_page %>">
+                    <%= link_to raw('<i class="icon-thumbs-up"></i>Questionnaire'), '/questionnaire' %>
                   </li>
                   <li class="<%= @bbs_page %>">
                     <%= link_to raw('<i class="icon-comments-alt"></i>BBS'), '/bbs' %>

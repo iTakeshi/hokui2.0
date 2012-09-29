@@ -63,7 +63,13 @@ Hokui::Application.routes.draw do
   get '/freeml/body/:id', to: 'freeml#download_body'
   get '/freeml/batch', to: 'freeml#batch'
 
+  get '/calendar', to: 'calendar#index'
+  get '/questionnaire', to: 'questionnaire#index'
+  get '/bbs', to: 'bbs#index'
+
   get '/admin', to: 'admin#index'
+
+  get '/help', to: 'index#help'
 
   root to: 'index#index'
 
