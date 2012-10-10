@@ -2,7 +2,7 @@
 
 <%= link_to '新しい問題セット', '/vocabularies/new', class: 'btn btn-primary' %>
 <ul>
-  <% @vocabularies.each do |vocabulary, count| %>
-    <li><%= vocabulary %> (<%= count %>問)</li>
+  <% @vocabularies.each do |vocabulary| %>
+    <li><%= link_to "#{vocabulary.vocabulary_name} (#{vocabulary.vocabulary_words.count}問)", "/vocabularies/#{vocabulary.id}/quiz" %></li>
   <% end %>
 </ul>

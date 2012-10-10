@@ -1,0 +1,24 @@
+<h1>確認クイズ</h1>
+
+<h3><%= @vocabulary.vocabulary_name %></h3>
+
+<div id="vocabulary-form">
+  <form action="/vocabularies/quizzes" class="form-horizontal" data-remote="true" method="get">
+    <fieldset>
+      <%= hidden_field_tag :vocabulary_id, @vocabulary.id %>
+      <div class="control-group">
+        <%= label_tag :quiz_count, '問題数', class: 'control-label' %>
+        <div class="controls">
+          <%= number_field_tag :quiz_count %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= submit_tag 'スタート！', class: 'btn btn-primary' %>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<div class="vocabulary-quiz">
+</div>

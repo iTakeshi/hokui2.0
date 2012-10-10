@@ -2,10 +2,7 @@ class VocabulariesController < ApplicationController
 
   # GET /vocabularies
   def index
-    @vocabularies = Hash.new
-    Vocabulary.all.each do |vocabulary|
-      @vocabularies["#{vocabulary.vocabulary_name}"] = vocabulary.vocabulary_words.count
-    end
+    @vocabularies = Vocabulary.all
   end
 
   # GET /vocabularies/new
@@ -26,5 +23,28 @@ class VocabulariesController < ApplicationController
     else
       render :new
     end
+  end
+
+  # GET /vocabularies/:vocabulary_id/quiz
+  def quiz
+    @vocabulary = Vocabulary.find(params[:vocabulary_id])
+  end
+
+  # GET /vocabularies/quizzes?params
+  def quizzes
+    if Rails.env == 'production'
+      words = VocabularyWord.where(vocabulary_id: params[:vocabulary_id]).order('RAND()').limit(params[:quiz_count].to_i)
+    else
+      words = VocabularyWord.where(vocabulary_id: params[:vocabulary_id]).order('RANDOM()').limit(params[:quiz_count].to_i)
+    end
+    quizzes = Array.new
+    words.each do |word|
+      if rand < 0.5
+        quizzes << { question: word.word_ja, answer: word.word_en }
+      else
+        quizzes << { question: word.word_en, answer: word.word_ja }
+      end
+    end
+    render json: { quizzes: quizzes }
   end
 end
