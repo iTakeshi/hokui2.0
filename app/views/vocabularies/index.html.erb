@@ -1,0 +1,8 @@
+<h1>語彙クイズ問題集</h1>
+
+<%= link_to '新しい問題セット', '/vocabularies/new', class: 'btn btn-primary' %>
+<ul>
+  <% @vocabularies.each do |vocabulary, count| %>
+    <li><%= vocabulary %> (<%= count %>問)</li>
+  <% end %>
+</ul>

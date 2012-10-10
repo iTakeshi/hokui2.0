@@ -63,6 +63,10 @@ Hokui::Application.routes.draw do
   get '/freeml/body/:id', to: 'freeml#download_body'
   get '/freeml/batch', to: 'freeml#batch'
 
+  get '/vocabularies', to: 'vocabularies#index'
+  get '/vocabularies/new', to: 'vocabularies#new'
+  post '/vocabularies/new', to: 'vocabularies#create'
+
   get '/calendar', to: 'calendar#index'
   get '/questionnaire', to: 'questionnaire#index'
   get '/bbs', to: 'bbs#index'
