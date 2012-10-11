@@ -45,6 +45,6 @@ class VocabulariesController < ApplicationController
         quizzes << { question: word.word_en, answer: word.word_ja }
       end
     end
-    render json: { quizzes: quizzes }
+    render json: { quizzes: quizzes, count: quizzes.count }
   end
 end
