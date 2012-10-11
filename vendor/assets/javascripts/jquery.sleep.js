@@ -9,6 +9,11 @@
 		});
 	Use at free will, distribute free of charge
 */
+/* 2012-10-11
+ * iTakeshi modified
+ * $.sleep ( 30, function() ...
+ * this code sleeps 3 seconds.
+ */
 ;(function($)
 {
 	var _sleeptimer;
@@ -16,7 +21,7 @@
 	{
 		$.sleep._sleeptimer = time2sleep;
 		$.sleep._cback = callback;
-		$.sleep.timer = setInterval('$.sleep.count()', 1000);
+		$.sleep.timer = setInterval('$.sleep.count()', 100);
 	}
 	$.extend ($.sleep, {
 		current_i : 1,
