@@ -1,0 +1,26 @@
+<h1>語彙問題を作成</h1>
+
+<%= form_tag '/vocabularies/new', class: 'form-horizontal' do %>
+  <fieldset>
+    <div class="control-group">
+      <%= label_tag :vocabulary_name, '問題名', class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :vocabulary_name %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :words, '問題', class: 'control-label' %>
+      <div class="controls">
+        <p> {日本語名},{英語名}&lt;改行&gt; の形式で入力してください。</p>
+        <%= text_area_tag :words, nil, size: '90x20' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= submit_tag '送信' %>
+    </div>
+  </fieldset>
+<% end %>
+
+<% @vocabulary_page = 'active' %>

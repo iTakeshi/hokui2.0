@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824070048) do
+ActiveRecord::Schema.define(:version => 20121010132639) do
 
   create_table "freeml_entries", :force => true do |t|
     t.integer  "freeml_id",       :null => false
@@ -92,5 +92,21 @@ ActiveRecord::Schema.define(:version => 20120824070048) do
 
   add_index "users", ["user_auth_token"], :name => "index_users_on_user_auth_token", :unique => true
   add_index "users", ["user_email"], :name => "index_users_on_user_email", :unique => true
+
+  create_table "vocabularies", :force => true do |t|
+    t.string   "vocabulary_name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "vocabularies", ["vocabulary_name"], :name => "index_vocabularies_on_vocabulary_name", :unique => true
+
+  create_table "vocabulary_words", :force => true do |t|
+    t.string   "word_en"
+    t.string   "word_ja"
+    t.integer  "vocabulary_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
 end
