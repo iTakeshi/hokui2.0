@@ -9,6 +9,7 @@ $ ->
     quizzes = 0
     i = 0
     i_max = 0
+    right_answer = ''
 
     $('#vocabulary-form form').on 'ajax:complete', (response, ajax, status) ->
         $('#vocabulary-quiz').show()
@@ -21,16 +22,16 @@ $ ->
     setQuestion = ->
         $judge.empty()
         $answer.val('')
+        right_answer = quizzes[i].answer
         $question.text(quizzes[i].question)
+        $answer.focus()
+        i++
 
     $('#vocabulary-quiz-submit').click (e) ->
-        if $answer.val() == quizzes[i].answer
+        if $answer.val() == right_answer
             $judge.text('OK!')
-            i++
-            $.sleep 5, ->
-                setQuestion()
         else
-            $judge.text(quizzes[i].answer)
-            i++
-            $.sleep 30, ->
-                setQuestion()
+            $judge.text(right_answer)
+
+    $('#vocabulary-quiz-next').click (e) ->
+        setQuestion()
