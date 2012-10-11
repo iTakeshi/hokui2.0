@@ -1,8 +1,10 @@
 <h1>語彙クイズ問題集</h1>
 
-<%= link_to '新しい問題セット', '/vocabularies/new', class: 'btn btn-primary' %>
+<%= link_to '新しい問題セット', '/vocabularies/new', class: 'btn btn-primary btn-mini' %>
 <ul>
   <% @vocabularies.each do |vocabulary| %>
     <li><%= link_to "#{vocabulary.vocabulary_name} (#{vocabulary.vocabulary_words.count}問)", "/vocabularies/#{vocabulary.id}/quiz" %></li>
   <% end %>
 </ul>
+
+<% @vocabulary_page = 'active' %>
