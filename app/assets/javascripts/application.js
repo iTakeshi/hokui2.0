@@ -14,5 +14,4 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require colorbox-rails
-//= require jquery.sleep
 //= require_tree .
