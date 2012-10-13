@@ -67,7 +67,7 @@ Hokui::Application.routes.draw do
   get '/vocabularies/new', to: 'vocabularies#new'
   post '/vocabularies/new', to: 'vocabularies#create'
   get '/vocabularies/:vocabulary_id/quiz', to: 'vocabularies#quiz'
-  get '/vocabularies/quizzes', to: 'vocabularies#quizzes'
+  get '/vocabularies/:vocabulary_id/quizzes', to: 'vocabularies#quizzes'
 
   get '/calendar', to: 'calendar#index'
   get '/questionnaire', to: 'questionnaire#index'

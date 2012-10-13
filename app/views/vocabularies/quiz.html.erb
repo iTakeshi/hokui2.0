@@ -3,21 +3,8 @@
 <h3><%= @vocabulary.vocabulary_name %></h3>
 
 <div id="vocabulary-form">
-  <form action="/vocabularies/quizzes" class="form-horizontal" data-remote="true" method="get">
-    <fieldset>
-      <%= hidden_field_tag :vocabulary_id, @vocabulary.id %>
-      <div class="control-group">
-        <%= label_tag :quiz_count, '問題数', class: 'control-label' %>
-        <div class="controls">
-          <%= number_field_tag :quiz_count %>
-        </div>
-      </div>
-
-      <div class="form-actions">
-        <%= submit_tag 'スタート！', class: 'btn btn-primary' %>
-      </div>
-    </fieldset>
-  </form>
+  <%= link_to 'Start!!', "/vocabularies/#{@vocabulary.id}/quizzes.json", id: 'vocabulary-start', class: 'btn btn-primary', remote: true %>
+  30問の問題セットをスタートします。
 </div>
 
 <div id="vocabulary-quiz" style="display: none;">
@@ -29,6 +16,10 @@
     <input type="submit" class="btn btn-primary" value="解答" id="vocabulary-quiz-submit"><br>
     <span id="vocabulary-quiz-judge"></span><br>
     <input type="submit" class="btn btn-primary" value="次の問題" id="vocabulary-quiz-next">
+  </div>
+  <div id="vocabulary-result">
+    Completed!<br>
+    <span></span>
   </div>
 </div>
 

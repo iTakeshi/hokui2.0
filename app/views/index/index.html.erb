@@ -33,6 +33,13 @@
         </dd>
       <% end %>
     </dl>
+    <h2><%= link_to 'Vocabulary Check', '/vocabularies', style: 'color: #333;' %></h2>
+    <dl class="dl-horizontal" style="margin-top: 0;">
+      <% Vocabulary.order('id DESC').limit(5).each do |vocabulary| %>
+        <dt><%= vocabulary.created_at.strftime("%Y/%m/%d %H:%M").gsub('/0', '/') %></dt>
+        <dd>問題セット「<%= link_to vocabulary.vocabulary_name, "/vocabularies/#{vocabulary.id}/quiz" %>」を追加</dd>
+      <% end %>
+    </dl>
   </div>
   <div class="span4">
   </div>
