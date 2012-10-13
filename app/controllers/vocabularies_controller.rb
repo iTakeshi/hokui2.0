@@ -30,12 +30,12 @@ class VocabulariesController < ApplicationController
     @vocabulary = Vocabulary.find(params[:vocabulary_id])
   end
 
-  # GET /vocabularies/quizzes?params
+  # GET /vocabularies/:vocabulary_id/quizzes.json
   def quizzes
     if Rails.env == 'production'
-      words = VocabularyWord.where(vocabulary_id: params[:vocabulary_id]).order('RAND()').limit(params[:quiz_count].to_i)
+      words = VocabularyWord.where(vocabulary_id: params[:vocabulary_id]).order('RAND()').limit(30)
     else
-      words = VocabularyWord.where(vocabulary_id: params[:vocabulary_id]).order('RANDOM()').limit(params[:quiz_count].to_i)
+      words = VocabularyWord.where(vocabulary_id: params[:vocabulary_id]).order('RANDOM()').limit(30)
     end
     quizzes = Array.new
     words.each do |word|
