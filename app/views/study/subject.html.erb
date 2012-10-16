@@ -50,7 +50,7 @@
                 <%= k != 0 ? raw('<tr>') : '' %>
                   <% if questions[k] %>
                     <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
-                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %><br><%= questions[k].material_comments %></td>
                     <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
                     <td>
                       <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
@@ -61,7 +61,7 @@
                   <% end %>
                   <% if answers[k] %>
                     <% file_name = "#{answers[k].material_file_name}.#{answers[k].material_file_ext}" %>
-                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %></td>
+                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %><br><%= answers[k].material_comments %></td>
                     <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
                     <td>
                       <%= link_to '修正', "/materials/#{answers[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
@@ -95,17 +95,16 @@
 
           <% rowspan = 0 %>
           <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
-            <% questions = @subject.quizzes.where(material_number: number, material_with_answer: false) %>
-            <% answers = @subject.quizzes.where(material_number: number, material_with_answer: true) %>
+            <% questions = materials.where(material_number: number, material_with_answer: false) %>
+            <% answers = materials.where(material_number: number, material_with_answer: true) %>
             <% rowspan += [questions.length, answers.length].max %>
           <% end %>
 
           <tr>
             <td rowspan="<%= rowspan %>"><%= year %></td>
-            <% materials = @subject.quizzes.where(material_year: year) %>
             <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
-              <% questions = @subject.quizzes.where(material_number: number, material_with_answer: false).order('material_page ASC') %>
-              <% answers = @subject.quizzes.where(material_number: number, material_with_answer: true).order('material_page ASC') %>
+              <% questions = materials.where(material_number: number, material_with_answer: false).order('material_page ASC') %>
+              <% answers = materials.where(material_number: number, material_with_answer: true).order('material_page ASC') %>
               <% rows = [questions.length, answers.length].max %>
               <%= j != 0 ? raw('<tr>') : '' %>
               <td rowspan="<%= rows %>"><%= number %> 回</td>
@@ -113,7 +112,7 @@
                 <%= k != 0 ? raw('<tr>') : '' %>
                   <% if questions[k] %>
                     <% file_name = "#{questions[k].material_file_name}.#{questions[k].material_file_ext}" %>
-                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %></td>
+                    <td><%= link_to file_name, "/materials/#{questions[k].id}/download/#{file_name}" %><br><%= questions[k].material_comments %></td>
                     <td><%= questions[k].user.user_handle_name %><br><%= questions[k].material_download_count %> 回</td>
                     <td>
                       <%= link_to '修正', "/materials/#{questions[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
@@ -124,7 +123,7 @@
                   <% end %>
                   <% if answers[k] %>
                     <% file_name = "#{answers[k].material_file_name}.#{answers[k].material_file_ext}" %>
-                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %></td>
+                    <td><%= link_to file_name, "/materials/#{answers[k].id}/download/#{file_name}" %><br><%= answers[k].material_comments %></td>
                     <td><%= answers[k].user.user_handle_name %><br><%= answers[k].material_download_count %> 回</td>
                     <td>
                       <%= link_to '修正', "/materials/#{answers[k].id}/edit", class: 'btn btn-mini btn-info' %><br>
@@ -157,15 +156,14 @@
 
           <% rowspan = 0 %>
           <% materials.group(:material_number).map{|obj| obj.material_number}.each do |number| %>
-            <% questions = @subject.summaries.where(material_number: number) %>
+            <% questions = materials.where(material_number: number) %>
             <% rowspan += questions.length %>
           <% end %>
 
           <tr>
             <td rowspan="<%= rowspan %>"><%= year %></td>
-            <% materials = @subject.summaries.where(material_year: year) %>
             <% materials.group(:material_number).map{|obj| obj.material_number}.each.with_index do |number, j| %>
-              <% questions = @subject.summaries.where(material_number: number).order('id DESC') %>
+              <% questions = materials.where(material_number: number).order('id DESC') %>
               <% rows = questions.length %>
               <%= j != 0 ? raw('<tr>') : '' %>
               <td rowspan="<%= rows %>"><%= number %> 回</td>
