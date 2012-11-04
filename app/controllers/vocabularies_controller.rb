@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class VocabulariesController < ApplicationController
 
   # GET /vocabularies
@@ -46,5 +48,10 @@ class VocabulariesController < ApplicationController
       end
     end
     render json: { quizzes: quizzes, count: quizzes.count }
+  end
+
+  # GET /vocabularies/:vocabulary_id/:vocabulary_name.csv
+  def send_csv
+    send_data "\xEF\xBB\xBF" + Vocabulary.find(params[:vocabulary_id]).vocabulary_words.to_a.map {|w| "#{w.word_ja},#{w.word_en}"}.join("\r\n"), filename: "#{params[:vocabulary_name]}.csv", content_type: 'application/octet-stream'
   end
 end

@@ -1,9 +1,11 @@
 <h1>語彙クイズ問題集</h1>
 
+2012/11/04 update! Get CSV data リンクをクリックすると、Excelで開ける問題データをダウンロードできます。
+
 <%= link_to '新しい問題セット', '/vocabularies/new', class: 'btn btn-primary btn-mini' %>
 <ul>
   <% @vocabularies.each do |vocabulary| %>
-    <li><%= link_to "#{vocabulary.vocabulary_name} (#{vocabulary.vocabulary_words.count}問)", "/vocabularies/#{vocabulary.id}/quiz" %></li>
+    <li><span style="margin-right: 20px;"><%= link_to "#{vocabulary.vocabulary_name} (#{vocabulary.vocabulary_words.count}問)", "/vocabularies/#{vocabulary.id}/quiz" %></span><%= link_to "Get CSV data", "/vocabularies/#{vocabulary.id}/#{vocabulary.vocabulary_name}.csv" %></li>
   <% end %>
 </ul>
 
