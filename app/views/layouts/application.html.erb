@@ -35,8 +35,8 @@
           <div class="navbar-inner">
             <div class="container">
               <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
-              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#main-menu" style="float: left;">Menu</button>
-              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#user-menu-smartphone"><%= user_name %></button>
+              <button type="button" class="btn-navbar" data-toggle="collapse" data-target="#main-menu" style="float: left;">Menu<i class="icon-caret-down"></i></button>
+              <button type="button" class="btn-navbar" data-toggle="collapse" data-target="#user-menu-smartphone"><i class="icon-user-md"></i><%= user_name %><i class="icon-caret-down"></i></button>
               <div class="nav-collapse collapsed" id="main-menu">
                 <ul class="nav">
                   <li class="<%= @index_page %>">
@@ -67,7 +67,7 @@
                     <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
                   </li>
                   <li class="dropdown visible-desktop <%= @user_page %>" id="user-menu">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><i class="icon-caret-down"></i></a>
                     <ul class="dropdown-menu">
                       <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
                       <li><%= link_to 'Log Out', '/logout' %></li>
