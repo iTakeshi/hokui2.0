@@ -1,23 +1,33 @@
 <h1><%= @subject.subject_name %></h1>
 
-<section>
-  <h3>シラバス情報</h3>
-  <dl class="dl-horizontal">
-    <dt>教科名</dt>
-    <dd><%= @subject.subject_name %></dd>
-    <dt>学期</dt>
-    <dd><%= @subject.term.term_name %></dd>
-    <dt>責任教員</dt>
-    <dd><%= @subject.subject_staff %></dd>
-    <dt>シラバス</dt>
-    <dd><%= link_to 'シラバスページを表示', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/syllabus.html", data: { colorbox: true, colorbox_height: '2900px', colorbox_innerwidth: '1200px'} %> 環境によっては表示が乱れます。</dd>
-  </dl>
-</section>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#subject-home" data-toggle="tab">シラバス & BBS</a></li>
+  <li><a href="#subject-exam" data-toggle="tab">過去問</a></li>
+  <li><a href="#subject-quiz" data-toggle="tab">小テスト</a></li>
+  <li><a href="#subject-summary" data-toggle="tab">授業資料</a></li>
+  <li><a href="#subject-personal" data-toggle="tab">個人ファイル</a></li>
+</ul>
 
-<section>
-  <h3>資料</h3>
+<section class="tab-content">
 
-  <section>
+  <section id="subject-home" class="tab-pane active">
+    <h4>シラバス情報</h4>
+    <dl class="dl-horizontal">
+      <dt>教科名</dt>
+      <dd><%= @subject.subject_name %></dd>
+      <dt>学期</dt>
+      <dd><%= @subject.term.term_name %></dd>
+      <dt>責任教員</dt>
+      <dd><%= @subject.subject_staff %></dd>
+      <dt>シラバス</dt>
+      <dd><%= link_to 'シラバスページを表示', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/syllabus.html", data: { colorbox: true, colorbox_height: '2900px', colorbox_innerwidth: '1200px'} %> 環境によっては表示が乱れます。</dd>
+    </dl>
+
+    <h4>BBS</h4>
+    Comming Soon!
+  </section>
+
+  <section id="subject-exam" class="tab-pane">
     <h4>過去問</h4>
     <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_exam_file", class: 'btn btn-primary btn-mini' %>
     <% if @subject.past_exams.any? %>
@@ -79,7 +89,7 @@
     <% end %>
   </section>
 
-  <section>
+  <section id="subject-quiz" class="tab-pane">
     <h4>小テスト</h4>
     <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_quiz_file", class: 'btn btn-primary btn-mini' %>
     <% if @subject.quizzes.any? %>
@@ -141,7 +151,7 @@
     <% end %>
   </section>
 
-  <section>
+  <section id="subject-summary" class="tab-pane">
     <h4>授業資料</h4>
     <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_summary_file", class: 'btn btn-primary btn-mini' %>
     <% if @subject.summaries.any? %>
@@ -186,7 +196,7 @@
     <% end %>
   </section>
 
-  <section>
+  <section id="subject-personal" class="tab-pane">
     <h4>個人ファイル</h4>
     <%= link_to '新規アップロード', "/study/#{@subject.term_identifier}/#{@subject.subject_identifier}/new_personal_file", class: 'btn btn-primary btn-mini' %>
     <% if @subject.personal_materials.any? %>
