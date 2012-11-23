@@ -34,7 +34,10 @@
         <nav class="navbar navbar-inverse">
           <div class="navbar-inner">
             <div class="container">
-              <div class="nav-collapse collapse">
+              <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#main-menu" style="float: left;">Menu</button>
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#user-menu-smartphone"><%= user_name %></button>
+              <div class="nav-collapse collapsed" id="main-menu">
                 <ul class="nav">
                   <li class="<%= @index_page %>">
                     <%= link_to raw('<i class="icon-home"></i>Home'), '/' %>
@@ -64,15 +67,6 @@
                     <%= link_to raw('<i class="icon-question-sign"></i>Help'), '/help' %>
                   </li>
                   <li class="dropdown visible-desktop <%= @user_page %>" id="user-menu">
-                    <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
-                      <li><%= link_to 'Log Out', '/logout' %></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown hidden-desktop <%= @user_page %>">
-                    <% user_name = ( current_user ? current_user.user_handle_name : 'guest' ) %>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user-md"></i><%= user_name %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
@@ -81,11 +75,18 @@
                   </li>
                 </ul>
               </div>
+              <div class="nav-collapse collapsed hidden-desktop" id="user-menu-smartphone">
+                <ul class="nav">
+                  <li><%= link_to 'Edit user profile', '/edit_profile' %></li>
+                  <li><%= link_to 'Log Out', '/logout' %></li>
+                </ul>
+              </div>
             </div>
           </div>
         </nav>
       </div>
     </header>
+
 
     <% if content_for?(:side) %>
 
@@ -171,7 +172,7 @@
     <footer id="grobal-footer" class="row-fluid">
       <div class="span12">
         <address>
-          Copyright 2011-2012 Hokui-Net Developer Team, Version 2.1.5 @2012-11-04
+          Copyright 2011-2012 Hokui-Net Developer Team, Version 2.1.6 @2012-11-23
         </address>
         <div id="grobal-footer-credits">
           <ul>
