@@ -20,7 +20,7 @@ a.dropdown-toggle + ul {
 }
 
 i {
-    margin-right: 3px;
+    margin: 0 5px;
     background: none !important;
 }
 
@@ -30,13 +30,19 @@ i:before {
     vertical-align: -1px !important;
 }
 
-span.caret {
-    margin-left: 5px !important;
+i.icon-caret-down:before {
+    font-size: 100%;
 }
 
 .navbar .nav > li > .dropdown-menu:after,
 .navbar .nav > li > .dropdown-menu:before {
     border: none;
+}
+
+.btn-navbar {
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
 }
 
 form {
