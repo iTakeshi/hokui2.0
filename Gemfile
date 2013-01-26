@@ -49,6 +49,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Deploy with Capistrano
 gem 'capistrano'
+gem 'capistrano_colors'
 
 # To use debugger
 # gem 'debugger'

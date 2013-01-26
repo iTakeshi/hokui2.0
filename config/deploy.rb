@@ -54,3 +54,4 @@ namespace :deploy do
 end
 
 require 'bundler/capistrano'
+require 'capistrano_colors'
